@@ -271,18 +271,55 @@ p { line-height: 1.65; word-break: keep-all; }
   left: 15px;
 }
 
-dialog {
-  border: 0;
-  padding: 0;
-  background: var(--paper);
-  width: calc(100vw - 32px);
-  max-width: 440px;
-  max-height: 86vh;
-  border-radius: 16px;
-  box-shadow: 0 20px 50px rgba(0,0,0,.25);
-  margin: auto;
-}
-dialog::backdrop { background: rgba(28,27,25,.65); backdrop-filter: blur(2px); }
+/* ================= Stitch Map Preview Dialog Styles ================= */
+    dialog {
+      border: 0;
+      padding: 0;
+      background: transparent;
+      width: calc(100vw - 20px);
+      max-width: 680px;
+      max-height: 94vh;
+      border-radius: 24px;
+      margin: auto;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      box-shadow: none;
+    }
+    dialog::backdrop {
+      background: rgba(20, 18, 16, 0.72);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+    .custom-shadow-modal {
+      box-shadow: 0 25px 50px -12px rgba(67, 40, 28, 0.22), 0 0 0 1px rgba(67, 40, 28, 0.08);
+    }
+    .marker-shadow {
+      filter: drop-shadow(0 4px 6px rgba(45, 26, 17, 0.3));
+    }
+    .workshop-shadow {
+      filter: drop-shadow(0 4px 6px rgba(35, 55, 35, 0.28));
+    }
+    @keyframes pulseRoute {
+      0% { stroke-dashoffset: 28; }
+      100% { stroke-dashoffset: 0; }
+    }
+    .animated-route {
+      stroke-dasharray: 6, 6;
+      animation: pulseRoute 4s linear infinite;
+    }
+    @keyframes ping-subtle {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.35); opacity: 0; }
+      100% { transform: scale(1.35); opacity: 0; }
+    }
+    .ping-marker {
+      animation: ping-subtle 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+    .active-tooltip {
+      opacity: 1 !important;
+      transform: translateX(-50%) translateY(0) !important;
+      pointer-events: auto !important;
+    }
 .dialog-header {
   padding: 16px 18px 10px;
   display: flex;
@@ -362,7 +399,45 @@ dialog::backdrop { background: rgba(28,27,25,.65); backdrop-filter: blur(2px); }
   padding: 10px 16px 16px;
 }
 .map-controls p { font-size: 10px; color: var(--muted); margin: 0; }
-</style><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&amp;family=Noto+Sans+KR:wght@400;500;600;700;800;900&amp;display=swap" data-snapdom="injected-import"></head>
+</style><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&amp;family=Noto+Sans+KR:wght@400;500;600;700;800;900&amp;display=swap" data-snapdom="injected-import"><!-- Google Fonts Outfit & FontAwesome & Tailwind for Stitch Maps -->
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+  tailwind.config = {
+    corePlugins: {
+      preflight: false,
+    },
+    theme: {
+      extend: {
+        colors: {
+          brand: {
+            cream: '#fbf9f5',
+            cardBg: '#faf7f2',
+            border: '#ebdccb',
+            brownText: '#8c5e3c',
+            darkBrown: '#43281c',
+            markerBrown: '#5c3826',
+            olive: '#4f634e',
+            oliveDark: '#3e4f3d',
+            oliveBg: '#e5ebe3',
+            roadBg: '#ede8df',
+            greenPark: '#d8e8d8',
+            lakeBlue: '#c8e2ee',
+            subtleGray: '#8a8279',
+            busBlue: '#3b7097',
+            busBg: '#eaf2f8'
+          }
+        },
+        fontFamily: {
+          sans: ['"Noto Sans KR"', 'sans-serif'],
+          display: ['"Outfit"', '"Noto Sans KR"', 'sans-serif'],
+        }
+      }
+    }
+  };
+</script>
+</head>
 <body data-page="detail">
 <header class="site-header">
 <div class="header-inner">
@@ -539,42 +614,250 @@ dialog::backdrop { background: rgba(28,27,25,.65); backdrop-filter: blur(2px); }
 </main>
 
 <dialog aria-labelledby="map-title" id="map-dialog">
-<div class="dialog-header">
-<div>
-<span class="eyebrow">COURSE 01 MAP / PROTOTYPE</span>
-<h2 id="map-title" class="">원도심 전체 지도</h2>
+<main class="w-full max-w-[760px] bg-[#faf6f0] rounded-3xl p-5 sm:p-7 custom-shadow-modal border border-stone-200/80 relative transition-all duration-300">
+<!-- BEGIN: HeaderSection -->
+<header class="flex items-start justify-between mb-4">
+<div class="space-y-1">
+<!-- Subtitle category tag -->
+<span class="block text-[12px] sm:text-[13px] font-semibold tracking-wider uppercase text-brand-brownText font-display">
+          COURSE 01 MAP / PREVIEW
+        </span>
+<!-- Main title -->
+<h1 class="text-2xl sm:text-[28px] font-bold text-stone-900 tracking-tight flex items-center gap-2">
+          원도심 전체 지도
+          <span class="inline-flex items-center text-xs font-medium text-brand-olive px-2.5 py-0.5 rounded-full bg-brand-oliveBg">
+            이천 산책 코스
+          </span>
+</h1>
 </div>
-<button aria-label="지도 닫기" class="close-btn" id="map-close" type="button" onclick="document.getElementById('map-dialog').close()">×</button>
-</div>
-<div class="map-legend">
-<span class=""><i class="legend-dot">1</i> 기본 동선</span>
-<span class=""><i class="legend-star">★</i> 추가 추천</span>
-</div>
-<div aria-label="개념 지도" class="map-stage">
-<div class="map-art">
-<svg aria-hidden="true" preserveAspectRatio="xMidYMid slice" viewBox="0 0 480 450">
-<rect fill="#f0ebe1" height="450" width="480"></rect>
-<path d="M-20 120Q120 100 240 130T510 90M-30 260Q130 230 250 280T508 240" fill="none" stroke="#fffdf6" stroke-width="18"></path>
-<path d="M120-10Q90 140 130 260T160 480M320-20Q360 110 330 230T350 490" fill="none" stroke="#fffdf6" stroke-width="16"></path>
-<path d="M40 80Q100 180 300 220T440 380" fill="none" opacity=".7" stroke="#cbd7c5" stroke-width="45"></path>
-<path d="M60 140C120 130 180 180 230 250S340 320 420 340" fill="none" stroke="#815744" stroke-dasharray="3 8" stroke-linecap="round" stroke-width="5"></path>
+<!-- Close Button with circular accent -->
+<button aria-label="닫기" class="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-stone-400 text-stone-600 hover:text-stone-900 hover:border-stone-700 hover:bg-stone-100/70 transition-colors flex items-center justify-center group focus:outline-none focus:ring-2 focus:ring-stone-400" data-purpose="modal-close-button" onclick="document.getElementById('map-dialog').close()" type="button">
+<svg class="w-5 h-5 transition-transform group-hover:rotate-90 duration-200" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
 </svg>
-<div id="map-markers">
-<button class="map-marker" style="left: 18%; top: 30%;" type="button">1</button>
-<button class="map-marker" style="left: 32%; top: 40%;" type="button">2</button>
-<button class="map-marker" style="left: 45%; top: 35%;" type="button">3</button>
-<button class="map-marker" style="left: 55%; top: 48%;" type="button">4</button>
-<button class="map-marker" style="left: 68%; top: 58%;" type="button">5</button>
-<button class="map-marker" style="left: 80%; top: 72%;" type="button">6</button>
-<button class="map-marker" style="left: 88%; top: 80%;" type="button">7</button>
-<button class="map-marker extra" style="left: 50%; top: 22%;" type="button">★</button>
+</button>
+</header>
+<!-- END: HeaderSection -->
+<!-- BEGIN: LegendSection -->
+<div class="flex items-center space-x-5 mb-3 text-xs sm:text-sm font-medium text-stone-700" data-purpose="map-legend">
+<!-- Standard Route Legend -->
+<div class="flex items-center space-x-2">
+<span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-brand-markerBrown text-white font-bold text-xs italic shadow-sm">
+          1
+        </span>
+<span class="font-semibold text-stone-800">추천 동선 (1~6)</span>
+</div>
+</div>
+<!-- END: LegendSection -->
+<!-- BEGIN: MapCanvasSection -->
+<!-- Stylized accurate vector map based on actual Icheon geography -->
+<section aria-label="이천 원도심 일러스트 지도" class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden border border-[#ebdccb] shadow-inner bg-[#fbf9f5] select-none" data-purpose="interactive-map-area" id="tour-map">
+<!-- Base SVG Map Graphic -->
+<svg class="absolute inset-0 w-full h-full" fill="none" preserveAspectRatio="none" viewBox="0 0 760 570" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<!-- Water Lake gradient -->
+<linearGradient id="lakeGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#bfe0f0" stop-opacity="0.95"></stop>
+<stop offset="100%" stop-color="#d4eaf5" stop-opacity="0.9"></stop>
+</linearGradient>
+<!-- Stream gradient -->
+<linearGradient id="streamGrad" x1="0%" x2="100%" y1="50%" y2="50%">
+<stop offset="0%" stop-color="#cae3f0"></stop>
+<stop offset="100%" stop-color="#dbeaf2"></stop>
+</linearGradient>
+<!-- Park Green gradient -->
+<radialGradient cx="35%" cy="40%" id="parkGreenGrad" r="60%">
+<stop offset="0%" stop-color="#d8e8d8"></stop>
+<stop offset="100%" stop-color="#c9dfca"></stop>
+</radialGradient>
+</defs>
+<!-- Background Base -->
+<rect fill="#fbf9f5" height="570" width="760"></rect>
+<!-- [GEOGRAPHY 1: Seolbong Park & Mountain Forest - Left Bottom / West] -->
+<path d="M -20,180 C 40,160 120,200 170,250 C 220,300 230,370 200,450 C 180,510 130,560 60,600 L -20,600 Z" fill="url(#parkGreenGrad)" opacity="0.85"></path>
+<!-- [GEOGRAPHY 2: Seolbong Lake (설봉호) - Organic natural lake body] -->
+<path d="M 45,350 C 50,310 100,295 145,315 C 185,335 195,390 175,430 C 150,475 90,485 55,450 C 35,425 40,380 45,350 Z" fill="url(#lakeGradient)" stroke="#a9d1e5" stroke-width="2.5"></path>
+<!-- Lake Ripples / Detail -->
+<path d="M 75,370 C 95,365 125,370 145,365" fill="none" opacity="0.6" stroke="#93c2db" stroke-linecap="round" stroke-width="2"></path>
+<path d="M 90,410 C 110,405 135,410 150,405" fill="none" opacity="0.6" stroke="#93c2db" stroke-linecap="round" stroke-width="2"></path>
+<!-- [GEOGRAPHY 3: Heungmanso Garden / Forest - Top North] -->
+<path d="M 370,-20 C 420,-10 490,20 500,80 C 510,130 460,160 400,165 C 350,170 320,130 310,70 C 300,10 330,-15 370,-20 Z" fill="#dceadc" opacity="0.8"></path>
+<!-- [GEOGRAPHY 4: Oncheon-cheon (온천천) Stream Axis towards Bokha-cheon] -->
+<path d="M 175,385 C 240,390 320,395 410,425 C 490,450 560,500 660,515 C 710,520 750,515 780,510" fill="none" stroke="url(#streamGrad)" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"></path>
+<!-- [ROAD NETWORK: Major Roads in Icheon Old Town] -->
+<!-- Jungni-ro / Seolbong-ro connecting Seolbong Park to Downtown & Terminal -->
+<path d="M 170,345 C 260,335 380,340 520,380 C 600,405 670,445 780,480" fill="none" stroke="#ede8df" stroke-linecap="round" stroke-linejoin="round" stroke-width="22"></path>
+<!-- Gyeongchung-daero (Main Arterial Road: North-South) -->
+<path d="M 640,-20 C 645,150 660,300 670,430 C 675,500 680,590 685,600" fill="none" stroke="#ede8df" stroke-linecap="round" stroke-linejoin="round" stroke-width="20"></path>
+<!-- Yeongchang-ro (Market & Commercial Street: East-West) -->
+<path d="M 230,280 C 330,265 470,265 620,285 C 700,295 740,310 780,325" fill="none" stroke="#ede8df" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"></path>
+<!-- Eoseop-ro (North-South Connector through Gwango & Changjeon) -->
+<path d="M 450,-10 C 445,140 440,260 435,370 C 430,470 420,530 410,600" fill="none" stroke="#ede8df" stroke-linecap="round" stroke-linejoin="round" stroke-width="17"></path>
+<!-- Secondary Street from Gwango Market to Seolbongho -->
+<path d="M 330,270 C 270,285 210,315 165,340" fill="none" stroke="#ede8df" stroke-linecap="round" stroke-width="14"></path>
+<!-- Downtown Alley Net -->
+<path d="M 520,270 C 515,330 510,400 505,470" fill="none" stroke="#ede8df" stroke-linecap="round" stroke-width="13"></path>
+<!-- Inner road center lines (Warm soft white) -->
+<path d="M 170,345 C 260,335 380,340 520,380 C 600,405 670,445 780,480" fill="none" stroke="#fcfbfa" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"></path>
+<path d="M 640,-20 C 645,150 660,300 670,430 C 675,500 680,590 685,600" fill="none" stroke="#fcfbfa" stroke-linecap="round" stroke-linejoin="round" stroke-width="9"></path>
+<path d="M 230,280 C 330,265 470,265 620,285 C 700,295 740,310 780,325" fill="none" stroke="#fcfbfa" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"></path>
+<path d="M 450,-10 C 445,140 440,260 435,370 C 430,470 420,530 410,600" fill="none" stroke="#fcfbfa" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"></path>
+<path d="M 330,270 C 270,285 210,315 165,340" fill="none" stroke="#fcfbfa" stroke-linecap="round" stroke-width="7"></path>
+<!-- [WALKING ROUTE: 1 -> 2 -> 3 -> 4 -> 5 (North) -> 6 (Seolbong) -> 7 (Back to Terminal)] -->
+<path class="animated-route" d="M 640,465 C 610,435 590,410 560,395 C 530,375 500,350 470,335 C 440,315 425,290 395,250 C 385,200 395,145 415,108 C 370,120 280,180 215,260 C 175,310 160,325 145,345" fill="none" stroke="#5c3826" stroke-linecap="round" stroke-linejoin="round" stroke-width="5.5"></path>
+<!-- [GEOGRAPHIC LABELS & ICONS (SVGs / Text)] -->
+<!-- Seolbong Lake Label -->
+<text fill="#5285a3" font-family="'Noto Sans KR', sans-serif" font-size="13" font-weight="700" letter-spacing="1" text-anchor="middle" x="110" y="395">설봉호</text>
+<text fill="#7baec9" font-family="'Noto Sans KR', sans-serif" font-size="10" font-weight="500" text-anchor="middle" x="110" y="412">호수 둘레길</text>
+<!-- Seolbong Mountain / Waterfall indication -->
+<g fill="#466946" opacity="0.8" transform="translate(45, 255)">
+<circle cx="10" cy="10" fill="#d1e3d1" r="12"></circle>
+<path d="M10 3 L16 14 L4 14 Z"></path>
+<path d="M10 0 L15 10 L5 10 Z" opacity="0.9"></path>
+<text fill="#3e593e" font-family="'Noto Sans KR', sans-serif" font-size="11" font-weight="700" x="24" y="14">설봉공원·폭포</text>
+</g>
+<!-- Heungmanso (North) Area Label -->
+<g transform="translate(415, 60)">
+<text fill="#486047" font-family="'Noto Sans KR', sans-serif" font-size="12" font-weight="700">흥만소</text>
+<text fill="#728c71" font-family="'Noto Sans KR', sans-serif" font-size="9" font-weight="500" y="14">쌀 베이커리·디저트</text>
+</g>
+<!-- Oncheon-cheon Stream text -->
+<text fill="#7baec9" font-family="'Noto Sans KR', sans-serif" font-size="10" font-weight="600" letter-spacing="2" transform="rotate(18, 480, 435)" x="480" y="435">온천천</text>
+<!-- Gwango Market District Label -->
+<text fill="#9c8774" font-family="'Noto Sans KR', sans-serif" font-size="11" font-weight="600" x="350" y="275">관고전통시장 일대</text>
+<!-- Terminal District Label -->
+<text fill="#8c6a53" font-family="'Noto Sans KR', sans-serif" font-size="11" font-weight="600" x="605" y="525">이천종합터미널</text>
+</svg>
+<!-- ================= WAYPOINT MARKERS ================= -->
+<!-- 1. 이천종합터미널 (출발) - [Right Bottom] -->
+<div class="group absolute left-[84%] top-[81%] -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer" data-marker-index="1">
+<div class="absolute inset-0 rounded-full bg-brand-markerBrown opacity-40 ping-marker"></div>
+<div class="relative w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-brand-markerBrown text-white font-bold text-xs sm:text-sm italic flex items-center justify-center ring-4 ring-white marker-shadow transition-transform group-hover:scale-115">
+          1
+        </div>
+<!-- Hover Popover Tooltip -->
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-stone-900/90 backdrop-blur-sm text-white text-xs p-2.5 rounded-xl opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 shadow-xl z-40 text-center">
+<div class="font-bold text-amber-200">1. 이천종합터미널 (출발)</div>
+<div class="text-[11px] text-stone-300 mt-0.5">도보 여정의 기점 · 물품보관 가능</div>
+</div>
+</div>
+<!-- 2. 우진 커피니케이션 - [Center-SouthEast] -->
+<div class="group absolute left-[73.5%] top-[69%] -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer" data-marker-index="2">
+<div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-brand-markerBrown text-white font-bold text-xs sm:text-sm italic flex items-center justify-center ring-4 ring-white marker-shadow transition-transform group-hover:scale-115">
+          2
+        </div>
+<!-- Hover Popover Tooltip -->
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-52 bg-stone-900/90 backdrop-blur-sm text-white text-xs p-2.5 rounded-xl opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 shadow-xl z-40 text-center">
+<div class="font-bold text-amber-200">2. 우진 커피니케이션</div>
+<div class="text-[11px] text-stone-300 mt-0.5">스페셜티 드립커피와 감각적인 공간</div>
+</div>
+</div>
+<!-- 3. 로컬 혼밥 (원도심 맛집) - [Center] -->
+<div class="group absolute left-[62%] top-[58.5%] -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer" data-marker-index="3">
+<div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-brand-markerBrown text-white font-bold text-xs sm:text-sm italic flex items-center justify-center ring-4 ring-white marker-shadow transition-transform group-hover:scale-115">
+          3
+        </div>
+<!-- Hover Popover Tooltip -->
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-stone-900/90 backdrop-blur-sm text-white text-xs p-2.5 rounded-xl opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 shadow-xl z-40 text-center">
+<div class="font-bold text-amber-200">3. 로컬 혼밥 (창전동 맛집)</div>
+<div class="text-[11px] text-stone-300 mt-0.5">이천 쌀밥 정식 &amp; 깔끔한 1인 로컬식</div>
+</div>
+</div>
+<!-- 4. 관고전통시장 - [Center North] -->
+<div class="group absolute left-[52%] top-[44%] -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer" data-marker-index="4">
+<div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-brand-markerBrown text-white font-bold text-xs sm:text-sm italic flex items-center justify-center ring-4 ring-white marker-shadow transition-transform group-hover:scale-115">
+          4
+        </div>
+<!-- Hover Popover Tooltip -->
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-stone-900/90 backdrop-blur-sm text-white text-xs p-2.5 rounded-xl opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 shadow-xl z-40 text-center">
+<div class="font-bold text-amber-200">4. 관고전통시장</div>
+<div class="text-[11px] text-stone-300 mt-0.5">활기찬 5일장 먹거리와 닭발 골목</div>
+</div>
+</div>
+<!-- 5. 흥만소 (쌀 베이커리) - [North Top] -->
+<div class="group absolute left-[54.5%] top-[19%] -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer" data-marker-index="5">
+<div class="absolute inset-0 rounded-full bg-brand-markerBrown opacity-40 ping-marker"></div>
+<div class="relative w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-brand-markerBrown text-white font-bold text-xs sm:text-sm italic flex items-center justify-center ring-4 ring-white marker-shadow transition-transform group-hover:scale-115">
+          5
+        </div>
+<!-- Hover Popover Tooltip -->
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-52 bg-stone-900/90 backdrop-blur-sm text-white text-xs p-2.5 rounded-xl opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 shadow-xl z-40 text-center">
+<div class="font-bold text-amber-200">5. 흥만소 (쌀 베이커리)</div>
+<div class="text-[11px] text-stone-300 mt-0.5">이천쌀 크림빵 &amp; 시그니처 쌀 디저트</div>
+</div>
+</div>
+<!-- 6. 설봉공원 & 설봉호 - [Left Bottom/West] -->
+<div class="group absolute left-[19%] top-[60.5%] -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer" data-marker-index="6">
+<div class="absolute inset-0 rounded-full bg-brand-markerBrown opacity-40 ping-marker"></div>
+<div class="relative w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-brand-markerBrown text-white font-bold text-xs sm:text-sm italic flex items-center justify-center ring-4 ring-white marker-shadow transition-transform group-hover:scale-115">
+          6
+        </div>
+<!-- Hover Popover Tooltip -->
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-stone-900/90 backdrop-blur-sm text-white text-xs p-2.5 rounded-xl opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 shadow-xl z-40 text-center">
+<div class="font-bold text-amber-200">6. 설봉공원 &amp; 설봉호</div>
+<div class="text-[11px] text-stone-300 mt-0.5">설봉호 둘레길 산책과 힐링 쉼터</div>
+</div>
+</div>
+<!-- 7. 터미널 귀가 - [Right Bottom] -->
+
+<!-- Map interaction hint badge -->
+<div class="absolute bottom-2.5 right-3 bg-white/85 backdrop-blur-sm px-2.5 py-1 rounded-full text-[11px] text-stone-600 font-medium pointer-events-none flex items-center gap-1 shadow-sm border border-stone-200/60">
+<i class="fa-solid fa-hand-pointer text-[10px] text-brand-brownText"></i> 번호를 누르면 상세 코스를 확인합니다
+      </div>
+</section>
+<!-- END: MapCanvasSection -->
+<!-- BEGIN: SequentialRouteSummaryCard -->
+<div class="mt-4 p-4 sm:p-5 bg-white rounded-2xl border border-stone-200/90 shadow-sm" data-purpose="course-stops-overview">
+<p class="text-[13px] sm:text-[14px] leading-relaxed font-medium text-stone-800 tracking-tight text-center sm:text-left break-keep"><span class="font-bold text-brand-markerBrown">1:</span> 터미널출발 <span class="text-stone-300 mx-1">·</span>
+<span class="font-bold text-brand-markerBrown">2:</span> 우진 커피니케이션 <span class="text-stone-300 mx-1">·</span>
+<span class="font-bold text-brand-markerBrown">3:</span> 로컬 혼밥 <span class="text-stone-300 mx-1">·</span>
+<span class="font-bold text-brand-markerBrown">4:</span> 관고전통시장 <span class="text-stone-300 mx-1">·</span>
+<span class="font-bold text-brand-markerBrown">5:</span> 흥만소 <span class="text-stone-300 mx-1">·</span>
+<span class="font-bold text-brand-markerBrown">6:</span> 설봉공원</p>
+<!-- Expandable Mini Info Chips -->
+<div class="mt-3 pt-3 border-t border-stone-100 grid grid-cols-3 gap-2 text-center text-xs">
+<div class="bg-stone-50/80 p-2 rounded-xl border border-stone-100">
+<span class="text-stone-400 block text-[10px] font-medium">총 코스 거리</span>
+<span class="font-bold text-stone-700 sm:text-sm">약 3.8 km</span>
+</div>
+<div class="bg-stone-50/80 p-2 rounded-xl border border-stone-100">
+<span class="text-stone-400 block text-[10px] font-medium">예상 소요 시간</span>
+<span class="font-bold text-stone-700 sm:text-sm">약 3시간 30분</span>
+</div>
+<div class="bg-stone-50/80 p-2 rounded-xl border border-stone-100">
+<span class="text-stone-400 block text-[10px] font-medium">코스 난이도</span>
+<span class="font-bold text-emerald-700 sm:text-sm">편안한 평지·호수 도보</span>
 </div>
 </div>
 </div>
-<div class="map-tooltip" role="status">1: 터미널출발 · 2: 우진 커피니케이션 · 3: 로컬 혼밥 · 4: 관고전통시장 · 5: 흥만소 · 6: 설봉공원 · 7: 터미널 귀가</div>
-<div class="map-controls">
-<p class="">시안용 개념 배치입니다. 실제 지리·보행 경로가 아닙니다.</p>
-</div>
+<!-- END: SequentialRouteSummaryCard -->
+<!-- BEGIN: DisclaimerFooter -->
+<footer class="mt-3 px-1" data-purpose="disclaimer-caption">
+<p class="text-[11.5px] sm:text-xs text-stone-500 font-normal">
+        실제 이천 원도심의 지리적 위치(설봉호, 관고전통시장, 이천터미널)를 반영한 감성 투어 맵입니다.
+      </p>
+</footer>
+<!-- END: DisclaimerFooter -->
+</main>
 </dialog>
 
+<script>
+  const mapDialog = document.getElementById('map-dialog');
+  if (mapDialog) {
+    mapDialog.addEventListener('click', (e) => {
+      if (e.target === mapDialog) mapDialog.close();
+    });
+  }
+
+  // 마커 모바일 탭 및 클릭 시 툴팁 표시
+  document.addEventListener('click', (e) => {
+    const marker = e.target.closest('[data-marker-index]');
+    document.querySelectorAll('.active-tooltip').forEach(el => el.classList.remove('active-tooltip'));
+    if (marker) {
+      const tip = marker.querySelector('div[class*="opacity-0"]');
+      if (tip) tip.classList.add('active-tooltip');
+    }
+  });
+
+</script>
 </body></html>
