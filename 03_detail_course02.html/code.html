@@ -1,0 +1,559 @@
+<!DOCTYPE html><html lang="ko" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" name="viewport">
+<title>코스 02 상세 · 이천 도예촌 투어</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap");
+
+:root {
+  --earth: #9d705b;
+  --earth-dark: #6e4838;
+  --sage: #a9bc8d;
+  --sage-dark: #5e7150;
+  --paper: #f8f5ed;
+  --cream: #efe9dd;
+  --ink: #302c28;
+  --muted: #6f6a63;
+  --line: #ded7cb;
+  --white: #fffefa;
+  --shadow: 0 14px 36px rgba(71, 49, 36, .08);
+  font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; background: var(--paper); -webkit-font-smoothing: antialiased; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { font: inherit; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+img { display: block; width: 100%; }
+button:focus-visible, a:focus-visible { outline: 3px solid var(--sage-dark); outline-offset: 3px; }
+
+.site-header {
+  height: 56px;
+  background: var(--earth);
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.header-inner {
+  max-width: 480px;
+  margin: auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+}
+.brand { font-size: 17px; font-weight: 900; letter-spacing: -.05em; display: flex; align-items: center; }
+.header-right { font-size: 10px; font-weight: 700; letter-spacing: .12em; opacity: .9; font-family: "DM Sans", sans-serif; }
+
+.shell {
+  max-width: 480px;
+  margin: 0 auto;
+  background: var(--white);
+  min-height: calc(100vh - 56px);
+  box-shadow: 0 0 40px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+}
+.content {
+  padding: 0 20px 60px;
+  flex: 1 0 auto;
+}
+.eyebrow {
+  color: var(--earth-dark);
+  font: 700 11px/1.4 "DM Sans", sans-serif;
+  letter-spacing: .15em;
+  display: inline-block;
+  text-transform: uppercase;
+}
+h1, h2, h3, p { margin-top: 0; }
+h1, h2, h3 { letter-spacing: -.05em; word-break: keep-all; }
+h1 { font-size: 28px; line-height: 1.25; font-weight: 900; }
+h2 { font-size: 21px; line-height: 1.3; font-weight: 800; }
+h3 { font-size: 17px; line-height: 1.35; font-weight: 800; }
+p { line-height: 1.65; word-break: keep-all; }
+.muted { color: var(--muted); }
+.small { font-size: 12px; line-height: 1.6; }
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--earth-dark);
+  margin: 18px 0 12px;
+}
+
+.detail-intro { padding-top: 2px; }
+.detail-intro h1 { margin: 6px 0 6px; }
+.detail-intro p { font-size: 13px; color: var(--muted); margin-bottom: 0; }
+
+.detail-photo {
+  border-radius: 16px;
+  margin: 18px 0;
+  overflow: hidden;
+  height: 200px;
+  background: linear-gradient(135deg, #bfa895 0%, #9e8574 100%);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+}
+.photo-credit {
+  position: absolute;
+  bottom: 10px;
+  left: 12px;
+  background: rgba(36,30,25,.75);
+  color: white;
+  font-size: 10px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.draft-banner {
+  border: 1px solid #d6c9b4;
+  background: #faf5e9;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 11px;
+  line-height: 1.55;
+  color: #6b5745;
+  margin: 18px 0;
+}
+
+.detail-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 18px 0 22px;
+}
+.summary-cell {
+  background: #f3ede3;
+  padding: 12px;
+  border-radius: 12px;
+}
+.summary-cell .label { color: var(--muted); display: block; font-size: 10px; margin-bottom: 4px; font-family: "DM Sans", sans-serif; font-weight: 700; }
+.summary-cell strong { font-size: 12px; line-height: 1.45; display: block; }
+
+.info-card {
+  background: #f6f1e7;
+  border: 1px solid #e9ded0;
+  border-radius: 16px;
+  padding: 16px;
+  margin: 18px 0;
+}
+.info-card h3 { margin: 4px 0 10px; font-size: 16px; }
+.info-row {
+  display: grid;
+  grid-template-columns: 68px 1fr;
+  gap: 8px;
+  padding: 7px 0;
+  border-top: 1px solid #e1d6c8;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.info-row dt { color: var(--muted); }
+.info-row dd { margin: 0; font-weight: 700; }
+
+.detail-section { margin-top: 30px; }
+.detail-section h2 { font-size: 21px; margin: 5px 0 6px; }
+.detail-section .lead { color: var(--muted); font-size: 12px; margin-bottom: 0; }
+
+.timeline { list-style: none; margin: 18px 0 0; padding: 0; }
+.timeline li {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 12px;
+  min-height: 84px;
+}
+.timeline li:last-child { min-height: auto; }
+.timeline .step-index {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 2px 5px rgba(110, 72, 56, 0.08);
+}
+.timeline li:not(:last-child) .step-index:after {
+  content: "";
+  position: absolute;
+  top: 34px;
+  height: calc(100% + 40px);
+  border-left: 1.5px dashed #bfaa95;
+  left: 15px;
+}
+.timeline h3 { font-size: 15px; margin: 2px 0 3px; }
+.timeline p { font-size: 12px; color: var(--muted); margin: 0 0 6px; }
+.record {
+  background: #eff1e8;
+  border-left: 3px solid var(--sage-dark);
+  padding: 7px 9px;
+  border-radius: 0 6px 6px 0;
+  font-size: 11px;
+  color: #48553f;
+  margin-bottom: 8px;
+}
+.shop-meta { font-size: 10px; line-height: 1.6; color: var(--muted); margin: 4px 0 14px; }
+
+.choice-note {
+  border: 1px solid var(--line);
+  padding: 11px 12px;
+  border-radius: 10px;
+  font-size: 11px;
+  line-height: 1.55;
+  margin: 16px 0;
+  background: #faf8f3;
+}
+
+.map-launch {
+  background: #e8eddf;
+  border-radius: 16px;
+  margin: 28px 0;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.map-launch .map-symbol { font-size: 32px; color: var(--sage-dark); }
+.map-launch h3 { font-size: 16px; margin: 0 0 4px; }
+.map-launch p { font-size: 11px; color: var(--muted); margin: 0 0 10px; }
+
+.outline-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--earth-dark);
+  border-radius: 11px;
+  color: var(--earth-dark);
+  min-height: 40px;
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  background: white;
+}
+
+.footer {
+  border-top: 1px solid var(--line);
+  padding: 22px 20px 36px;
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.65;
+  background: var(--paper);
+  margin-top: auto;
+}
+
+dialog {
+  border: 0;
+  padding: 0;
+  background: var(--paper);
+  width: calc(100vw - 32px);
+  max-width: 440px;
+  max-height: 86vh;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0,0,0,.25);
+  margin: auto;
+}
+dialog::backdrop { background: rgba(28,27,25,.65); backdrop-filter: blur(2px); }
+.dialog-header {
+  padding: 16px 18px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.dialog-header h2 { font-size: 19px; margin: 2px 0; }
+.close-btn {
+  border: 0;
+  background: var(--cream);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.map-legend { display: flex; gap: 12px; font-size: 11px; padding: 0 18px 10px; }
+.legend-dot, .legend-star {
+  display: inline-block;
+  color: white;
+  background: var(--earth-dark);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 9px;
+  line-height: 16px;
+}
+.legend-star { border-radius: 3px; background: var(--sage-dark); }
+.map-stage {
+  margin: 0 14px;
+  height: 260px;
+  background: #eae5db;
+  border: 1px solid #d4cebe;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+.map-art { position: absolute; inset: -10%; width: 120%; height: 120%; }
+.map-art svg { width: 100%; height: 100%; }
+.map-marker {
+  position: absolute;
+  transform: translate(-50%,-50%);
+  z-index: 2;
+  background: var(--earth-dark);
+  border: 2px solid white;
+  color: white;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  font-size: 11px;
+  font-weight: 800;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.map-marker.extra { border-radius: 5px; background: var(--sage-dark); }
+.map-tooltip {
+  margin: 10px 14px 0;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 11px;
+  min-height: 42px;
+  line-height: 1.5;
+}
+.map-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px 16px;
+}
+.map-controls p { font-size: 10px; color: var(--muted); margin: 0; }
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&amp;family=Noto+Sans+KR:wght@400;500;600;700;800;900&amp;display=swap" data-snapdom="injected-import"></head>
+<body data-page="detail-02">
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../01_home.html/code.html"><svg class="brand-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="20" height="20" fill="#ffffff" style="display: inline-block; vertical-align: -3px; margin-right: 8px;" aria-hidden="true"><circle cx="50" cy="14" r="9"></circle><path d="M 43 27 C 39 27 34 30 31 36 L 23 50 C 21 53 22 57 25 59 C 28 61 32 60 34 57 L 40 46 L 40 57 L 24 81 C 22 84 23 88 26 90 C 27 91 29 91 30 91 C 33 91 35 90 36 88 L 51 65 L 68 87 C 70 89 73 90 75 90 C 76 90 77 90 78 89 C 81 87 82 83 80 80 L 61 55 L 61 41 L 69 49 C 71 51 74 52 77 52 C 78 52 79 52 80 51 C 83 49 84 45 82 42 L 70 30 C 66 26 61 24 55 24 L 46 24 C 45 25 44 26 43 27 Z"></path></svg>뚜벅뚜벅 나혼자 [이천]</a>
+<span class="header-right">COURSE GUIDE / ICHEON</span>
+</div>
+</header>
+<main class="shell">
+<div class="content">
+<a class="back-link" href="../01_home.html/code.html" id="detail-back">← 추천 결과로</a>
+<div id="detail-content">
+<div class="detail-intro">
+<span class="eyebrow">COURSE 02 / CERAMICS</span>
+<h1 class="">이천 도예촌 투어</h1>
+<p class="">쌀밥 먹고 도자 예술마을을 걷다</p>
+</div>
+
+<div class="detail-photo"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZpBvw9uDqJDTDLgvdflS-xfQNeQhTUyxo0bpP4cUzMUZstPn23ETnyDWf8TQEwwWqnj99vBn6IM_20qVQtsiOz_NrlGi5AN6F2qbFHUfC0-4Zyc7jzywBmb8bocJarThp_OlJLahWiED50qoAPKY_9jlZZHBixSXv-IIflgN5Iz--mEu3xb_r3bZNhFRhPa4TDczgMG5_Ji65VHSOxGtR2Ta0wsXZEcrUre0njDWTCD8XDXTzhspD4BvQk2T41FUaRO8" alt="광주요 &amp; 카페 코유 야외 마당 전경" style="width: 100%; height: 100%; object-fit: cover; display: block;" class=""><span class="photo-credit">광주요 &amp; 카페 코유 (coyu) · 현장 사진</span></div>
+
+<div class="draft-banner">이 화면은 디자인 시안입니다. 아래 방문 순서·노선은 편집용 후보이며 검증 전 도보 경로와 탑승 시각을 확정 정보로 사용하지 마세요.</div>
+
+
+
+<section aria-label="대중교통 안내" class="info-card">
+<span class="eyebrow">TRANSIT FIRST</span>
+<h3 class="">놓치지 말아야 할 이동</h3>
+<dl>
+<div class="info-row"><dt>전철·버스</dt><dd>경강선 신둔도예촌역 하차 후 도보 또는 연계 시내버스</dd></div>
+<div class="info-row"><dt>예스파크 이동</dt><dd>정류장 간격이 넓은 구간은 '똑타' 앱 똑버스 호출 후보 검토</dd></div>
+<div class="info-row"><dt>마지막 확인</dt><dd>검증 후 표시</dd></div>
+</dl>
+<p class="small" style="margin: 8px 0px 0px; color: rgb(107, 87, 69);">구간별 실제 도보 시간과 안전한 보행 경로를 확인한 뒤 확정합니다.</p>
+</section><section class="spot-preview-section" style="margin: 26px 0px 28px;">
+  <span class="eyebrow" style="color: var(--earth-dark); font: 700 11px / 1.4 &quot;DM Sans&quot;, sans-serif; letter-spacing: 0.15em; display: inline-block; text-transform: uppercase;">SPOT PREVIEW</span>
+  <h2 style="font-size: 20px; line-height: 1.3; font-weight: 800; letter-spacing: -0.05em; margin: 5px 0px 4px;" class="">오늘 만날 풍경 미리보기</h2>
+  <p style="font-size: 12.5px; color: var(--muted); margin: 0px 0px 14px;" class="">발걸음이 닿을 도예촌의 주요 스팟 풍경을 미리 넘겨보세요.</p>
+  
+  <div class="spot-carousel" style="display: flex; gap: 12px; overflow-x: auto; padding: 4px 4px 14px 2px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none;">
+    <!-- SPOT 02 이천돌솥밥 -->
+    <div style="flex: 0 0 160px; scroll-snap-align: start; border-radius: 14px; overflow: hidden; background: #fff; border: 1px solid var(--line); box-shadow: 0 4px 12px rgba(71,49,36,0.06); display: flex; flex-direction: column;">
+      <div style="height: 110px; position: relative; overflow: hidden;" class=""><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCOM5UpL67shIVAIUqGPR3KyR8x21Z8yKvNXYDKnkWFak-uTDSdpo2jIDYcizjuezmAjiHjEli732SM1fXSWwEaVvwKrxzmdmQHHaBlGFzQrg19OVoEtKzVD4fHW01XJaFnQ1satvVM001uUZuAUbDw4Q0xypQqD8NGVtbehYRbfU0rjz1L7wvWUWsorX1Faj7WdotyHN0RttdMVN3mX31zhZK8F53Txgt4PBRdHfmdCUWSmfxDU1PKRrARvf5SD1EHBQ" alt="이천돌솥밥 식당 외관 및 간판" style="width: 100%; height: 100%; object-fit: cover;" class=""><span style="position: absolute; top: 8px; left: 8px; font-size: 9px; font-weight: 800; font-family: &quot;DM Sans&quot;, sans-serif; background: rgba(36, 30, 25, 0.75); color: rgb(255, 255, 255); padding: 2px 6px; border-radius: 4px; letter-spacing: 0.05em;" class="">SPOT 02</span><span style="position: absolute; bottom: 6px; right: 6px; font-size: 9px; font-weight: 700; background: rgba(94, 113, 80, 0.9); color: rgb(255, 255, 255); padding: 2px 5px; border-radius: 4px;" class="">현장 사진</span></div>
+      <div style="padding: 10px 12px;">
+        <strong style="font-size: 13px; font-weight: 800; display: block; color: var(--ink); margin-bottom: 2px;">이천돌솥밥</strong>
+        <span style="font-size: 11px; color: var(--muted); display: block;" class="">정갈한 돌솥밥 한 상</span>
+      </div>
+    </div>
+
+    <!-- SPOT 03 광주요 & 카페 코유 -->
+    <div style="flex: 0 0 160px; scroll-snap-align: start; border-radius: 14px; overflow: hidden; background: #fff; border: 1px solid var(--line); box-shadow: 0 4px 12px rgba(71,49,36,0.06); display: flex; flex-direction: column;">
+      <div style="height: 110px; position: relative; overflow: hidden;" class=""><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfFTveq4xKCRQtrW9yLf-lDQQG4adwEJE3P9nJZLYutoIjF4kSpqr1m8C76-t_7fSMQ3ml8nqioNuoj266HEVcgLn3S3W0KwvYMkXqGXVokTkVpCcd1up4OqMzg0fd4xpodtxLW7RFfeO_IaSWzcv9cIcRpEp0LzWQpLkXi-DfQHZdVgeofbnty4U0RjxcbywV624VhGwm-reUHqZaszfYRCuLjaveCZV5TG3uwvUcDKxqcsEyGbusLNYCbO5jSQXduzY" alt="광주요 &amp; 카페 코유 입구" style="width: 100%; height: 100%; object-fit: cover;" class=""><span style="position: absolute; top: 8px; left: 8px; font-size: 9px; font-weight: 800; font-family: &quot;DM Sans&quot;, sans-serif; background: rgba(36, 30, 25, 0.75); color: rgb(255, 255, 255); padding: 2px 6px; border-radius: 4px; letter-spacing: 0.05em;" class="">SPOT 03</span><span style="position: absolute; bottom: 6px; right: 6px; font-size: 9px; font-weight: 700; background: rgba(94, 113, 80, 0.9); color: rgb(255, 255, 255); padding: 2px 5px; border-radius: 4px;" class="">현장 사진</span></div>
+      <div style="padding: 10px 12px;">
+        <strong style="font-size: 13px; font-weight: 800; display: block; color: var(--ink); margin-bottom: 2px;">광주요 &amp; 카페 코유</strong>
+        <span style="font-size: 11px; color: var(--muted); display: block;" class="">오름가마와 고즈넉한 정원</span>
+      </div>
+    </div>
+
+    <!-- SPOT 04 예스파크 -->
+    <div style="flex: 0 0 160px; scroll-snap-align: start; border-radius: 14px; overflow: hidden; background: #fff; border: 1px solid var(--line); box-shadow: 0 4px 12px rgba(71,49,36,0.06); display: flex; flex-direction: column;">
+      <div style="height: 110px; position: relative; overflow: hidden;">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmPO3-KYvE4nb5RH7y2fYaVsH5nMRpFkXfFCoOzO5NaAR-3EgQ0nxRNtAZNR_lHIvuPscZc1I-86TUy8wQAYqwYnmwnoiptX0BEELzvmKuvg8BR_Ptl39eTBpe3gyfNmRSVGa7ell8PxWESmrGIeNVzarRZHd4T8QwXFfbeVBnUSKlV6mm2mfvjtzOcyRegcy2akBEvRTeXrVsjMlHAL-R8jBeJOIbVbGCjD5p5v-2VUtHgnrq-5ud6SdmlqpwFAdVev8" alt="예스파크 공방 풍경" style="width: 100%; height: 100%; object-fit: cover;" class="">
+        <span style="position: absolute; top: 8px; left: 8px; font-size: 9px; font-weight: 800; font-family: &quot;DM Sans&quot;, sans-serif; background: rgba(36, 30, 25, 0.75); color: rgb(255, 255, 255); padding: 2px 6px; border-radius: 4px; letter-spacing: 0.05em;" class="">SPOT 04</span>
+        <span style="position: absolute; bottom: 6px; right: 6px; font-size: 9px; font-weight: 700; background: rgba(94, 113, 80, 0.9); color: rgb(255, 255, 255); padding: 2px 5px; border-radius: 4px;" class="">현장 사진</span>
+      </div>
+      <div style="padding: 10px 12px;">
+        <strong style="font-size: 13px; font-weight: 800; display: block; color: var(--ink); margin-bottom: 2px;">예스파크</strong>
+        <span style="font-size: 11px; color: var(--muted); display: block;" class="">공방 골목 &amp; 아틀리에 산책</span>
+      </div>
+    </div>
+
+    <!-- SPOT 04 추천 공방들 -->
+    <div style="flex: 0 0 160px; scroll-snap-align: start; border-radius: 14px; overflow: hidden; background: #fff; border: 1px solid var(--line); box-shadow: 0 4px 12px rgba(71,49,36,0.06); display: flex; flex-direction: column;">
+      <div style="height: 110px; background: linear-gradient(135deg, #e4d7cf 0%, #cbb1a3 100%); position: relative; display: flex; align-items: center; justify-content: center;">
+        <span style="position: absolute; top: 8px; left: 8px; font-size: 9px; font-weight: 800; font-family: &quot;DM Sans&quot;, sans-serif; background: rgba(36, 30, 25, 0.75); color: rgb(255, 255, 255); padding: 2px 6px; border-radius: 4px; letter-spacing: 0.05em;" class="">WORKSHOP</span>
+        <span style="font-size: 32px;" class="">🏺</span>
+      </div>
+      <div style="padding: 10px 12px;">
+        <strong style="font-size: 13px; font-weight: 800; display: block; color: var(--ink); margin-bottom: 2px;">추천 공방 3곳</strong>
+        <span style="font-size: 11px; color: var(--muted); display: block;" class="">그루 · 가마가 텅빈 날 · 너븐재</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="steps-title" class="detail-section">
+<span class="eyebrow">A DAY IN ORDER</span>
+<h2 id="steps-title" class="">이 순서로 둘러봐요</h2>
+<p class="lead">방문 순서는 고정하며, 장소를 자동으로 섞지 않습니다.</p>
+<ol class="timeline"><li class="">
+<span class="step-index" style="background: rgb(238, 244, 232); border: 1.5px solid rgb(168, 194, 155);">🚇</span>
+<div>
+<div style="display:flex; align-items:center; gap:6px;"><span style="font-size: 10px; font-weight: 800; color: rgb(94, 113, 80); background: rgb(240, 244, 234); padding: 1px 6px; border-radius: 4px;" class="">01</span><h3 style="margin: 0px;" class="">신둔도예촌역 도착</h3></div>
+<p style="margin: 4px 0px 6px;" class="">도예마을 탐방의 시작 지점 · 출구 앞 버스/보행 동선 검증 후 표시</p>
+</div>
+</li>
+<li class=""><span class="step-index" style="background: rgb(250, 246, 237); border: 1.5px solid rgb(223, 207, 185);">🍚</span>
+<div class="">
+<div style="display:flex; align-items:center; gap:6px;"><span style="font-size: 10px; font-weight: 800; color: rgb(94, 113, 80); background: rgb(240, 244, 234); padding: 1px 6px; border-radius: 4px;" class="">02</span><h3 style="margin: 0px;" class="">이천돌솥밥</h3></div>
+<p style="margin: 4px 0px 6px;" class="">30년 전통의 원조 이천 쌀밥 정식 · 혼밥 가능한 든든한 돌솥밥 한 상</p>
+<div class="record">기록 포인트 예시 · 갓 지은 가마솥 밥과 정갈한 반찬, 숭늉 마무리</div>
+<div style="margin: 10px 0px 8px; border-radius: 12px; overflow: hidden; border: 1px solid rgb(235, 220, 203); background: rgb(250, 247, 242); padding: 6px;" class=""><div style="position: relative; height: 160px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(0,0,0,0.06);"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9w_KCisUOn3bOSE5nx21Fk-yUhnEK99HuQKJZ_jSJD7yCIBrTPSGL0fsPcMV1uUUsyIjTKzltpBxCA8iIpSUwXy6PgQFAnSECif-9H5TFQNmRCNUgJLE1CDUUcAjCbhCCSWwaeJjJ3npKFATOriei3AQC1fY1vvrmwFBUCJLTpc01dgJJswadpWvhfEY3qZVunKV6Q2yNOGMvuhr5aF2cRmILPxoESzkHm3cf9Agbo8yhe3xyJL6YQxvDiwNJS_nwZ_o" alt="가마솥 쌀밥과 20여 종 반찬 한 상" style="width: 100%; height: 100%; object-fit: cover;" class=""><span style="position: absolute; bottom: 6px; left: 6px; font-size: 9.5px; font-weight: 700; background: rgba(36, 30, 25, 0.75); color: rgb(255, 255, 255); padding: 3px 7px; border-radius: 4px;" class="">가마솥 쌀밥과 20여 종 반찬 한 상</span></div><div style="padding: 8px 6px 2px; font-size: 11px; color: var(--earth-dark); font-weight: 700; display: flex; align-items: center; justify-content: space-between;"><span class="">이천돌솥밥 맛집 스팟</span><span style="font-size: 9px; background: rgba(110, 72, 56, 0.12); padding: 2px 6px; border-radius: 4px;" class="">현장 사진 1점</span></div></div>
+</div></li>
+
+<li class="">
+<span class="step-index" style="background: rgb(232, 239, 226); border: 1.5px solid rgb(158, 183, 145);">🍵</span>
+<div>
+<div style="display:flex; align-items:center; gap:6px;"><span style="font-size: 10px; font-weight: 800; color: rgb(94, 113, 80); background: rgb(240, 244, 234); padding: 1px 6px; border-radius: 4px;" class="">03</span><h3 style="margin: 0px;" class="">광주요 &amp; 카페 코유 (coyu)</h3></div>
+<p style="margin: 4px 0px 6px;" class="">전통 오름가마와 고즈넉한 정원이 있는 문화 쉼터</p>
+<div class="record">기록 포인트 예시 · 야외 가마 굴뚝 풍경과 흙마당</div>
+<div class="shop-meta">영업시간·휴무일: 검증 후 표시<br>마지막 확인일: 확인 후 연결</div><div style="margin: 10px 0px 6px; border-radius: 12px; overflow: hidden; border: 1px solid rgb(235, 220, 203); background: rgb(250, 247, 242); padding: 6px;" class=""><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;"><div style="position: relative; height: 96px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(0,0,0,0.06);"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCF-3_x6G2qM7HcYtawk2HU7ELMY6wR6O1D38S9Dsr2_LAz2BYLVd3k0Ic0mD9Bl4rkJxaIf98rRQa4SR4UVjg4JIT1L-hX5bRufoVzZIh1bXrIH06JCG3PfEzPpxGTvyF54X6SOEl4VZ4CW9imnXGSrA-wBzlS-E_LvXhBTlLMCBn-on6Hx-xp5I8AOxgFS8acAp4Wr_nwNU7CUM0Agc2WEGD0GPieUKN2UVFrbUBQq5QNdPm03PnLstw_UegKRXK25mg" alt="전통 오름가마" style="width: 100%; height: 100%; object-fit: cover;" class=""><span style="position: absolute; bottom: 5px; left: 5px; font-size: 9px; font-weight: 700; background: rgba(36, 30, 25, 0.75); color: rgb(255, 255, 255); padding: 2px 6px; border-radius: 4px;" class="">전통 오름가마</span></div><div style="position: relative; height: 96px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(0,0,0,0.06);"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA593b1FifRfU1JGq3n4OXyAp5yWY5hMen9E7ibhtJIE3jNaIUQgjdQFM9CTdLcEuNQVkdJc17IteDUj5fbe8qhNmxgiGWdHcfTbrF7ZiqFR0A4Ud5e8aH_XAYBNJ-hMozuRqToxlTYdU2U3fiN0R6FrIN-JE05YyxL-hSjvTovgkW_qIaznI3NgzFDm78FFTPvOl0paIN0xLmnV4xAOFdb-6l95Xtzd4e9OZlE4IzxKLWsIwJqslWCewkLmyndUP5wzZY" alt="야외 정원 테라스" style="width: 100%; height: 100%; object-fit: cover;" class=""><span style="position: absolute; bottom: 5px; left: 5px; font-size: 9px; font-weight: 700; background: rgba(36, 30, 25, 0.75); color: rgb(255, 255, 255); padding: 2px 6px; border-radius: 4px;" class="">야외 정원 테라스</span></div><div style="position: relative; height: 96px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(0,0,0,0.06);"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuChgLU3F6kd9k_rF0sII0v41R-RQWjkDXztoUCQGza-D1gAz8XGszSjA2cXohie3wleYkgUHCbc_3-tfxnRu8cAowh0X4HGV4Y952-OM1wFomVfAQYh-08vEPL5ILl24E7CopQjwuETQA9C_fIGtEZaiw5fijV2KtbczZ4tQcFwlYW2MV0-J_YQonYi2fzIg0HceSWufeLF35-fxDTOxlH1k8NwAOXW1_VrCahKTgcQnvVaWB2DvqqOfarupImuhhAPyng" alt="도자 쇼룸" style="width: 100%; height: 100%; object-fit: cover;" class=""><span style="position: absolute; bottom: 5px; left: 5px; font-size: 9px; font-weight: 700; background: rgba(36, 30, 25, 0.75); color: rgb(255, 255, 255); padding: 2px 6px; border-radius: 4px;" class="">도자 쇼룸</span></div><div style="position: relative; height: 96px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(0,0,0,0.06);"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBu8rZGOwCU_xTeW4kOTXnt2RCgIS7rYa8RhAs0OF61rgGwfJddTDyQ7eri7zLQT3nbdXyebyCveJIFmR6DCLg4DZIEYEqYB_0OapdeQevPJbHKX3mmgUlYxlfU-gZFZ3l2iRcqDz1nlGjGe70FPBNn6KAxsvmSAbToy68TauauVhJ7hyzp30irfNKEN3JoEA33YAn5S-mRa18mfOZXq36Zs-jeNJIt6RelDOjIoGiXaZ7czrUXCYa8hURLDIpJcbGjJoU" alt="카페 내부" style="width: 100%; height: 100%; object-fit: cover;" class=""><span style="position: absolute; bottom: 5px; left: 5px; font-size: 9px; font-weight: 700; background: rgba(36, 30, 25, 0.75); color: rgb(255, 255, 255); padding: 2px 6px; border-radius: 4px;" class="">카페 내부</span></div></div><div style="padding: 8px 6px 2px; font-size: 11px; color: var(--earth-dark); font-weight: 700; display: flex; align-items: center; justify-content: space-between;"><span class="">광주요 복합문화공간 4색 스팟</span><span style="font-size: 9px; background: rgba(110, 72, 56, 0.12); padding: 2px 6px; border-radius: 4px;" class="">현장 사진 4점</span></div></div>
+</div>
+</li>
+<li class=""><span class="step-index" style="background: rgb(250, 238, 232); border: 1.5px solid rgb(228, 185, 171);">🎨</span>
+<div class="">
+<div style="display:flex; align-items:center; gap:6px;"><span style="font-size: 10px; font-weight: 800; color: rgb(94, 113, 80); background: rgb(240, 244, 234); padding: 1px 6px; border-radius: 4px;" class="">04</span><h3 style="margin: 0px;" class="">예스파크 (이천도자예술마을)</h3></div>
+<p style="margin: 4px 0px 6px;" class="">공예 작가들의 개성 있는 아틀리에와 갤러리 산책</p>
+<div style="margin: 10px 0px 8px; border-radius: 12px; overflow: hidden; border: 1px solid rgb(235, 220, 203); background: rgb(250, 247, 242); padding: 6px;" class=""><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;"><div style="position: relative; height: 108px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(0,0,0,0.06);"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCtUYgBSuXw3p-RqajKO8TK6GRJxSFfGGmErAs_oX66xKrb7zKHOkdBC_NQitVj43OIOYhSYXf-S8PbmQkgtxFIwxGeYUT4tP1Ui36qAvDNPe-z2BpP53TMntiIb6H247Z-f3IxlpIO3Iizo39HMrXR01Egv4AhtVKf8xKKD095-2xBpgveCm8sUdUiKLzJNkIfst-oKVNsP7gnujQZx08VvcSGB_E3C0hNqACKEr0zaf9CvpsUID_VI4tYJfQzh-HV9Q" alt="도자 공방 &amp; 라이프스타일 숍" style="width: 100%; height: 100%; object-fit: cover;" class=""><span style="position: absolute; bottom: 5px; left: 5px; font-size: 9px; font-weight: 700; background: rgba(36, 30, 25, 0.75); color: rgb(255, 255, 255); padding: 2px 6px; border-radius: 4px;" class="">도자 공방 &amp; 라이프스타일 숍</span></div><div style="position: relative; height: 108px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(0,0,0,0.06);"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsdpPb82TkS2cOyXyMQRvVXTLf3HtnAn9tsxyr65OxxACZMPxIigGA_t3mMBmsy4UQG-M0xu0fg2x6Xy0igOxyAFe9cr1YtjraLuPsIlLdMnwB4WLccVnJpZ3EzNlaw5MzIutNzHHfyPNJnRIS2haqYICoJ5I2AJ_AJj2WrMNd0hXtO8pLSAlYQR7VAPRWUWihr0rAQ5yM03bXM0XF0gZks380SUAilDePY-73gZdpIUYkpfDpVQTjPVZrI3sZEMN98zY" alt="예스파크 도자 공방 외관" style="width: 100%; height: 100%; object-fit: cover;" class=""><span style="position: absolute; bottom: 5px; left: 5px; font-size: 9px; font-weight: 700; background: rgba(36, 30, 25, 0.75); color: rgb(255, 255, 255); padding: 2px 6px; border-radius: 4px;" class="">예스파크 도자 공방 외관</span></div></div><div style="padding: 8px 6px 2px; font-size: 11px; color: var(--earth-dark); font-weight: 700; display: flex; align-items: center; justify-content: space-between;"><span class="">예스파크 도예마을 풍경</span><span style="font-size: 9px; background: rgba(110, 72, 56, 0.12); padding: 2px 6px; border-radius: 4px;" class="">현장 사진 2점</span></div></div><div class="record">기록 포인트 예시 · 모던한 건축 골목과 도판 벽화, 개성 넘치는 공방 쇼룸</div>
+<div style="margin: 10px 0 6px; padding: 10px 12px; background: #faf7f2; border: 1px solid #ebdccb; border-radius: 8px;">
+  <div style="font-size: 11px; font-weight: 800; color: var(--earth-dark); margin-bottom: 6px; display: flex; align-items: center; gap: 4px;">
+    <span class="">✨ 추천 도자 공방 &amp; 인스타그램</span>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 5px;">
+    <a href="https://www.instagram.com/explore/tags/%EA%B7%B8%EB%A3%A8%EB%8F%84%EC%9E%90%EA%B8%B0/" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; justify-content: space-between; background: white; border: 1px solid rgb(223, 212, 197); padding: 5px 9px; border-radius: 6px; font-size: 11px; color: var(--ink); text-decoration: none;" class="">
+      <span style="font-weight: 700;" class="">🏺 그루 (GROO)</span>
+      <span style="font-size: 10px; color: var(--earth); font-weight: 600;" class="">인스타그램 바로가기 ↗</span>
+    </a>
+    <a href="https://www.instagram.com/explore/tags/%EA%B0%80%EB%A7%88%EA%B0%80%ED%85%81%EB%B9%88%EB%82%A0/" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; justify-content: space-between; background: white; border: 1px solid rgb(223, 212, 197); padding: 5px 9px; border-radius: 6px; font-size: 11px; color: var(--ink); text-decoration: none;" class="">
+      <span style="font-weight: 700;" class="">🔥 가마가 텅빈 날</span>
+      <span style="font-size: 10px; color: var(--earth); font-weight: 600;" class="">인스타그램 바로가기 ↗</span>
+    </a>
+    <a href="https://www.instagram.com/nv.jae/" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; justify-content: space-between; background: white; border: 1px solid rgb(223, 212, 197); padding: 5px 9px; border-radius: 6px; font-size: 11px; color: var(--ink); text-decoration: none;" class="">
+      <span style="font-weight: 700;" class="">🪴 너븐재</span>
+      <span style="font-size: 10px; color: var(--earth); font-weight: 600;" class="">인스타그램 바로가기 ↗</span>
+    </a>
+  </div>
+</div>
+</div></li>
+<li class="">
+<span class="step-index" style="background: rgb(250, 246, 237); border: 1.5px solid rgb(220, 208, 188);">🚌</span>
+<div>
+<div style="display:flex; align-items:center; gap:6px;"><span style="font-size: 10px; font-weight: 800; color: rgb(94, 113, 80); background: rgb(240, 244, 234); padding: 1px 6px; border-radius: 4px;" class="">05</span><h3 style="margin: 0px;" class="">신둔도예촌역 귀가</h3></div>
+<p style="margin: 4px 0px 6px;" class="">역 복귀 버스 또는 똑버스 호출 · 경강선 판교 방면 전철 귀가</p>
+</div>
+</li></ol>
+<style>.timeline li { min-height: 92px; } .timeline li:not(:last-child) .step-index:after { top: 38px; height: calc(100% + 22px); border-left: 1.5px dashed #bfaa95; left: 15px; }</style></section>
+
+<div class="choice-note"><strong class="">추천 혼밥 식당 안내</strong><br class="">이천 쌀밥 명가 '이천돌솥밥'은 혼자서도 정갈하고 든든하게 솥밥 한 상을 즐기실 수 있습니다.</div>
+
+<section aria-label="전체 지도 보기" class="map-launch">
+<span aria-hidden="true" class="map-symbol">⌁</span>
+<div>
+<h3 class="">전체 지도에서 보기</h3>
+<p class="">이천돌솥밥, 광주요, 예스파크, 역까지의 연결 동선을 확인하세요.</p>
+<button class="outline-btn" id="map-open" type="button" onclick="document.getElementById('map-dialog').showModal()">전체 지도 열기 →</button>
+</div>
+</section>
+
+<section class="detail-section">
+<span class="eyebrow">BEFORE YOU GO</span>
+<h2 class="">귀가와 대안</h2>
+<p class="lead">예스파크 내부에서 신둔도예촌역으로 이동할 때는 도보 거리가 다소 있으므로 똑타 앱의 '똑버스' 호출을 1순위로 고려하세요. 배차가 길어질 경우 지역 택시 콜을 이용할 수 있습니다.</p>
+</section>
+</div>
+</div>
+<footer class="footer">디자인 시안입니다. 동선·시각·영업 정보는 출처와 마지막 확인일을 확인한 뒤 공개합니다.</footer>
+</main>
+
+<dialog aria-labelledby="map-title" id="map-dialog">
+<div class="dialog-header">
+<div>
+<span class="eyebrow">COURSE 02 MAP / PROTOTYPE</span>
+<h2 id="map-title" class="">도예촌 전체 지도</h2>
+</div>
+<button aria-label="지도 닫기" class="close-btn" id="map-close" type="button" onclick="document.getElementById('map-dialog').close()">×</button>
+</div>
+<div class="map-legend">
+<span class=""><i class="legend-dot">1</i> 기본 동선</span>
+<span class=""><i class="legend-star">★</i> 추가 추천</span>
+</div>
+<div aria-label="개념 지도" class="map-stage">
+<div class="map-art">
+<svg aria-hidden="true" preserveAspectRatio="xMidYMid slice" viewBox="0 0 480 450">
+<rect fill="#eae5db" height="450" width="480"></rect>
+<path d="M-20 120Q120 100 240 130T510 90M-30 260Q130 230 250 280T508 240" fill="none" stroke="#fffdf6" stroke-width="18"></path>
+<path d="M120-10Q90 140 130 260T160 480M320-20Q360 110 330 230T350 490" fill="none" stroke="#fffdf6" stroke-width="16"></path>
+<path d="M40 80Q100 180 300 220T440 380" fill="none" opacity=".7" stroke="#c2ccb2" stroke-width="45"></path>
+<path d="M60 140C120 130 180 180 230 250S340 320 420 340" fill="none" stroke="#815744" stroke-dasharray="3 8" stroke-linecap="round" stroke-width="5"></path>
+</svg>
+<div id="map-markers">
+<button class="map-marker" style="left: 16%; top: 32%;" type="button">1</button>
+<button class="map-marker" style="left: 28%; top: 28%;" type="button">2</button>
+<button class="map-marker" style="left: 42%; top: 40%;" type="button">3</button>
+<button class="map-marker" style="left: 56%; top: 52%;" type="button">4</button>
+<button class="map-marker" style="left: 72%; top: 68%;" type="button">5</button>
+<button class="map-marker" style="left: 86%; top: 76%;" type="button">6</button>
+<button class="map-marker extra" style="left: 52%; top: 26%;" type="button">★</button>
+</div>
+</div>
+</div>
+<div class="map-tooltip" role="status">1: 신둔도예촌역 · 2: 이천돌솥밥 · 3: 광주요/코유 · 4: 예스파크(공방) · 5: 역 귀가</div>
+<div class="map-controls">
+<p class="">시안용 개념 배치입니다. 실제 지리·보행 경로가 아닙니다.</p>
+</div>
+</dialog>
+
+
+
+
+</body></html>
