@@ -1,67 +1,700 @@
-<!DOCTYPE html><html lang="ko" style=""><head>
+<!DOCTYPE html><html lang="ko"><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" name="viewport">
-<title>코스 상세 · 이천 뚜벅이</title>
+<title>이천 원도심 투어 · 뚜벅뚜벅 나혼자 [이천]</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700;800&amp;family=Noto+Sans+KR:wght@400;500;600;700;800;900&amp;family=Outfit:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 <style>
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap");
-
 :root {
   --earth: #9d705b;
   --earth-dark: #6e4838;
+  --earth-light: #f5eee8;
   --sage: #a9bc8d;
   --sage-dark: #5e7150;
-  --paper: #f8f5ed;
-  --cream: #efe9dd;
-  --ink: #302c28;
-  --muted: #6f6a63;
-  --line: #ded7cb;
-  --white: #fffefa;
+  --sage-light: #eff4eb;
+  --paper: #fbf9f5;
+  --cream: #f4efe6;
+  --ink: #2b2723;
+  --muted: #746d64;
+  --line: #e6dfd5;
+  --white: #ffffff;
   --shadow: 0 14px 36px rgba(71, 49, 36, .08);
   font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
   color: var(--ink);
   background: var(--paper);
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { margin: 0; min-width: 320px; background: var(--paper); -webkit-font-smoothing: antialiased; }
+html { scroll-behavior: smooth; overflow-x: clip; }
+body { margin: 0; min-width: 320px; background: #f7f4ee; -webkit-font-smoothing: antialiased; color: var(--ink); line-height: 1.6; overflow-x: clip; }
+body, p, span, li, dt, dd, h1, h2, h3, h4, h5, h6, a, button {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+.br-pc { display: inline; }
+.br-mobile { display: none; }
 button, a { -webkit-tap-highlight-color: transparent; }
-button { font: inherit; cursor: pointer; }
+button { font: inherit; cursor: pointer; border: none; background: none; }
 a { color: inherit; text-decoration: none; }
 img { display: block; width: 100%; }
 
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 32px;
+  box-sizing: border-box;
+}
+
+/* Header & Desktop Nav */
 .site-header {
-  height: 56px;
-  background: var(--earth);
-  color: white;
+  height: 68px;
+  background: rgba(251, 249, 245, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(230, 223, 213, 0.85);
   position: sticky;
   top: 0;
   z-index: 50;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  display: flex;
+  align-items: center;
 }
 .header-inner {
-  max-width: 480px;
-  margin: auto;
-  height: 100%;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 18px;
+  box-sizing: border-box;
 }
-.brand { font-size: 17px; font-weight: 900; letter-spacing: -.05em; display: flex; align-items: center; }
-.header-right { font-size: 10px; font-weight: 700; letter-spacing: .12em; opacity: .9; font-family: "DM Sans", sans-serif; }
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 19px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  text-decoration: none;
+}
+.brand-logo .brand-badge {
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--earth-light);
+  color: var(--earth-dark);
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(157, 112, 91, 0.22);
+  letter-spacing: 0;
+}
+.desktop-nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.desktop-nav-menu a {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+  transition: color 0.2s;
+  position: relative;
+  padding: 6px 2px;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.desktop-nav-menu a:hover,
+.desktop-nav-menu a.active {
+  color: var(--earth-dark);
+}
+.desktop-nav-menu a.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--earth-dark);
+  border-radius: 2px;
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.header-map-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 800;
+  background: var(--earth-dark);
+  color: #ffffff;
+  padding: 9px 18px;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(110, 72, 56, 0.2);
+  cursor: pointer;
+  white-space: nowrap;
+  border: none;
+}
+.header-map-btn:hover {
+  background: #563628;
+  transform: translateY(-1px);
+}
+.header-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  background: #ffffff;
+  color: var(--ink);
+  border: 1.2px solid var(--line);
+  padding: 8px 15px;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(71, 49, 36, 0.04);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.header-share-btn:hover {
+  background: #fbf5ee;
+  border-color: #d8c3b0;
+  color: var(--earth-dark);
+  transform: translateY(-1px);
+}
+.header-share-btn i {
+  font-size: 12.5px;
+  color: var(--earth-dark);
+}
 
-.shell {
-  max-width: 480px;
-  margin: 0 auto;
-  background: var(--white);
-  min-height: calc(100vh - 56px);
-  box-shadow: 0 0 40px rgba(0,0,0,0.04);
+/* Sidebar Share Card */
+.sidebar-share-card {
+  background: #ffffff;
+  border: 1.5px solid #ebd9c5;
+  border-radius: 16px;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(71, 49, 36, 0.03);
 }
-.content {
-  padding: 0 20px 60px;
-  flex: 1 0 auto;
+.sidebar-share-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sidebar-share-header .share-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+.sidebar-share-header h4 {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 2px;
+}
+.sidebar-share-header p {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0;
+}
+.sidebar-share-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 100%;
+  padding: 9px 14px;
+  background: #fbf5ee;
+  border: 1.2px solid #dfcfbe;
+  color: var(--earth-dark);
+  border-radius: 10px;
+  font-size: 12.5px;
+  font-weight: 800;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.sidebar-share-btn:hover {
+  background: var(--earth-dark);
+  border-color: var(--earth-dark);
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(110, 72, 56, 0.2);
+}
+
+/* Course End Share Recommendation Box (Full-Width Bottom Banner) */
+.course-share-recommend-box {
+  background: linear-gradient(135deg, #fdfaf6 0%, #f6eee4 100%);
+  border: 1.5px solid #ebd8c2;
+  border-radius: 24px;
+  padding: 36px 32px 34px;
+  margin: 40px 0 20px;
+  box-shadow: 0 6px 24px rgba(71, 49, 36, 0.05);
+  text-align: center;
+}
+.share-recommend-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--earth-dark);
+  background: rgba(157, 112, 91, 0.12);
+  padding: 3px 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+.share-recommend-title {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--ink);
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+}
+.share-recommend-desc {
+  font-size: 13.5px;
+  color: var(--muted);
+  margin: 0 0 22px;
+  line-height: 1.6;
+}
+.share-recommend-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.btn-primary-share {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--earth-dark);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 11px 22px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(110, 72, 56, 0.22);
+  cursor: pointer;
+  border: none;
+}
+.btn-primary-share:hover {
+  background: #563628;
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 18px rgba(110, 72, 56, 0.28);
+}
+.btn-copy-url {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #ffffff;
+  color: var(--ink);
+  border: 1.2px solid var(--line);
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 11px 18px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.btn-copy-url:hover {
+  background: #fbf5ee;
+  border-color: #d8c3b0;
+  color: var(--earth-dark);
+}
+
+/* Floating Toast Notification */
+.share-toast {
+  position: fixed;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(36, 30, 25, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 13.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+  z-index: 9999;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  white-space: nowrap;
+}
+.share-toast.show {
+  bottom: 32px;
+  opacity: 1;
+  pointer-events: auto;
+}
+.share-toast i {
+  color: #9fe29f;
+  font-size: 16px;
+}
+
+/* Editorial 2-Column Layout */
+.detail-editorial-layout {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 36px;
+  align-items: start;
+  padding: 36px 0 64px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Left Sidebar (Sticky) */
+
+
+
+/* Spot Preview Carousel */
+.spot-preview-carousel {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 12px;
+  -webkit-overflow-scrolling: touch;
+}
+.spot-preview-card {
+  flex: 0 0 250px;
+  scroll-snap-align: start;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(71, 49, 36, 0.05);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.spot-preview-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(71, 49, 36, 0.1);
+}
+.spot-preview-img-wrap {
+  width: 100%;
+  height: 175px;
+  position: relative;
+  overflow: hidden;
+  background: #eae4da;
+}
+.spot-preview-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+.spot-preview-card:hover .spot-preview-img-wrap img {
+  transform: scale(1.05);
+}
+.spot-preview-body {
+  padding: 12px 14px 14px;
+}
+.spot-preview-title {
+  font-size: 14px;
+  font-weight: 800;
+  display: block;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+.spot-preview-desc {
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Timeline Photos */
+.timeline-photo-full {
+  margin-top: 10px;
+  margin-bottom: 12px;
+  border-radius: 16px;
+  overflow: hidden;
+  height: 360px;
+  position: relative;
+  background: #f0ebe1;
+  border: 1px solid rgba(225, 214, 200, 0.8);
+  box-shadow: 0 4px 16px rgba(71, 49, 36, 0.05);
+}
+.timeline-photo-full img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+.timeline-photo-full:hover img {
+  transform: scale(1.02);
+}
+.timeline-photo-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 12px;
+}
+.timeline-photo-grid-2 .photo-item {
+  position: relative;
+  height: 250px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #f0ebe1;
+  border: 1px solid rgba(225, 214, 200, 0.8);
+  box-shadow: 0 3px 12px rgba(71, 49, 36, 0.04);
+}
+.timeline-photo-grid-2 .photo-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+.timeline-photo-grid-2 .photo-item:hover img {
+  transform: scale(1.03);
+}
+.timeline-photo-grid-4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 12px;
+}
+.timeline-photo-grid-4 .photo-item {
+  position: relative;
+  height: 210px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #f0ebe1;
+  border: 1px solid rgba(225, 214, 200, 0.8);
+  box-shadow: 0 3px 12px rgba(71, 49, 36, 0.04);
+}
+.timeline-photo-grid-4 .photo-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+.timeline-photo-grid-4 .photo-item:hover img {
+  transform: scale(1.03);
+}
+.photo-caption-bar {
+  padding: 8px 12px;
+  font-size: 11.5px;
+  color: var(--muted);
+  background: #faf7f2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #ebdccb;
+  border-radius: 0 0 14px 14px;
+}
+.badge-live-photo {
+  font-size: 9.5px;
+  font-weight: 700;
+  background: rgba(94, 113, 80, 0.92);
+  color: #ffffff;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0;
+}
+.photo-credit {
+  position: absolute;
+  bottom: 10px;
+  left: 12px;
+  background: rgba(36, 30, 25, 0.78);
+  backdrop-filter: blur(4px);
+  color: white;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 5px;
+}
+
+.detail-summary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+.summary-row-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 14px;
+  box-shadow: 0 2px 6px rgba(71, 49, 36, 0.03);
+}
+.summary-row-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.summary-row-label .summary-icon {
+  font-size: 14px;
+  line-height: 1;
+}
+.summary-row-card strong {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  text-align: right;
+}
+
+/* Spot Hashtag Pills */
+.spot-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 6px 0 10px;
+}
+.spot-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #635243;
+  background: #f4eee6;
+  border: 1px solid #e2d7c9;
+  padding: 2.5px 8px;
+  border-radius: 6px;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.info-card {
+  background: #ffffff;
+  border: 1.5px solid #e7ded2;
+  border-radius: 18px;
+  padding: 20px 18px;
+  box-shadow: 0 4px 16px rgba(71, 49, 36, 0.04);
+}
+.info-card h3 {
+  margin: 4px 0 12px;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--ink);
+}
+.info-row {
+  display: grid;
+  grid-template-columns: 74px 1fr;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid #f0e9df;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.info-row dt { color: var(--muted); }
+.info-row dd { margin: 0; font-weight: 700; color: var(--ink); }
+
+.map-launch-card {
+  background: #edf3e7;
+  border: 1.5px solid #cbdbbf;
+  border-radius: 18px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.map-launch-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.map-symbol {
+  font-size: 26px;
+  color: var(--sage-dark);
+}
+.map-launch-header h3 {
+  font-size: 15px;
+  font-weight: 800;
+  margin: 0 0 2px;
+  color: var(--ink);
+}
+.map-launch-header p {
+  font-size: 11.5px;
+  color: var(--muted);
+  margin: 0;
+}
+.map-launch-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--earth-dark);
+  color: #ffffff;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 800;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(110, 72, 56, 0.2);
+}
+.map-launch-btn:hover {
+  background: #563628;
+}
+
+.emergency-transit-card {
+  background: #faf7f2;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 15px 16px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.55;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.emergency-transit-card h4 {
+  margin: 0 0 6px 0;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.3;
+}
+
+/* Right Main Content */
+.detail-main-column {
+  min-width: 0;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.detail-main-content {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1.5px solid var(--line);
+  border-radius: 24px;
+  padding: 38px 36px 48px;
+  box-shadow: 0 8px 32px rgba(71, 49, 36, 0.05);
 }
 .eyebrow {
   color: var(--earth-dark);
@@ -71,255 +704,150 @@ img { display: block; width: 100%; }
   text-transform: uppercase;
 }
 h1, h2, h3, p { margin-top: 0; }
-h1, h2, h3 { letter-spacing: -.05em; word-break: keep-all; }
-h1 { font-size: 28px; line-height: 1.25; font-weight: 900; }
-h2 { font-size: 21px; line-height: 1.3; font-weight: 800; }
-h3 { font-size: 17px; line-height: 1.35; font-weight: 800; }
-p { line-height: 1.65; word-break: keep-all; }
-.muted { color: var(--muted); }
-.small { font-size: 12px; line-height: 1.6; }
-
-.back-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--earth-dark);
-  margin: 18px 0 12px;
+h1, h2, h3 { letter-spacing: -.04em; word-break: keep-all; }
+.detail-intro h1 {
+  font-size: 32px;
+  font-weight: 900;
+  margin: 6px 0 6px;
+  color: var(--ink);
 }
-
-.detail-intro { padding-top: 2px; }
-.detail-intro h1 { margin: 6px 0 6px; }
-.detail-intro p { font-size: 13px; color: var(--muted); margin-bottom: 0; }
-
-.detail-photo {
-  border-radius: 16px;
-  margin: 18px 0;
-  overflow: hidden;
-  height: 200px;
-  background: linear-gradient(135deg, #a38d7b 0%, #8c7866 100%);
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.photo-inner-text {
-  color: #fff;
-  font-weight: 800;
-  font-size: 15px;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
-}
-.photo-credit {
-  position: absolute;
-  bottom: 10px;
-  left: 12px;
-  background: rgba(36,30,25,.75);
-  color: white;
-  font-size: 10px;
-  padding: 4px 8px;
-  border-radius: 4px;
+.detail-intro p.lead {
+  font-size: 16px;
+  color: var(--muted);
+  margin-bottom: 0;
 }
 
 .draft-banner {
   border: 1px solid #d6c9b4;
   background: #faf5e9;
   border-radius: 12px;
-  padding: 10px 12px;
-  font-size: 11px;
-  line-height: 1.55;
-  color: #6b5745;
-  margin: 18px 0;
-}
-
-.detail-summary {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin: 18px 0 22px;
-}
-.summary-cell {
-  background: #f3ede3;
-  padding: 12px;
-  border-radius: 12px;
-}
-.summary-cell .label { color: var(--muted); display: block; font-size: 10px; margin-bottom: 4px; font-family: "DM Sans", sans-serif; font-weight: 700; }
-.summary-cell strong { font-size: 12px; line-height: 1.45; display: block; }
-
-.info-card {
-  background: #f6f1e7;
-  border: 1px solid #e9ded0;
-  border-radius: 16px;
-  padding: 16px;
-  margin: 18px 0;
-}
-.info-card h3 { margin: 4px 0 10px; font-size: 16px; }
-.info-row {
-  display: grid;
-  grid-template-columns: 68px 1fr;
-  gap: 8px;
-  padding: 7px 0;
-  border-top: 1px solid #e1d6c8;
+  padding: 12px 16px;
   font-size: 12px;
-  line-height: 1.5;
+  line-height: 1.6;
+  color: #6b5745;
+  margin: 20px 0 28px;
 }
-.info-row dt { color: var(--muted); }
-.info-row dd { margin: 0; font-weight: 700; }
 
-.detail-section { margin-top: 30px; }
-.detail-section h2 { font-size: 21px; margin: 5px 0 6px; }
-.detail-section .lead { color: var(--muted); font-size: 12px; margin-bottom: 0; }
+.detail-section { margin-top: 32px; }
+.detail-section h2 { font-size: 22px; font-weight: 900; margin: 4px 0 6px; color: var(--ink); }
+.detail-section .lead { color: var(--muted); font-size: 13px; margin-bottom: 0; }
 
-.timeline { list-style: none; margin: 18px 0 0; padding: 0; }
+.timeline { list-style: none; margin: 22px 0 0; padding: 0; }
 .timeline li {
   display: grid;
-  grid-template-columns: 36px 1fr;
-  gap: 12px;
-  min-height: 84px;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 16px;
+  min-height: 90px;
+  margin-bottom: 24px;
+  min-width: 0;
+  max-width: 100%;
 }
-.timeline li:last-child { min-height: auto; }
+.timeline li > div {
+  min-width: 0;
+  max-width: 100%;
+}
+.timeline li:last-child { min-height: auto; margin-bottom: 0; }
 .timeline .step-index {
   border-radius: 50%;
-  width: 34px;
-  height: 34px;
-  line-height: 34px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
   text-align: center;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
+  font-size: 16px;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(71, 49, 36, 0.08);
 }
-.timeline li:not(:last-child) .step-index:after {
+.timeline li:not(:last-child) .step-index:after { display: none; /* Replaced by continuous connector */
   content: "";
   position: absolute;
-  top: 36px;
-  height: calc(100% + 46px);
-  border-left: 1.5px dashed #cbbcae;
-  left: 16px;
+  top: 42px;
+  height: calc(100% + 56px);
+  border-left: 2px dashed #cbbcae;
+  left: 19px;
 }
-.timeline h3 { font-size: 15px; margin: 2px 0 3px; }
-.timeline p { font-size: 12px; color: var(--muted); margin: 0 0 6px; }
+.timeline h3 { font-size: 17px; margin: 2px 0 4px; font-weight: 800; }
+.timeline p { font-size: 13px; color: var(--muted); margin: 0 0 8px; line-height: 1.6; }
 .record {
   background: #eff1e8;
   border-left: 3px solid var(--sage-dark);
-  padding: 7px 9px;
-  border-radius: 0 6px 6px 0;
-  font-size: 11px;
+  padding: 8px 12px;
+  border-radius: 0 8px 8px 0;
+  font-size: 12px;
   color: #48553f;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  font-weight: 600;
 }
-.shop-meta { font-size: 10px; line-height: 1.6; color: var(--muted); margin: 4px 0 14px; }
+.shop-meta { font-size: 11px; line-height: 1.6; color: var(--muted); margin: 6px 0 16px; }
 
 .choice-note {
   border: 1px solid var(--line);
-  padding: 11px 12px;
-  border-radius: 9px;
-  font-size: 11px;
-  line-height: 1.55;
-  margin: 16px 0;
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  margin: 20px 0;
   background: #faf8f3;
 }
 
-.map-launch {
-  background: #e8eddf;
-  border-radius: 16px;
-  margin: 28px 0;
-  padding: 18px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-.map-launch .map-symbol { font-size: 32px; color: var(--sage-dark); }
-.map-launch h3 { font-size: 16px; margin: 0 0 4px; }
-.map-launch p { font-size: 11px; color: var(--muted); margin: 0 0 10px; }
-
-.outline-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1.5px solid var(--earth-dark);
-  border-radius: 11px;
-  color: var(--earth-dark);
-  min-height: 40px;
-  padding: 8px 14px;
-  font-size: 12px;
-  font-weight: 700;
-  background: white;
-}
-
 .footer {
-  border-top: 1px solid var(--line);
-  padding: 22px 20px 36px;
-  font-size: 11px;
+  text-align: center;
+  font-size: 11.5px;
   color: var(--muted);
-  line-height: 1.65;
-  background: var(--paper);
-  margin-top: auto;
-}
-</style>
-<style>
-.timeline li {
-  min-height: 92px;
-}
-.timeline li:not(:last-child) .step-index:after {
-  content: "";
-  position: absolute;
-  top: 38px;
-  height: calc(100% + 22px);
-  border-left: 1.5px dashed #bfaa95;
-  left: 15px;
+  padding: 30px 20px;
+  border-top: 1px solid var(--line);
+  margin-top: 40px;
 }
 
-/* ================= Stitch Map Preview Dialog Styles ================= */
-    dialog {
-      border: 0;
-      padding: 0;
-      background: transparent;
-      width: calc(100vw - 20px);
-      max-width: 680px;
-      max-height: 94vh;
-      border-radius: 24px;
-      margin: auto;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      box-shadow: none;
-    }
-    dialog::backdrop {
-      background: rgba(20, 18, 16, 0.72);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-    }
-    .custom-shadow-modal {
-      box-shadow: 0 25px 50px -12px rgba(67, 40, 28, 0.22), 0 0 0 1px rgba(67, 40, 28, 0.08);
-    }
-    .marker-shadow {
-      filter: drop-shadow(0 4px 6px rgba(45, 26, 17, 0.3));
-    }
-    .workshop-shadow {
-      filter: drop-shadow(0 4px 6px rgba(35, 55, 35, 0.28));
-    }
-    @keyframes pulseRoute {
-      0% { stroke-dashoffset: 28; }
-      100% { stroke-dashoffset: 0; }
-    }
-    .animated-route {
-      stroke-dasharray: 6, 6;
-      animation: pulseRoute 4s linear infinite;
-    }
-    @keyframes ping-subtle {
-      0% { transform: scale(0.95); opacity: 0.8; }
-      50% { transform: scale(1.35); opacity: 0; }
-      100% { transform: scale(1.35); opacity: 0; }
-    }
-    .ping-marker {
-      animation: ping-subtle 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
-    }
-    .active-tooltip {
-      opacity: 1 !important;
-      transform: translateX(-50%) translateY(0) !important;
-      pointer-events: auto !important;
-    }
+/* Dialog */
+dialog {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  width: calc(100vw - 32px);
+  max-width: 860px;
+  max-height: 92vh;
+  border-radius: 28px;
+  margin: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: none;
+}
+dialog::backdrop {
+  background: rgba(20, 18, 16, 0.75);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+.custom-shadow-modal {
+  box-shadow: 0 25px 50px -12px rgba(67, 40, 28, 0.22), 0 0 0 1px rgba(67, 40, 28, 0.08);
+}
+.marker-shadow {
+  filter: drop-shadow(0 4px 6px rgba(45, 26, 17, 0.3));
+}
+@keyframes pulseRoute {
+  0% { stroke-dashoffset: 28; }
+  100% { stroke-dashoffset: 0; }
+}
+.animated-route {
+  stroke-dasharray: 6, 6;
+  animation: pulseRoute 4s linear infinite;
+}
+@keyframes ping-subtle {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.35); opacity: 0; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+.ping-marker {
+  animation: ping-subtle 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+.active-tooltip {
+  opacity: 1 !important;
+  transform: translateX(-50%) translateY(0) !important;
+  pointer-events: auto !important;
+}
 .dialog-header {
   padding: 16px 18px 10px;
   display: flex;
@@ -398,7 +926,1081 @@ p { line-height: 1.65; word-break: keep-all; }
   align-items: center;
   padding: 10px 16px 16px;
 }
-.map-controls p { font-size: 10px; color: var(--muted); margin: 0; }
+/* Left Sidebar (Sticky) */
+.detail-sidebar {
+  position: sticky;
+  top: 88px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-self: start;
+}
+.detail-sidebar > * {
+  flex-shrink: 0;
+}
+
+/* 4:5 Uncropped Poster Container - Mathematical 4:5 ratio matches 1080x1350 perfectly */
+.detail-photo {
+  flex-shrink: 0;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(71, 49, 36, 0.1);
+  background: #241e19;
+  border: 1px solid var(--line);
+}
+.detail-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 960px) {
+  .container, .header-inner {
+    padding: 0 20px;
+  }
+  .detail-editorial-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 24px 0 48px;
+  }
+  .detail-sidebar {
+    position: static;}
+  .detail-main-content {
+    padding: 28px 22px 40px;
+    border-radius: 20px;
+  }
+  .detail-intro h1 {
+    font-size: 26px !important;
+  }
+  .timeline-photo-full {
+    height: 290px;
+  }
+  .timeline-photo-grid-2 .photo-item {
+    height: 190px;
+  }
+}
+@media (max-width: 768px) {
+  .desktop-nav-menu {
+    display: none;
+  }
+}
+@media (max-width: 640px) {
+  .br-pc { display: none !important; }
+  .br-mobile { display: inline !important; }
+  .container, .header-inner {
+    padding: 0 16px;
+  }
+  .summary-row-card {
+    padding: 9px 12px;
+  }
+  .summary-row-label {
+    font-size: 11.5px;
+  }
+  .summary-row-card strong {
+    font-size: 12px;
+  }
+  .emergency-transit-card p {
+    font-size: 12.5px;
+    line-height: 1.65;
+  }
+  .detail-intro h1 {
+    font-size: 24px !important;
+    line-height: 1.35 !important;
+    text-wrap: balance;
+  }
+  .detail-intro .lead {
+    font-size: 14.5px;
+    line-height: 1.6;
+    text-wrap: balance;
+  }
+  .transit-first-main-card h2 {
+    font-size: 17px !important;
+    line-height: 1.4;
+  }
+  .transit-info-cell dt {
+    font-size: 11px;
+  }
+  .transit-info-cell dd {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .timeline p {
+    font-size: 13px;
+    line-height: 1.65;
+  }
+  .record {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .spot-preview-card {
+    flex: 0 0 210px;
+  }
+  .spot-preview-img-wrap {
+    height: 145px;
+  }
+  .timeline-photo-full {
+    height: 220px;
+  }
+  .timeline-photo-grid-2 {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .timeline-photo-grid-2 .photo-item {
+    height: 200px;
+  }
+}
+
+    /* Site Footer Modern Redesign */
+    .site-footer {
+      border-top: 1px solid var(--line);
+      background: #faf7f2;
+      color: var(--muted);
+      margin-top: 80px;
+      padding: 0;
+    }
+    .footer-top-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 44px 32px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 32px;
+    }
+    .footer-brand-block {
+      max-width: 650px;
+    }
+    .footer-eyebrow {
+      display: inline-block;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--sage-dark);
+      background: rgba(94, 113, 80, 0.12);
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+    .footer-brand-title {
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--ink);
+      margin: 0 0 10px;
+      letter-spacing: -0.02em;
+    }
+    .footer-brand-title span {
+      color: var(--earth-dark);
+    }
+    .footer-brand-desc {
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: #6d5e51;
+      margin: 0;
+    }
+    .footer-partner-logos {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      padding: 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      flex-shrink: 0;
+    }
+    .partner-logo-item {
+      display: inline-flex;
+      align-items: center;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      text-decoration: none;
+    }
+    .partner-logo-item:hover {
+      transform: translateY(-1px);
+      opacity: 0.85;
+    }
+    .logo-glowide {
+      height: 20px;
+      width: auto;
+      display: block;
+    }
+    .logo-highlocal {
+      height: 36px;
+      width: auto;
+      display: block;
+    }
+    .footer-logo-divider {
+      width: 1px;
+      height: 26px;
+      background: #e2d7c9;
+    }
+    .footer-bottom-bar {
+      background: #faeecf;
+      border-top: 1px solid #eedda9;
+      padding: 18px 32px 20px;
+    }
+    .footer-bottom-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: center;
+      text-align: center;
+    }
+    .footer-info-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: #524335;
+    }
+    .footer-info-meta .meta-sep {
+      color: #c4b087;
+    }
+    .footer-email-link {
+      color: var(--earth-dark);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s;
+    }
+    .footer-email-link:hover {
+      color: #9d4624;
+    }
+    .footer-disclaimer {
+      font-size: 11.5px;
+      color: #7d6e5c;
+      margin: 0;
+    }
+    @media (max-width: 768px) {
+      .footer-top-container {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 36px 20px 28px;
+        gap: 22px;
+      }
+      .footer-partner-logos {
+        width: 100%;
+        justify-content: center;
+      }
+      .footer-bottom-bar {
+        padding: 16px 20px 20px;
+      }
+      .footer-info-meta {
+        flex-direction: column;
+        gap: 6px;
+      }
+      .footer-info-meta .meta-sep {
+        display: none;
+      }
+    }
+
+    /* Course Poster Banner in Right Column */
+    .course-poster-banner {
+      margin: 0 0 16px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(36, 30, 25, 0.08);
+      border: 1.5px solid #ebdccb;
+      background: #faf7f2;
+    }
+    .course-poster-banner img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Transit First Card in Main Column */
+    .transit-first-main-card {
+      background: #faf6f0;
+      border: 1.5px solid #dfd2c4;
+      border-radius: 20px;
+      padding: 18px 22px;
+      margin: 18px 0 28px;
+      box-shadow: 0 4px 16px rgba(45, 32, 22, 0.05);
+    }
+    .transit-first-main-card .transit-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .transit-first-main-card .transit-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #784824;
+      background: #fae6d9;
+      padding: 3px 9px;
+      border-radius: 6px;
+    }
+    .transit-first-main-card .transit-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .transit-first-main-card .transit-info-cell {
+      background: #ffffff;
+      border: 1px solid #ebdccb;
+      border-radius: 12px;
+      padding: 10px 14px;
+    }
+    .transit-first-main-card .transit-info-cell dt {
+      font-size: 11px;
+      font-weight: 700;
+      color: #8c7866;
+      margin-bottom: 2px;
+    }
+    .transit-first-main-card .transit-info-cell dd {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #2b221a;
+      margin: 0;
+      line-height: 1.35;
+    }
+    .transit-first-main-card .transit-tip-foot {
+      margin: 12px 0 0;
+      font-size: 11.5px;
+      color: #6e5c4d;
+      line-height: 1.5;
+    }
+
+    /* Spot Title Row & Action Buttons */
+    .spot-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .spot-action-links {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-spot-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      line-height: 1.2;
+    }
+    .btn-spot-link.btn-kko {
+      background: #faeecf;
+      color: #4b361c;
+      border: 1px solid #e8d5a7;
+    }
+    .btn-spot-link.btn-kko:hover {
+      background: #f5e3b8;
+    }
+    .btn-spot-link.btn-insta {
+      background: #fdf0f4;
+      color: #8a2a53;
+      border: 1px solid #f3d2e0;
+    }
+    .btn-spot-link.btn-insta:hover {
+      background: #f9e2ec;
+    }
+
+    /* Spot Photo Carousel */
+    .spot-carousel-wrap {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 8px;
+  margin: 10px 0 8px;
+  -webkit-overflow-scrolling: touch;
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+}
+    .spot-carousel-card {
+      flex: 0 0 280px;
+      max-width: 320px;
+      scroll-snap-align: start;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #faf7f2;
+      border: 1px solid #ebdccb;
+      box-shadow: 0 3px 10px rgba(36,30,25,0.06);
+    }
+    @media (max-width: 640px) {
+      .spot-carousel-card {
+        flex: 0 0 260px;
+      }
+    }
+    .spot-carousel-card .photo-box {
+      width: 100%;
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+      background: #ede6dc;
+    }
+    .spot-carousel-card .photo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .spot-carousel-card:hover .photo-box img {
+      transform: scale(1.03);
+    }
+    .spot-carousel-card .photo-desc {
+      padding: 8px 10px 10px;
+      font-size: 11.5px;
+      color: #524436;
+      font-weight: 500;
+      line-height: 1.45;
+      background: #faf7f2;
+      margin: 0;
+    }
+
+    /* Continuous Timeline Connectors */
+    .timeline li.timeline-step {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 16px;
+      margin-bottom: 0;
+      position: relative;
+    }
+    .timeline-connector-item {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 16px;
+      padding: 6px 0;
+      position: relative;
+    }
+    .timeline-connector-rail {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      min-height: 48px;
+    }
+    .timeline-connector-rail .rail-line {
+      width: 2px;
+      flex: 1;
+      border-left: 2px dashed #b8a695;
+    }
+    .timeline-connector-rail .rail-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #b8a695;
+      margin: 3px 0;
+    }
+    .timeline-connector-body {
+      display: flex;
+      align-items: center;
+    }
+    .timeline-transit-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 11px;
+      background: #f4eee6;
+      border: 1px solid #dfd3c5;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #5a4b3d;
+      box-shadow: 0 1px 3px rgba(36,30,25,0.04);
+    }
+
+    /* Header Kakao Link Button */
+    .header-kko-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #faeecf;
+      color: #442f15;
+      border: 1.5px solid #e2d2ae;
+      padding: 7px 14px;
+      border-radius: 10px;
+      font-size: 12.5px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .header-kko-btn:hover {
+      background: #f5e2b0;
+      transform: translateY(-1px);
+    }
+  
+/* Enhanced Readability & Layout Refinement */
+/* 100% Full Width Banner - No Empty Side Space */
+.course-poster-banner {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 0 24px !important;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(36,30,25,0.08);
+  border: 1px solid rgba(220, 210, 195, 0.85);
+  background: #faf7f2;
+}
+.course-poster-banner img {
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  display: block;
+}
+
+/* Spot Typography Upgrades */
+.spot-title-row h3 {
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  color: #241e19 !important;
+  letter-spacing: -0.02em;
+}
+.timeline-step > div > p {
+  font-size: 14.5px !important;
+  line-height: 1.65 !important;
+  color: #43372c !important;
+}
+.timeline .record {
+  font-size: 12.5px !important;
+  padding: 8px 12px !important;
+  line-height: 1.5 !important;
+  color: #5c4b3d !important;
+}
+.shop-meta {
+  font-size: 12.5px !important;
+  line-height: 1.6 !important;
+  color: #786757 !important;
+}
+.btn-spot-link {
+  font-size: 11.5px !important;
+  padding: 4px 9px !important;
+}
+
+/* Enlarged & Responsive Carousel */
+.spot-carousel-wrap {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 4px 2px 14px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  margin: 12px 0 10px;
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+}
+.spot-carousel-card {
+  flex: 0 0 340px !important;
+  max-width: 360px !important;
+  scroll-snap-align: start;
+  border-radius: 14px !important;
+  overflow: hidden;
+  background: #faf7f2;
+  border: 1px solid #ebdccb;
+  box-shadow: 0 3px 12px rgba(36,30,25,0.07);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.spot-carousel-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(36,30,25,0.12);
+}
+@media (max-width: 640px) {
+  .spot-carousel-card {
+    flex: 0 0 290px !important;
+  }
+}
+.spot-carousel-card .photo-box {
+  width: 100%;
+  height: 220px !important;
+  position: relative;
+  overflow: hidden;
+  background: #ede6dc;
+}
+@media (max-width: 640px) {
+  .spot-carousel-card .photo-box {
+    height: 190px !important;
+  }
+}
+.spot-carousel-card .photo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+.spot-carousel-card:hover .photo-box img {
+  transform: scale(1.03);
+}
+.spot-carousel-card .photo-desc {
+  padding: 10px 14px !important;
+  font-size: 13px !important;
+  color: #382c20 !important;
+  font-weight: 600 !important;
+  line-height: 1.5 !important;
+  background: #faf7f2;
+  margin: 0;
+  border-top: 1px solid #f0e6da;
+}
+
+/* Modal Dialog Styles */
+dialog#map-dialog {
+  background: transparent;
+  border: none;
+  padding: 0;
+  max-width: 880px;
+  width: 95%;
+  border-radius: 24px;
+  box-shadow: 0 24px 64px rgba(25,20,15,0.35);
+  overflow: hidden;
+}
+dialog#map-dialog::backdrop {
+  background: rgba(36, 30, 25, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.kakao-modal-card {
+  background: #faf6f0;
+  border-radius: 24px;
+  padding: 24px 28px;
+  border: 1px solid rgba(220, 210, 195, 0.9);
+  font-family: 'Noto Sans KR', sans-serif;
+  box-sizing: border-box;
+  max-height: 92vh;
+  overflow-y: auto;
+}
+@media (max-width: 640px) {
+  .kakao-modal-card {
+    padding: 18px 16px;
+  }
+}
+.kakao-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.kko-header-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.kko-badge-tag {
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid #fde68a;
+}
+.kko-badge-count {
+  background: #e8ede3;
+  color: #385536;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+.kko-modal-title {
+  font-size: 20px;
+  font-weight: 900;
+  color: #241e19;
+  margin: 0 0 4px;
+}
+.kko-modal-desc {
+  font-size: 12.5px;
+  color: #6e6053;
+  margin: 0;
+  line-height: 1.45;
+}
+.kko-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-kko-app-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #fae100;
+  color: #371d1e;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 8px 14px;
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+.btn-kko-app-link:hover {
+  opacity: 0.9;
+}
+.btn-close-kko-modal {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid #d4c8b8;
+  background: #ffffff;
+  color: #5a4e43;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-close-kko-modal:hover {
+  background: #f0ebe1;
+  color: #241e19;
+}
+.kko-map-filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.filter-chip {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #ede6dc;
+  color: #5c4e40;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.filter-chip.active {
+  background: #241e19;
+  color: #ffffff;
+}
+.kko-map-canvas-box {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1.5px solid #dfd4c4;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.06);
+}
+.kko-map-tip-bar {
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(4px);
+  padding: 7px 12px;
+  font-size: 11.5px;
+  color: #6e6053;
+  border-top: 1px solid #ebdccb;
+  text-align: center;
+}
+.kko-drawer-section {
+  margin-top: 14px;
+}
+.kko-drawer-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: #4a3e33;
+  margin-bottom: 8px;
+}
+.kko-bookmarks-drawer {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 4px 2px 10px;
+  scrollbar-width: thin;
+}
+
+
+/* ==========================================================================
+   Mobile Bottom Navigation & Course Switch Banner
+   ========================================================================== */
+:root {
+  --bottom-bar-height: 62px;
+}
+
+@media (max-width: 768px) {
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+/* Mobile Floating Bottom Navigation Bar */
+.bottom-nav-bar {
+  display: none; /* hidden on desktop */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: var(--bottom-bar-height, 62px);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(227, 220, 209, 0.85);
+  align-items: center;
+  justify-content: space-around;
+  z-index: 1000;
+  box-shadow: 0 -3px 14px rgba(0, 0, 0, 0.06);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.bottom-nav-bar .nav-tab {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: var(--muted, #7c7267);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+.bottom-nav-bar .nav-tab .tab-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.bottom-nav-bar .nav-tab .tab-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.bottom-nav-bar .nav-tab:hover,
+.bottom-nav-bar .nav-tab:active {
+  color: var(--earth-dark, #473124);
+}
+@media (max-width: 768px) {
+  .bottom-nav-bar {
+    display: flex;
+  }
+  body {
+    padding-bottom: calc(var(--bottom-bar-height, 62px) + env(safe-area-inset-bottom, 0px) + 24px) !important;
+  }
+  .site-footer {
+    padding-bottom: calc(var(--bottom-bar-height, 62px) + env(safe-area-inset-bottom, 0px) + 30px) !important;
+  }
+}
+
+/* Bottom Course Navigation & Keyword Re-Selection Banner */
+.bottom-course-nav-banner {
+  background: linear-gradient(135deg, #fdfbf7 0%, #f6efe6 100%);
+  border: 1.5px solid #dfd3c3;
+  border-radius: 16px;
+  padding: 28px 24px;
+  margin: 36px 0 20px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(71, 49, 36, 0.05);
+}
+.bottom-course-nav-banner .banner-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 800;
+  color: #7b4f31;
+  background: #f0e4d7;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+.bottom-course-nav-banner .banner-title {
+  font-size: 19px;
+  font-weight: 800;
+  color: #2b221a;
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+}
+.bottom-course-nav-banner .banner-desc {
+  font-size: 13.5px;
+  color: #6e5f52;
+  margin: 0 0 20px;
+  line-height: 1.55;
+  word-break: keep-all;
+}
+.bottom-course-nav-banner .banner-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.btn-banner-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #473124;
+  color: #ffffff !important;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 22px;
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: 0 3px 10px rgba(71, 49, 36, 0.15);
+  transition: all 0.2s ease;
+}
+.btn-banner-primary:hover {
+  background: #2f2017;
+  transform: translateY(-1px);
+}
+.btn-banner-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #ffffff;
+  color: #473124 !important;
+  border: 1.5px solid #d4c4b2;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.btn-banner-secondary:hover {
+  background: #f9f6f0;
+}
+.bottom-course-nav-banner.standalone-banner {
+  margin: 0;
+  background: #ffffff;
+  border: 1.5px solid var(--line, #e2d7c9);
+  border-radius: 20px;
+  box-shadow: 0 4px 18px rgba(71, 49, 36, 0.05);
+  padding: 32px 36px;
+}
+@media (max-width: 640px) {
+  .detail-main-column {
+    gap: 20px;
+  }
+  .bottom-course-nav-banner {
+    padding: 20px 16px;
+    margin: 28px 0 16px;
+    border-radius: 14px;
+  }
+  .bottom-course-nav-banner .banner-title {
+    font-size: 16.5px;
+  }
+  .bottom-course-nav-banner .banner-desc {
+    font-size: 12.5px;
+    margin-bottom: 16px;
+  }
+  .bottom-course-nav-banner .banner-actions {
+    flex-direction: column;
+    gap: 9px;
+  }
+  .btn-banner-primary, .btn-banner-secondary {
+    width: 100%;
+    padding: 11px 16px;
+    font-size: 13.5px;
+  }
+  .bottom-course-nav-banner.standalone-banner {
+    margin: 0;
+    border-radius: 16px;
+    padding: 22px 16px;
+  }
+  .bottom-course-nav-banner .banner-actions.single-action .btn-banner-primary {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}
+
+/* Honbap Recommendation Mobile Optimizations */
+.honbap-item-card {
+  display: flex;
+  gap: 14px;
+  background: #faf7f2;
+  border: 1px solid #e8decb;
+  border-radius: 14px;
+  padding: 12px;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(71,49,36,0.04);
+  transition: transform 0.2s ease;
+}
+.honbap-thumb {
+  flex: 0 0 100px;
+  height: 100px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #eadecf;
+  border: 1px solid rgba(71,49,36,0.08);
+}
+.honbap-tag {
+  font-size: 10px;
+  font-weight: 800;
+  color: #8c5835;
+  background: #f4ede3;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.honbap-name {
+  font-size: 14.5px;
+  color: var(--earth-dark, #473124);
+  font-weight: 800;
+  white-space: nowrap;
+}
+.btn-honbap-map {
+  padding: 3px 8px;
+  font-size: 11px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+@media (max-width: 640px) {
+  .honbap-item-card {
+    gap: 8px !important;
+    padding: 8px !important;
+  }
+  .honbap-thumb {
+    flex: 0 0 62px !important;
+    height: 62px !important;
+  }
+  .honbap-tag {
+    font-size: 8.5px !important;
+    padding: 1.5px 4px !important;
+    white-space: nowrap !important;
+  }
+  .honbap-name {
+    font-size: 13.5px !important;
+    white-space: nowrap !important;
+  }
+  .btn-honbap-map {
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+    border-radius: 6px !important;
+  }
+  .btn-honbap-map .btn-text {
+    display: none !important;
+  }
+}
 </style><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&amp;family=Noto+Sans+KR:wght@400;500;600;700;800;900&amp;display=swap" data-snapdom="injected-import"><!-- Google Fonts Outfit & FontAwesome & Tailwind for Stitch Maps -->
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&amp;display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
@@ -437,408 +2039,632 @@ p { line-height: 1.65; word-break: keep-all; }
     }
   };
 </script>
+  <!-- Kakao Maps JavaScript API SDK -->
+  <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=d7db5a5025f24de38dd1af902b633258&libraries=services,clusterer&autoload=false"></script>
+  <script src="../js/kakao-map-module.js"></script>
 </head>
 <body data-page="detail">
 <header class="site-header">
-<div class="header-inner">
-<a class="brand" href="../01_home.html/code.html">
-  <svg class="brand-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="20" height="20" fill="#ffffff" style="display: inline-block; vertical-align: -3px; margin-right: 8px;" aria-hidden="true"><circle cx="50" cy="14" r="9"></circle><path d="M 43 27 C 39 27 34 30 31 36 L 23 50 C 21 53 22 57 25 59 C 28 61 32 60 34 57 L 40 46 L 40 57 L 24 81 C 22 84 23 88 26 90 C 27 91 29 91 30 91 C 33 91 35 90 36 88 L 51 65 L 68 87 C 70 89 73 90 75 90 C 76 90 77 90 78 89 C 81 87 82 83 80 80 L 61 55 L 61 41 L 69 49 C 71 51 74 52 77 52 C 78 52 79 52 80 51 C 83 49 84 45 82 42 L 70 30 C 66 26 61 24 55 24 L 46 24 C 45 25 44 26 43 27 Z"></path></svg>
-  뚜벅뚜벅 나혼자 [이천]
-</a>
-<span class="header-right">COURSE GUIDE / ICHEON</span>
-</div>
+  <div class="header-inner">
+    <a href="../01_home.html/code.html" class="brand-logo">
+      <span>뚜벅뚜벅 나혼자</span>
+      <span style="color: var(--earth); font-weight: 900;">[이천]</span>
+    </a>
+    <nav class="desktop-nav-menu">
+      <a href="../01_home.html/code.html">홈</a>
+      <a href="../01_home.html/code.html#keyword-selection-area">취향 추천</a>
+      <a href="../03_detail_course01.html/code.html" class="active">원도심 투어</a>
+      <a href="../03_detail_course02.html/code.html">도예촌 투어</a>
+      <a href="../03_detail_course03.html/code.html">문화공간 투어</a>
+      <a href="../01_home.html/code.html#transit-tips-section">대중교통 팁</a>
+    </nav>
+    <div class="header-actions">
+      <button class="header-share-btn" type="button" onclick="handleShare()" title="원도심 투어 코스 친구에게 공유하기">
+        <i class="fa-solid fa-arrow-up-from-bracket"></i>
+        <span>공유하기</span>
+      </button>
+    </div>
+  </div>
 </header>
-<main class="shell">
-<div class="content">
-<a class="back-link" href="../01_home.html/code.html" id="detail-back">← 추천 결과로</a>
-<div id="detail-content">
-<div class="detail-intro">
-<span class="eyebrow">COURSE 01 / local town</span>
-<h1 class="">이천 원도심 투어</h1>
-<p class="">빵과 커피 들고 오래된 이천을 걷다</p>
-</div>
 
-<div class="detail-photo"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAs1N1nUDNIPD4QvFCG6aqRfa7d-RtzxQX259ezkoLOzOgMlB8IrqSnspX0krTe_7W-rpkKPAoF12E1OLSPsEf8NlzBwsL2Jiq2Ws-HhfK5-WQYxp3A4wFPJyTo3tsGTRDUY-jrjfTe5fkxEcbsyRjVbnv0zWZ5NTy7XiWFcknSyT-6Be_zlvxpHDVs6gaqiHbHN60HdIRPP7F56toAkxFjwGWa62qoaFcysz2RIPliMVvPvqPhgn2C8KfAD3lPC5RxmjQ" alt="이천 원도심 문화의 거리 전경" style="width: 100%; height: 100%; object-fit: cover;"><span class="photo-credit">이천 원도심 문화의 거리 · 현장 사진</span></div>
+<main class="container">
+  <div class="detail-editorial-layout">
+    <!-- Left Column: Sticky Editorial Sidebar -->
+    <aside class="detail-sidebar">
+      <div class="detail-summary-list">
+        <div class="summary-row-card">
+          <div class="summary-row-label">
+            <span class="summary-icon">📏</span>
+            <span>총 코스 거리</span>
+          </div>
+          <strong>약 3.8 km</strong>
+        </div>
+        <div class="summary-row-card">
+          <div class="summary-row-label">
+            <span class="summary-icon">⏱️</span>
+            <span>예상 소요 시간</span>
+          </div>
+          <strong>약 3시간 30분</strong>
+        </div>
+        <div class="summary-row-card">
+          <div class="summary-row-label">
+            <span class="summary-icon">🧭</span>
+            <span>코스 유형</span>
+          </div>
+          <strong>원도심 도보 산책</strong>
+        </div>
+        <div class="summary-row-card">
+          <div class="summary-row-label">
+            <span class="summary-icon">👟</span>
+            <span>보행 난이도</span>
+          </div>
+          <strong style="color: #466946;">보통 (일부 오르막·골목)</strong>
+        </div>
+      </div>
 
-<div class="draft-banner">이 화면은 디자인 시안입니다. 아래 방문 순서·노선은 편집용 후보이며 검증 전 도보 경로와 탑승 시각을 확정 정보로 사용하지 마세요.</div>
+      <!-- Map Launch Card -->
+      <div class="map-launch-card">
+        <div class="map-launch-header">
+          <span class="map-symbol">🗺️</span>
+          <div>
+            <h3>원도심 투어 동선 안내 지도</h3>
+            <p>1~6번 스팟 전체 동선과 지리 안내</p>
+          </div>
+        </div>
+        <button class="map-launch-btn" type="button" onclick="openDetailMap('course-01')">
+          <i class="fa-solid fa-map-location-dot"></i> 전체 지도 열기
+        </button>
+      </div>
 
+      <!-- Course Exploration Tip Card -->
+      <div class="emergency-transit-card">
+        <h4>💡 원도심 도보 산책 팁</h4>
+        <p style="margin:0;">시내 중심은 평지이나, 흥만소·설봉공원 구간은 완만한 오르막과 좁은 골목이 이어지므로 편한 신발 착용과 지도 앱 확인을 추천합니다. 관고전통시장 5일장(끝자리 2·7일)에 맞추면 더욱 풍성합니다.</p>
+      </div>
 
+      <!-- Course Share Card (Positioned below Tip) -->
+      <div class="sidebar-share-card">
+        <div class="sidebar-share-header">
+          <span class="share-icon">💌</span>
+          <div>
+            <h4>친구에게 코스 추천</h4>
+            <p>혼자 걸어보고 너무 좋았던 코스 공유</p>
+          </div>
+        </div>
+        <button class="sidebar-share-btn" type="button" onclick="handleShare()" title="원도심 투어 코스 공유하기">
+          <i class="fa-solid fa-arrow-up-from-bracket"></i>
+          <span>이 코스 공유하기</span>
+        </button>
+      </div>
+    </aside>
 
-<section aria-label="대중교통 안내" class="info-card">
-<span class="eyebrow">TRANSIT FIRST</span>
-<h3 class="">놓치지 말아야 할 이동</h3>
-<dl>
-<div class="info-row"><dt>노선·환승</dt><dd>G2100 및 터미널 정류장 · 최신 운행 확인 전</dd></div>
-<div class="info-row"><dt>추천 탑승</dt><dd>검증 후 표시</dd></div>
-<div class="info-row"><dt>마지막 확인</dt><dd>검증 후 표시</dd></div>
-</dl>
-<p class="small" style="margin:8px 0 0;color:#6b5745">구간별 실제 도보 시간과 안전한 보행 경로를 확인한 뒤 확정합니다.</p>
-</section><section class="detail-section" style="margin-top: 26px;" aria-label="오늘의 스팟 미리보기">
-  <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 12px;">
-    <div>
-      <span class="eyebrow">SPOT PREVIEW</span>
-      <h2 style="font-size: 20px; margin: 4px 0 3px;" class="">오늘 만날 풍경 미리보기</h2>
-      <p class="lead" style="margin: 0; font-size: 12px; color: var(--muted);">발걸음이 닿을 원도심의 주요 스팟 풍경을 미리 넘겨보세요.</p>
-    </div>
-  </div>
+    <!-- Right Column: Editorial Main Column -->
+    <div class="detail-main-column">
+      <article class="detail-main-content">
+      <!-- Course Route Poster Banner -->
+      <div class="course-poster-banner">
+        <img src="../images/banner_course01_v4.png" alt="이천 원도심 투어 공식 코스 루트 배너">
+      </div>
 
-  <div style="display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; margin: 0 -20px; padding-left: 20px; padding-right: 20px; -webkit-overflow-scrolling: touch;"><!-- Spot 02 -->
-    <div style="flex: 0 0 156px; scroll-snap-align: start; background: var(--white); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: rgba(71, 49, 36, 0.05) 0px 4px 12px; display: flex; flex-direction: column;">
-      <div style="width: 100%; height: 110px; position: relative; overflow: hidden; background: rgb(238, 238, 238);"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeeS045IidPqXXS3vSXoAy09cGD4AnBQOVR1IfOmb7pI6ve9LioXMg9gDbidYDE1vxdL86q6RWUCQnDK8kTiKHTsW1ALps5DsJm3Yom0CpXINFPTTXyFGb4v26cOf4253FaZs-Ak1rz920OoZo0RqqZ8uYq5dr7IURBH0vJIxVHesFNTuzLu6OtNRQvKLI8E9V4lEdN3zn5VBG5OwuTILfFJacKxarXo15a7-dEkcJzPOK1F7N89EAwQUt7_wv-JBEbvA" alt="우진 커피니케이션 외관" style="width: 100%; height: 100%; object-fit: cover;"><span style="position: absolute; top: 8px; left: 8px; background: rgba(30,24,20,0.72); color: #fff; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px; font-family: 'DM Sans', sans-serif;" class="">SPOT 02</span><span style="position: absolute; bottom: 6px; right: 6px; background: rgba(78,97,63,0.85); color: #fff; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px;" class="">현장 사진</span></div>
-      <div style="padding: 10px 10px 12px;">
-        <strong style="font-size: 13px; display: block; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">우진 커피니케이션</strong>
-        <div style="font-size: 11px; color: var(--muted); margin-top: 3px;" class="">커피 한 잔의 여유</div>
+      <div class="detail-intro" style="margin-bottom: 22px;">
+        <span class="eyebrow">COURSE 01 / LOCAL TOWN</span>
+        <h1>이천 원도심 투어</h1>
+        <p class="lead">빵과 커피 들고 오래된 이천을 걷다</p>
+      </div>
+
+      <div class="draft-banner">이 화면은 디자인 시안입니다. 아래 방문 순서·노선은 편집용 후보이며 검증 전 도보 경로와 탑승 시각을 확정 정보로 사용하지 마세요.</div>
+
+      <!-- TRANSIT FIRST SECTION -->
+      <section aria-label="대중교통 안내" class="transit-first-main-card">
+        <div class="transit-top-row">
+          <div>
+            <span class="eyebrow" style="color: #8c5835; font-size: 11px; font-weight: 800; letter-spacing: 0.08em;">TRANSIT FIRST</span>
+            <h2 style="font-size: 19px; font-weight: 800; color: #241e19; margin: 4px 0 2px;">놓치지 말아야 할 대중교통 이동 팁</h2>
+          </div>
+          <span class="transit-badge">출발 전 필수 확인</span>
+        </div>
+        <div class="transit-info-grid">
+          <div class="transit-info-cell">
+            <dt>기점·도착</dt>
+            <dd>서울/잠실 광역버스 G2100번 ➔ 이천터미널 하차</dd>
+          </div>
+          <div class="transit-info-cell">
+            <dt>원도심 이동</dt>
+            <dd>커피·식당·시장·흥만소·설봉공원 전 구간 도보 이동</dd>
+          </div>
+          <div class="transit-info-cell">
+            <dt>터미널 귀가</dt>
+            <dd>설봉공원에서 시내버스 10분(또는 도보 20분) ➔ 광역버스 환승</dd>
+          </div>
+        </div>
+        <p class="transit-tip-foot">💡 터미널 도착 후 코스 내 모든 명소를 여유로운 도보로 둘러보실 수 있습니다.</p>
+      </section>
+
+      <!-- TIMELINE SECTION -->
+      <section aria-labelledby="steps-title" class="detail-section">
+        <span class="eyebrow">A DAY IN ORDER</span>
+        <h2 id="steps-title">이 순서로 둘러봐요</h2>
+        <p class="lead">방문 순서는 고정하며, 장소를 자동으로 섞지 않습니다.</p>
+
+        <ol class="timeline">
+          <!-- Step 01: 이천터미널 출발 -->
+          <li class="timeline-step">
+            <span class="step-index" style="background: rgb(238, 244, 232); border: 1.5px solid rgb(168, 194, 155);">🚌</span>
+            <div>
+              <div class="spot-title-row">
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <span style="font-size:10px; font-weight:800; color:#5e7150; background:#f0f4ea; padding:1px 6px; border-radius:4px;">01</span>
+                  <h3 style="margin:0;">이천터미널 출발</h3>
+                </div>
+                <div class="spot-action-links">
+                  <a href="https://kko.to/z5I20INTnP" target="_blank" rel="noopener noreferrer" class="btn-spot-link btn-kko" title="카카오맵 하차 정류장 위치 보기">
+                    <span>카카오맵 ↗</span>
+                  </a>
+                </div>
+              </div>
+              <p style="margin: 4px 0 6px;">서울 / 잠실 광역버스 G2100번 하차 정류장 · 도보 여정의 기점</p>
+              <div class="spot-tags">
+                <span class="spot-tag">#이천터미널</span>
+                <span class="spot-tag">#G2100광역버스</span>
+                <span class="spot-tag">#원도심도보시작</span>
+                <span class="spot-tag">#뚜벅이여행</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- Connector 01 -> 02 -->
+          <li class="timeline-connector-item">
+            <div class="timeline-connector-rail">
+              <div class="rail-line"></div>
+              <div class="rail-dot"></div>
+              <div class="rail-line"></div>
+            </div>
+            <div class="timeline-connector-body">
+              <span class="timeline-transit-pill">🚶 도보 6분 (약 450m)</span>
+            </div>
+          </li>
+
+          <!-- Step 02: 우진 커피니케이션 -->
+          <li class="timeline-step">
+            <span class="step-index" style="background: rgb(252, 237, 234); border: 1.5px solid rgb(232, 189, 175);">☕</span>
+            <div>
+              <div class="spot-title-row">
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <span style="font-size:10px; font-weight:800; color:#5e7150; background:#f0f4ea; padding:1px 6px; border-radius:4px;">02</span>
+                  <h3 style="margin:0;">우진 커피니케이션</h3>
+                </div>
+                <div class="spot-action-links">
+                  <a href="https://map.kakao.com/link/search/우진커피니케이션" target="_blank" rel="noopener noreferrer" class="btn-spot-link btn-kko" title="카카오맵에서 보기">
+                    <span>카카오맵 ↗</span>
+                  </a>
+                  <a href="https://www.instagram.com/woojin_coffeenication/" target="_blank" rel="noopener noreferrer" class="btn-spot-link btn-insta" title="인스타그램에서 보기">
+                    <i class="fa-brands fa-instagram"></i> <span>인스타그램 ↗</span>
+                  </a>
+                </div>
+              </div>
+              <p style="margin: 4px 0 6px;">스페셜티 드립커피와 감각적인 브루잉 바</p>
+              <div class="spot-tags">
+                <span class="spot-tag">#스페셜티커피</span>
+                <span class="spot-tag">#핸드드립</span>
+                <span class="spot-tag">#브루잉바</span>
+                <span class="spot-tag">#골목카페</span>
+                <span class="spot-tag">#감성카페</span>
+              </div>
+
+              <!-- Spot 02 Carousel -->
+              <div class="spot-carousel-wrap">
+                <div class="spot-carousel-card">
+                  <div class="photo-box">
+                    <img src="../images/c01_spot02_coffieenication_01.png" alt="우진 커피니케이션 전경">
+                    <span class="badge-live-photo" style="position: absolute; top: 8px; right: 8px;">현장 사진</span>
+                  </div>
+                  <p class="photo-desc">골목길 속 감각적이고 아늑한 우진 커피니케이션 전경</p>
+                </div>
+                <div class="spot-carousel-card">
+                  <div class="photo-box">
+                    <img src="../images/c01_spot02_coffieenication_2450.jpg" alt="우진 커피니케이션 브루잉 바">
+                    <span class="badge-live-photo" style="position: absolute; top: 8px; right: 8px;">현장 사진</span>
+                  </div>
+                  <p class="photo-desc">정밀한 핸드드립을 내리는 전문 브루잉 바 공간</p>
+                </div>
+                <div class="spot-carousel-card">
+                  <div class="photo-box">
+                    <img src="../images/c01_spot02_coffieenication_menu.jpg" alt="우진 커피니케이션 핸드드립 메뉴판">
+                    <span class="badge-live-photo" style="position: absolute; top: 8px; right: 8px;">현장 사진</span>
+                  </div>
+                  <p class="photo-desc">원두별 산미와 테이스팅 노트가 적힌 핸드드립 메뉴판</p>
+                </div>
+              </div>
+              <div class="shop-meta">영업시간: 07:30 ~ 19:00 (매주 일요일 휴무)<br>마지막 확인일: 현장 취재 기준</div>
+            </div>
+          </li>
+
+          <!-- Connector 02 -> 03 -->
+          <li class="timeline-connector-item">
+            <div class="timeline-connector-rail">
+              <div class="rail-line"></div>
+              <div class="rail-dot"></div>
+              <div class="rail-line"></div>
+            </div>
+            <div class="timeline-connector-body">
+              <span class="timeline-transit-pill">🚶 도보 5분 (약 350m)</span>
+            </div>
+          </li>
+
+          <!-- Step 03: 이천 로컬 혼밥 식당 -->
+          <li class="timeline-step">
+            <span class="step-index" style="background: rgb(250, 246, 237); border: 1.5px solid rgb(223, 207, 185);">🍝</span>
+            <div>
+              <div class="spot-title-row">
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <span style="font-size:10px; font-weight:800; color:#5e7150; background:#f0f4ea; padding:1px 6px; border-radius:4px;">03</span>
+                  <h3 style="margin:0;">이천 로컬 혼밥 식당</h3>
+                </div>
+              </div>
+              <p style="margin: 4px 0 8px;">원도심 취향별 1인 식사 추천 스팟 3곳</p>
+              <div class="spot-tags">
+                <span class="spot-tag">#로컬혼밥맛집</span>
+                <span class="spot-tag">#생면라자냐</span>
+                <span class="spot-tag">#손수제비</span>
+                <span class="spot-tag">#토종순대국</span>
+                <span class="spot-tag">#1인식사환영</span>
+              </div>
+              <!-- 혼밥 맛집 3선: 가독성 높인 직렬 카드 레이아웃 & 대표 메뉴 사진 -->
+              <div style="display: flex; flex-direction: column; gap: 12px; margin: 10px 0 14px;">
+                <!-- 01 관고동사랑방 -->
+                <div class="honbap-item-card">
+                  <div class="honbap-thumb">
+                    <img src="../images/honbap_sarangbang.png" alt="관고동사랑방 생면 라자냐" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                  </div>
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; gap: 6px;">
+                      <div style="display: flex; align-items: center; gap: 6px; min-width: 0;">
+                        <span class="honbap-tag">추천 01 · 양식</span>
+                        <strong class="honbap-name">관고동사랑방</strong>
+                      </div>
+                      <a href="https://map.kakao.com/link/search/관고동사랑방" target="_blank" rel="noopener noreferrer" class="btn-spot-link btn-kko btn-honbap-map" title="관고동사랑방 지도 보기" aria-label="관고동사랑방 지도 바로가기">
+                        <i class="fa-solid fa-map-location-dot"></i><span class="btn-text">지도 ↗</span>
+                      </a>
+                    </div>
+                    <p style="font-size: 12px; color: #5a4d40; margin: 0 0 4px; line-height: 1.45;">정성 가득한 수제 생면 라자냐와 파스타를 편안하게 즐길 수 있는 이탈리안 비스트로</p>
+                    <span style="font-size: 11px; color: #7f6e60; background: rgba(0,0,0,0.03); padding: 1px 6px; border-radius: 4px; display: inline-block;">🍝 대표메뉴: 생면 라자냐, 파스타 1인 식사 환영</span>
+                  </div>
+                </div>
+
+                <!-- 02 초이수제비 -->
+                <div class="honbap-item-card">
+                  <div class="honbap-thumb">
+                    <img src="../images/honbap_choi.png" alt="초이수제비 대표 수제비 한 그릇" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                  </div>
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; gap: 6px;">
+                      <div style="display: flex; align-items: center; gap: 6px; min-width: 0;">
+                        <span class="honbap-tag">추천 02 · 분식</span>
+                        <strong class="honbap-name">초이수제비</strong>
+                      </div>
+                      <a href="https://map.kakao.com/link/search/초이수제비" target="_blank" rel="noopener noreferrer" class="btn-spot-link btn-kko btn-honbap-map" title="초이수제비 지도 보기" aria-label="초이수제비 지도 바로가기">
+                        <i class="fa-solid fa-map-location-dot"></i><span class="btn-text">지도 ↗</span>
+                      </a>
+                    </div>
+                    <p style="font-size: 12px; color: #5a4d40; margin: 0 0 4px; line-height: 1.45;">얇고 쫄깃한 손수제비와 진하고 개운한 멸치 육수, 이천 현지인들이 줄 서는 로컬 혼밥 맛집</p>
+                    <span style="font-size: 11px; color: #7f6e60; background: rgba(0,0,0,0.03); padding: 1px 6px; border-radius: 4px; display: inline-block;">🍲 대표메뉴: 초이수제비, 얼큰수제비</span>
+                  </div>
+                </div>
+
+                <!-- 03 백암토종순대 -->
+                <div class="honbap-item-card">
+                  <div class="honbap-thumb">
+                    <img src="../images/honbap_baegam.png" alt="백암토종순대 뚝배기 순대국" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                  </div>
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; gap: 6px;">
+                      <div style="display: flex; align-items: center; gap: 6px; min-width: 0;">
+                        <span class="honbap-tag">추천 03 · 한식</span>
+                        <strong class="honbap-name">백암토종순대</strong>
+                      </div>
+                      <a href="https://map.kakao.com/link/search/백암토종순대이천" target="_blank" rel="noopener noreferrer" class="btn-spot-link btn-kko btn-honbap-map" title="백암토종순대 지도 보기" aria-label="백암토종순대 지도 바로가기">
+                        <i class="fa-solid fa-map-location-dot"></i><span class="btn-text">지도 ↗</span>
+                      </a>
+                    </div>
+                    <p style="font-size: 12px; color: #5a4d40; margin: 0 0 4px; line-height: 1.45;">잡내 없이 깔끔하고 뽀얀 사골 육수에 속이 꽉 찬 토종순대와 머릿고기가 푸짐한 국밥</p>
+                    <span style="font-size: 11px; color: #7f6e60; background: rgba(0,0,0,0.03); padding: 1px 6px; border-radius: 4px; display: inline-block;">🍚 대표메뉴: 토종순대국, 모듬순대</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- Connector 03 -> 04 -->
+          <li class="timeline-connector-item">
+            <div class="timeline-connector-rail">
+              <div class="rail-line"></div>
+              <div class="rail-dot"></div>
+              <div class="rail-line"></div>
+            </div>
+            <div class="timeline-connector-body">
+              <span class="timeline-transit-pill">🚶 도보 4분 (약 280m)</span>
+            </div>
+          </li>
+
+          <!-- Step 04: 관고전통시장 -->
+          <li class="timeline-step">
+            <span class="step-index" style="background: rgb(232, 239, 226); border: 1.5px solid rgb(158, 183, 145);">🏪</span>
+            <div>
+              <div class="spot-title-row">
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <span style="font-size:10px; font-weight:800; color:#5e7150; background:#f0f4ea; padding:1px 6px; border-radius:4px;">04</span>
+                  <h3 style="margin:0;">관고전통시장</h3>
+                </div>
+                <div class="spot-action-links">
+                  <a href="https://kko.to/3zJVNxO6d8" target="_blank" rel="noopener noreferrer" class="btn-spot-link btn-kko" title="카카오맵에서 보기">
+                    <span>카카오맵 ↗</span>
+                  </a>
+                </div>
+              </div>
+              <p style="margin: 4px 0 6px;">활기찬 전통 5일장 먹거리와 닭발 골목</p>
+              <div class="spot-tags">
+                <span class="spot-tag">#관고전통시장</span>
+                <span class="spot-tag">#이천오일장</span>
+                <span class="spot-tag">#닭발골목</span>
+                <span class="spot-tag">#시장분식</span>
+                <span class="spot-tag">#로컬먹거리</span>
+              </div>
+
+              <!-- Spot 04 Carousel -->
+              <div class="spot-carousel-wrap">
+                <div class="spot-carousel-card">
+                  <div class="photo-box">
+                    <img src="../images/c01_spot04_gwango_gate.jpg" alt="관고전통시장 아치 입구 게이트">
+                    <span class="badge-live-photo" style="position: absolute; top: 8px; right: 8px;">현장 사진</span>
+                  </div>
+                  <p class="photo-desc">오랜 역사의 관고전통시장 시작을 알리는 아치 게이트</p>
+                </div>
+                <div class="spot-carousel-card">
+                  <div class="photo-box">
+                    <img src="../images/c01_spot04_gwango.jpg" alt="관고전통시장 분식 닭발 골목">
+                    <span class="badge-live-photo" style="position: absolute; top: 8px; right: 8px;">현장 사진</span>
+                  </div>
+                  <p class="photo-desc">김이 모락모락 피어오르는 활기찬 분식·닭발 골목</p>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- Connector 04 -> 05 -->
+          <li class="timeline-connector-item">
+            <div class="timeline-connector-rail">
+              <div class="rail-line"></div>
+              <div class="rail-dot"></div>
+              <div class="rail-line"></div>
+            </div>
+            <div class="timeline-connector-body">
+              <span class="timeline-transit-pill">🚶 도보 3분 (약 200m)</span>
+            </div>
+          </li>
+
+          <!-- Step 05: 쌀베이커리카페 흥만소 -->
+          <li class="timeline-step">
+            <span class="step-index" style="background: rgb(250, 238, 232); border: 1.5px solid rgb(228, 185, 171);">🍞</span>
+            <div>
+              <div class="spot-title-row">
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <span style="font-size:10px; font-weight:800; color:#5e7150; background:#f0f4ea; padding:1px 6px; border-radius:4px;">05</span>
+                  <h3 style="margin:0;">쌀베이커리카페 흥만소</h3>
+                </div>
+                <div class="spot-action-links">
+                  <a href="https://kko.to/7PB8D0jU0H" target="_blank" rel="noopener noreferrer" class="btn-spot-link btn-kko" title="카카오맵에서 보기">
+                    <span>카카오맵 ↗</span>
+                  </a>
+                  <a href="https://www.instagram.com/heungman.so/" target="_blank" rel="noopener noreferrer" class="btn-spot-link btn-insta" title="인스타그램에서 보기">
+                    <i class="fa-brands fa-instagram"></i> <span>인스타그램 ↗</span>
+                  </a>
+                </div>
+              </div>
+              <p style="margin: 4px 0 6px;">이천쌀 크림빵 & 시그니처 쌀 디저트</p>
+              <div class="spot-tags">
+                <span class="spot-tag">#흥만소</span>
+                <span class="spot-tag">#이천쌀크림빵</span>
+                <span class="spot-tag">#쌀베이커리</span>
+                <span class="spot-tag">#레트로한옥카페</span>
+                <span class="spot-tag">#디저트맛집</span>
+              </div>
+
+              <!-- Spot 05 Carousel (3 photos) -->
+              <div class="spot-carousel-wrap">
+                <div class="spot-carousel-card">
+                  <div class="photo-box">
+                    <img src="../images/c01_spot05_img_2409.jpg" alt="흥만소 입구 대표 마스코트 흥만씨">
+                    <span class="badge-live-photo" style="position: absolute; top: 8px; right: 8px;">현장 사진</span>
+                  </div>
+                  <p class="photo-desc">마당에서 반겨주는 흥만씨 쌀 캐릭터 조형물과 황토 한옥 외관</p>
+                </div>
+                <div class="spot-carousel-card">
+                  <div class="photo-box">
+                    <img src="../images/c01_spot05_img_2414.jpg" alt="흥만소 한옥 카페 내부">
+                    <span class="badge-live-photo" style="position: absolute; top: 8px; right: 8px;">현장 사진</span>
+                  </div>
+                  <p class="photo-desc">서까래와 고즈넉한 나무 가구가 어우러진 아늑한 한옥 실내</p>
+                </div>
+                <div class="spot-carousel-card">
+                  <div class="photo-box">
+                    <img src="../images/c01_spot05_img_2419.jpg" alt="흥만소 이천쌀크림빵 진열대">
+                    <span class="badge-live-photo" style="position: absolute; top: 8px; right: 8px;">현장 사진</span>
+                  </div>
+                  <p class="photo-desc">다양한 맛의 시그니처 이천쌀크림빵 진열대와 메뉴 안내</p>
+                </div>
+              </div>
+              <div class="shop-meta">영업시간: 평일 11:00 ~ 19:00 / 주말·공휴일 11:00 ~ 20:00<br>마지막 확인일: 현장 취재 기준</div>
+            </div>
+          </li>
+
+          <!-- Connector 05 -> 06 -->
+          <li class="timeline-connector-item">
+            <div class="timeline-connector-rail">
+              <div class="rail-line"></div>
+              <div class="rail-dot"></div>
+              <div class="rail-line"></div>
+            </div>
+            <div class="timeline-connector-body">
+              <span class="timeline-transit-pill">🚶 도보 12분 (약 850m)</span>
+            </div>
+          </li>
+
+          <!-- Step 06: 설봉공원 & 설봉호 -->
+          <li class="timeline-step">
+            <span class="step-index" style="background: rgb(238, 244, 232); border: 1.5px solid rgb(168, 194, 155);">🌲</span>
+            <div>
+              <div class="spot-title-row">
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <span style="font-size:10px; font-weight:800; color:#5e7150; background:#f0f4ea; padding:1px 6px; border-radius:4px;">06</span>
+                  <h3 style="margin:0;">설봉공원 &amp; 설봉호</h3>
+                </div>
+                <div class="spot-action-links">
+                  <a href="https://kko.to/-uQNdYic_T" target="_blank" rel="noopener noreferrer" class="btn-spot-link btn-kko" title="카카오맵에서 보기">
+                    <span>카카오맵 ↗</span>
+                  </a>
+                  <a href="https://www.instagram.com/icheon_city" target="_blank" rel="noopener noreferrer" class="btn-spot-link btn-insta" title="인스타그램에서 보기">
+                    <i class="fa-brands fa-instagram"></i> <span>인스타그램 ↗</span>
+                  </a>
+                </div>
+              </div>
+              <p style="margin: 4px 0 6px;">호수 둘레길 산책과 힐링 수변 쉼터</p>
+              <div class="spot-tags">
+                <span class="spot-tag">#설봉공원</span>
+                <span class="spot-tag">#설봉호둘레길</span>
+                <span class="spot-tag">#호수산책</span>
+                <span class="spot-tag">#음악분수</span>
+                <span class="spot-tag">#도심속힐링</span>
+              </div>
+
+              <!-- Spot 06 Carousel -->
+              <div class="spot-carousel-wrap">
+                <div class="spot-carousel-card">
+                  <div class="photo-box">
+                    <img src="../images/c01_spot06_seolbong.jpg" alt="설봉공원 호수 둘레길">
+                    <span class="badge-live-photo" style="position: absolute; top: 8px; right: 8px;">현장 사진</span>
+                  </div>
+                  <p class="photo-desc">물결에 비친 숲길을 호젓하게 걷는 설봉호 둘레길</p>
+                </div>
+                <div class="spot-carousel-card">
+                  <div class="photo-box">
+                    <img src="../images/c01_spot06_seolbong_fountain.jpg" alt="설봉호 음악분수 전경">
+                    <span class="badge-live-photo" style="position: absolute; top: 8px; right: 8px;">현장 사진</span>
+                  </div>
+                  <p class="photo-desc">설봉호 중앙에서 시원하게 솟아오르는 음악분수</p>
+                </div>
+              </div>
+
+              <!-- 설봉호 둘레길 산책 팁 -->
+              <div style="margin-top: 10px; padding: 10px 14px; background: #f2f7ed; border: 1px solid #cfe0c6; border-radius: 10px; font-size: 12px; color: #2d4c20; line-height: 1.5; display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 16px;">🌲</span>
+                <span><strong>둘레길 산책 안내:</strong> 설봉호 둘레길은 총 길이 약 1.05km 코스로, 잔잔한 호수를 따라 20분 안팎으로 가볍게 산책하기 좋습니다.</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- Connector 06 -> 07 -->
+          <li class="timeline-connector-item">
+            <div class="timeline-connector-rail">
+              <div class="rail-line"></div>
+              <div class="rail-dot"></div>
+              <div class="rail-line"></div>
+            </div>
+            <div class="timeline-connector-body">
+              <span class="timeline-transit-pill">🚌 시내버스 10분 / 🚶 도보 20분</span>
+            </div>
+          </li>
+
+          <!-- Step 07: 이천터미널 귀가 -->
+          <li class="timeline-step">
+            <span class="step-index" style="background: rgb(250, 246, 237); border: 1.5px solid rgb(220, 208, 188);">🚌</span>
+            <div>
+              <div class="spot-title-row">
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <span style="font-size:10px; font-weight:800; color:#5e7150; background:#f0f4ea; padding:1px 6px; border-radius:4px;">07</span>
+                  <h3 style="margin:0;">이천터미널 귀가</h3>
+                </div>
+                <div class="spot-action-links">
+                  <a href="https://kko.to/k1GCIExMLG" target="_blank" rel="noopener noreferrer" class="btn-spot-link btn-kko" title="카카오맵 승차 정류장 위치 보기">
+                    <span>카카오맵 ↗</span>
+                  </a>
+                </div>
+              </div>
+              <p style="margin: 4px 0 6px;">서울 / 잠실행 광역버스 G2100번 승차 및 안전한 귀가 여정</p>
+              <div class="spot-tags">
+                <span class="spot-tag">#이천터미널</span>
+                <span class="spot-tag">#광역버스환승</span>
+                <span class="spot-tag">#잠실강남귀가</span>
+                <span class="spot-tag">#원도심투어완주</span>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+    </article>
+
+    <!-- Bottom Course Navigation & Keyword Re-Selection Banner (메인 박스 외부 단독 카드) -->
+    <div class="bottom-course-nav-banner standalone-banner">
+      <div class="banner-badge">✨ 다른 여정도 궁금하신가요?</div>
+      <h3 class="banner-title">내 취향에 딱 맞는 또 다른 이천 코스 찾기</h3>
+      <p class="banner-desc">취향 키워드를 다시 골라보며 나만의 특별한 하루를 찾아보세요.</p>
+      <div class="banner-actions single-action">
+        <a href="../01_home.html/code.html#keyword-selection-area" class="btn-banner-primary">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span>🎯 키워드로 내 취향 다시 찾기</span>
+        </a>
       </div>
     </div>
-
-    <!-- Spot 04 -->
-    <div style="flex: 0 0 156px; scroll-snap-align: start; background: var(--white); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: rgba(71, 49, 36, 0.05) 0px 4px 12px; display: flex; flex-direction: column;">
-      <div style="width: 100%; height: 110px; position: relative; overflow: hidden; background: #eee;">
-        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC262lwxv42vduJANR3OhiO00bKsxPoQeDEVL822wHLfY2QaYITJ1Qyp65jK_iVLjdV0nvEDax3Gl7fvSD7jlGvtJAOJSvFBQPkbZ4B8OTeFlxv4peSeuT7MIVIJycba1WMq9Y3s-gq3_hf8fiD5UYVoDjwZJMLkUzGZIauA06a7CP0DtEDovP9r1Rv3o_2DrAzCXtdT48YZcqutNn8B9kbPOqwVrX84fukFIv5KLvlAGrDMl3066w69sM-xXNwVF0ox-M" alt="관고전통시장 풍경" style="width: 100%; height: 100%; object-fit: cover;">
-        <span style="position: absolute; top: 8px; left: 8px; background: rgba(30,24,20,0.72); color: #fff; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px; font-family: 'DM Sans', sans-serif;" class="">SPOT 04</span>
-        <span style="position: absolute; bottom: 6px; right: 6px; background: rgba(78,97,63,0.85); color: #fff; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px;" class="">현장 사진</span>
-      </div>
-      <div style="padding: 10px 10px 12px;">
-        <strong style="font-size: 13px; display: block; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">관고전통시장</strong>
-        <div style="font-size: 11px; color: var(--muted); margin-top: 3px;" class="">오래된 시장 골목</div>
-      </div>
-    </div>
-
-    <!-- Spot 05 -->
-    <div style="flex: 0 0 156px; scroll-snap-align: start; background: var(--white); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: rgba(71, 49, 36, 0.05) 0px 4px 12px; display: flex; flex-direction: column;"><div style="width: 100%; height: 110px; position: relative; overflow: hidden; background: rgb(238, 238, 238);"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnHicrdURGYsSrspN-6mKs9UgNvW7OHqrc61wOYvdKDxERkHrqs33astRvWlRG80_0XaK55MCWoaPIb3J9a_6msTfWx6UCRak0Bl6juWaaXfRQ6n__IFYbk7nyNA-FZWcuvxq90bUg8om2mpZxQi4Q-0-OQNEvCtSg6Vxt-9343t8pCtbLlyXokjZ-37SB9prQMmemtu6a6YZeI7yNfzRU36NG9iVi7R5VGtu2q-NRIKsvsNrRHOTJ8Gz12H9jLLRvkYM" alt="흥만소 이천 쌀빵 포스터와 한옥 감성" style="width: 100%; height: 100%; object-fit: cover;"><span style="position: absolute; top: 8px; left: 8px; background: rgba(30, 24, 20, 0.72); color: #fff; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px; font-family: 'DM Sans', sans-serif;" class="">SPOT 05</span><span style="position: absolute; bottom: 6px; right: 6px; background: rgba(78, 97, 63, 0.85); color: #fff; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px;" class="">현장 사진</span></div><div style="padding: 10px 10px 12px;"><strong style="font-size: 13px; display: block; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">쌀베이커리카페 흥만소</strong><div style="font-size: 11px; color: var(--muted); margin-top: 3px;" class="">옛감성 가득한 쌀베이커리 카페</div></div></div>
-
-    <!-- Spot 06 -->
-    <div style="flex: 0 0 156px; scroll-snap-align: start; background: var(--white); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: rgba(71, 49, 36, 0.05) 0px 4px 12px; display: flex; flex-direction: column;"><div style="width: 100%; height: 110px; position: relative; overflow: hidden; background: rgb(238, 238, 238);"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAN8nC2m6Q0rQ3P23_Xau1uxtUBzslbGA9yL7In1sjMRu22tNIVve8nbPfGUGaq5Vn8ZoMCoFVsgcVh0mdcdpemaEkH_3SwUhPEsA9GooO1j4UFDNSWOvipBnGsTYHgfHwg4XH3McMHka7XYkklt758GgwBrgFHjla-HsIYe5eI71F1H2vhsPRM6JoCqW-9jOub0uKr6_OwD2i5iod9ZBMke0JfzOYW3C1C98Fgy4ngc7yZirX8QC7T7x0rpIYkY5t3kZA" alt="설봉공원 호수와 분수 전경" style="width: 100%; height: 100%; object-fit: cover;"><span style="position: absolute; top: 8px; left: 8px; background: rgba(30, 24, 20, 0.72); color: #fff; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px; font-family: 'DM Sans', sans-serif;" class="">SPOT 06</span><span style="position: absolute; bottom: 6px; right: 6px; background: rgba(78, 97, 63, 0.85); color: #fff; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px;" class="">현장 사진</span></div><div style="padding: 10px 10px 12px;"><strong style="font-size: 13px; display: block; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">설봉공원</strong><div style="font-size: 11px; color: var(--muted); margin-top: 3px;" class="">호수 둘레길과 분수 산책</div></div></div></div>
-</section>
-
-<section aria-labelledby="steps-title" class="detail-section">
-<span class="eyebrow">A DAY IN ORDER</span>
-<h2 class="" id="steps-title">이 순서로 둘러봐요</h2>
-<p class="lead">방문 순서는 고정하며, 장소를 자동으로 섞지 않습니다.</p>
-
-<ol class="timeline"><li class="">
-  <span class="step-index" style="background: rgb(238, 244, 232); border: 1.5px solid rgb(168, 194, 155);">🚌</span>
-  <div>
-    <div style="display:flex; align-items:center; gap:6px;"><span style="font-size:10px; font-weight:800; color:#5e7150; background:#f0f4ea; padding:1px 6px; border-radius:4px;" class="">01</span><h3 style="margin:0;" class="">이천터미널 출발</h3></div>
-    <p style="margin: 4px 0 6px;" class="">출발 지점 · 정류장 및 탑승 시각 검증 후 표시</p>
-  </div>
-</li>
-
-<li class="">
-  <span class="step-index" style="background: rgb(252, 237, 234); border: 1.5px solid rgb(232, 189, 175);">☕</span>
-  <div>
-    <div style="display:flex; align-items:center; gap:6px;"><span style="font-size:10px; font-weight:800; color:#5e7150; background:#f0f4ea; padding:1px 6px; border-radius:4px;" class="">02</span><h3 style="margin:0;" class="">우진 커피니케이션</h3></div>
-    <p style="margin: 4px 0 6px;" class="">커피 한 잔으로 원도심 산책 시작</p>
-    <div class="record">기록 포인트 예시 · 잔과 카페 공간의 질감을 한 컷</div><div style="margin-bottom: 8px; border-radius: 8px; overflow: hidden; height: 120px; position: relative;"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBse7naATkGFc8VSeNok2B1J1jHhRVyoXutJeVAU2eAioCCy12MIAQCdbURDe6aEi9zsc_QSUwcFE_h5jwCujX80DST1ar_SK4AtcFzkeWPerS3s4djKV9X49n8jHG3-j-jvhWpbN9lzwkCnQDdYj_JDD3f2kWNSMghmolyf1rf-Fg0VHCbFESnQSWQwA1gHfDKH_EiZlsVl0W1jg6bd4sfUhppIINkjU_4l6oPWt8u5179vmo69tWWTWhfUADnSENi2i8" alt="우진 커피니케이션 내부 카운터" style="width: 100%; height: 100%; object-fit: cover;"><span style="position: absolute; bottom: 6px; right: 6px; background: rgba(30,24,20,0.7); color: #fff; font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 4px;" class="">공간 전경 · 바 카운터</span></div>
-    <div class="shop-meta">영업시간·휴무일: 검증 후 표시<br>마지막 확인일: 확인 후 연결</div>
-  </div>
-</li>
-
-<li class="">
-  <span class="step-index" style="background: rgb(250, 246, 237); border: 1.5px solid rgb(223, 207, 185);">🍝</span>
-  <div>
-    <div style="display:flex; align-items:center; gap:6px;"><span style="font-size:10px; font-weight:800; color:#5e7150; background:#f0f4ea; padding:1px 6px; border-radius:4px;" class="">03</span><h3 style="margin:0;" class="">이천 로컬 혼밥 식당</h3></div>
-    <p style="margin: 4px 0 8px;" class="">원도심 취향별 1인 식사 추천 스팟 3곳</p>
-    <div style="display:flex; flex-direction:column; gap:6px; margin: 6px 0 10px;">
-      <div style="background:#faf7f2; border:1px solid #eadecf; border-radius:8px; padding:7px 10px;">
-        <strong style="font-size:12px; color:var(--earth-dark);">관고동사랑방</strong>
-        <div style="font-size: 11px; color: var(--muted); margin-top: 2px;" class="">정성 가득한 생면 라자냐 이탈리안 맛집</div>
-      </div>
-      <div style="background:#faf7f2; border:1px solid #eadecf; border-radius:8px; padding:7px 10px;">
-        <strong style="font-size:12px; color:var(--earth-dark);">초이수제비</strong>
-        <div style="font-size:11px; color:var(--muted); margin-top:2px;" class="">현지인들이 사랑하는 얼큰/담백 수제비 맛집</div>
-      </div>
-      <div style="background:#faf7f2; border:1px solid #eadecf; border-radius:8px; padding:7px 10px;">
-        <strong style="font-size:12px; color:var(--earth-dark);">백암토종순대</strong>
-        <div style="font-size:11px; color:var(--muted); margin-top:2px;" class="">진한 국물과 속 꽉 찬 순대국 혼밥</div>
-      </div>
     </div>
   </div>
-</li>
-
-<li class="">
-  <span class="step-index" style="background: rgb(232, 239, 226); border: 1.5px solid rgb(158, 183, 145);">🏪</span>
-  <div>
-    <div style="display:flex; align-items:center; gap:6px;"><span style="font-size:10px; font-weight:800; color:#5e7150; background:#f0f4ea; padding:1px 6px; border-radius:4px;" class="">04</span><h3 style="margin:0;" class="">관고전통시장</h3></div>
-    <p style="margin: 4px 0 6px;" class="">오래된 시장 골목과 활기찬 일상 풍경</p>
-    <div class="record">기록 포인트 예시 · 아케이드 아래 상점과 발걸음을 담아보세요</div>
-  </div>
-</li>
-
-<li class="">
-  <span class="step-index" style="background: rgb(250, 238, 232); border: 1.5px solid rgb(228, 185, 171);">🍞</span>
-  <div>
-    <div style="display:flex; align-items:center; gap:6px;"><span style="font-size:10px; font-weight:800; color:#5e7150; background:#f0f4ea; padding:1px 6px; border-radius:4px;" class="">05</span><h3 style="margin:0;" class="">쌀베이커리카페 흥만소</h3></div>
-    <p style="margin: 4px 0 6px;" class="">옛감성 가득한 쌀베이커리 카페</p>
-    <div class="record">기록 포인트 예시 · 쌀빵과 가게의 정겨운 레트로 풍경</div><div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px;"><div style="border-radius: 8px; overflow: hidden; height: 150px; position: relative; background: #eee;"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAM06i5s_dUkLq3L8wkW0rzTKUaDLNV1VuvnypINz3plryQW_6KCQbHSXZAlW6VV7JPdWW-nirpX_1z63yqe_7FYS1UJ2-swY-CPTiwXKs1aVpgp4hFFdC3ZgTbrON0pcWYiCUOLV_S-fjS9h5MnSCEioxuYac_3ic0OukM7AE2lTki4gH2CicG1KiZkS9DgLtsWOdk4P6wyaFR3qLC4mZfouwcbFV-ARQU8ha0f_6vadMPAX6TDyp3Ww1JhSsu_c4HuoU" alt="흥만소 입구 대표 마스코트 흥만씨 조형물과 한옥" style="width: 100%; height: 100%; object-fit: cover;"><span style="position: absolute; bottom: 6px; left: 6px; background: rgba(30,24,20,0.72); color: #fff; font-size: 9px; font-weight: 600; padding: 2px 7px; border-radius: 4px;" class="">흥만소 입구 대표 마스코트</span></div><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;"><div style="border-radius: 8px; overflow: hidden; height: 110px; position: relative; background: #eee;"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBkveWpgQIhGiu4mkAO06KvTtDZ9fbrrYGgCcv8clhGVramdczg0ANrExkW2k_bD7Q330AXTApeJ7UeVTySzSZGn4TtIo7nUb_yoUmxOm3ilMM7ueTxbAdK_qeM0tAFl-R5ZH8-y1KL1ItsAJAEnLPgXA1x3SMiuZiEa82fLd3aWD4MEvuhFtS7NVbU6pZWOOyQ4tdukYnHbfDX9L85puG77LAe1bjX3xKJbIPxWBkCirmDI_pkdApx5HzMllkYh-Gy4o" alt="이천쌀크림빵 패키지 및 굿즈" style="width: 100%; height: 100%; object-fit: cover;"><span style="position: absolute; bottom: 6px; left: 6px; background: rgba(30,24,20,0.72); color: #fff; font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 4px;" class="">쌀크림빵 굿즈 전시</span></div><div style="border-radius: 8px; overflow: hidden; height: 110px; position: relative; background: #eee;"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrYa3Ld70dht715OAYjc4s5xPfRLJjTdCQT8sWJsbchXOzZO3ejDKxWL3dHsKDkgoEHyfgVDLWZ_naAPfgaY_kGBLv6RDFqoP9unQ7hgkxaebrka59T8ScItxZDNxXltGjdN0r2nA5WeJWSTDBeF8JBDoyEmciFhk57tnWptBj1N2_o7hNxK_EYpS7Jm-S0Z7UBYGyaA5_-hrB3RHcxyBbcftsacUqFs5a8Cqy0ZuSC-AvQYhr39QJQh2Y0mut0KD8qkE" alt="흥만소 레트로 한옥 카페 내부 전경" style="width: 100%; height: 100%; object-fit: cover;"><span style="position: absolute; bottom: 6px; left: 6px; background: rgba(30,24,20,0.72); color: #fff; font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 4px;" class="">한옥 카페 전경</span></div></div></div>
-    <div class="shop-meta">영업시간·휴무일: 검증 후 표시<br>마지막 확인일: 확인 후 연결</div>
-  </div>
-</li>
-
-<li class="">
-  <span class="step-index" style="background: rgb(238, 244, 232); border: 1.5px solid rgb(168, 194, 155);">🌲</span>
-  <div>
-    <div style="display:flex; align-items:center; gap:6px;"><span style="font-size:10px; font-weight:800; color:#5e7150; background:#f0f4ea; padding:1px 6px; border-radius:4px;" class="">06</span><h3 style="margin:0;" class="">설봉공원</h3></div>
-    <p style="margin: 4px 0 6px;" class="">호수 둘레길 산책과 도심 속 자연 쉼터</p>
-  <div class="record">기록 포인트 예시 · 설봉호수 둘레길과 시원한 분수 전경</div><div style="margin-bottom: 8px; border-radius: 8px; overflow: hidden; height: 140px; position: relative; background: rgb(238, 238, 238);"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJZJx1yz84cXBw-29IB-tbGNL0x8pTwVQtr9BUHi0jc2_j67DJ0vRSGLVPOPgAx5wLcchrqzuXeapnU82EmzOqDifXHfOI4SGL6lZ76rdjKt_gy7PvpBWP_np0c3bULBDV3HXSs-EyunSy4YzojHFrCK_04xxh9PYbD3B9FfZWHClpcMU3t-ZdseVdAhyO7t560lhgidBgCokJ-sYPFffY3VLFbXlxLF-0M963ebO60oBtLjtXgJDUDvbUp6ZJqGqWK2g" alt="설봉공원 호수와 분수 전경" style="width: 100%; height: 100%; object-fit: cover;"><span style="position: absolute; bottom: 6px; left: 6px; background: rgba(30,24,20,0.72); color: #fff; font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 4px;" class="">설봉공원 둘레길과 시원한 분수 전경</span><span style="position: absolute; top: 6px; right: 6px; background: rgba(78,97,63,0.88); color: #fff; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px;" class="">현장 사진</span></div></div>
-</li>
-
-<li class="">
-  <span class="step-index" style="background: rgb(250, 246, 237); border: 1.5px solid rgb(220, 208, 188);">🚌</span>
-  <div>
-    <div style="display:flex; align-items:center; gap:6px;"><span style="font-size:10px; font-weight:800; color:#5e7150; background:#f0f4ea; padding:1px 6px; border-radius:4px;" class="">07</span><h3 style="margin:0;" class="">이천터미널 귀가</h3></div>
-    <p style="margin: 4px 0 6px;" class="">터미널 복귀 후 귀가 버스 탑승 · 시각 검증 후 표시</p>
-  </div>
-</li></ol>
-</section>
-
-<div class="choice-note"><strong class="">이천 로컬 혼밥 식당 안내</strong><br class="">관고동사랑방(생면 라자냐·이탈리안), 초이수제비(칼칼/담백 수제비), 백암토종순대(순대국) 3곳은 모두 원도심 동선 내 편하게 혼자 식사하기 좋은 추천 후보입니다. 당일 일정과 입맛에 맞춰 자유롭게 선택해보세요.</div>
-
-<section aria-label="전체 지도 보기" class="map-launch">
-<span aria-hidden="true" class="map-symbol">⌁</span>
-<div>
-<h3 class="">전체 지도에서 보기</h3>
-<p class="">기본 동선과 추가 추천 장소를 구분해 살펴보세요.</p>
-<button class="outline-btn" id="map-open" type="button" onclick="document.getElementById('map-dialog').showModal()">전체 지도 열기 →</button>
-</div>
-</section>
-
-<section class="detail-section">
-<span class="eyebrow">BEFORE YOU GO</span>
-<h2 class="">귀가와 대안</h2>
-<p class="lead">귀가 버스의 정류장·추천 탑승 시각은 검증 후 표시합니다. 놓쳤다면 똑타 앱에서 똑버스 호출 가능 여부를 먼저 확인하고, 이용할 수 없으면 택시를 다음 대안으로 검토하세요.</p>
-</section>
-</div>
-</div>
-<footer class="footer">디자인 시안입니다. 동선·시각·영업 정보는 출처와 마지막 확인일을 확인한 뒤 공개합니다.</footer>
 </main>
 
 <dialog aria-labelledby="map-title" id="map-dialog">
-<main class="w-full max-w-[760px] bg-[#faf6f0] rounded-3xl p-5 sm:p-7 custom-shadow-modal border border-stone-200/80 relative transition-all duration-300">
-<!-- BEGIN: HeaderSection -->
-<header class="flex items-start justify-between mb-4">
-<div class="space-y-1">
-<!-- Subtitle category tag -->
-<span class="block text-[12px] sm:text-[13px] font-semibold tracking-wider uppercase text-brand-brownText font-display">
-          COURSE 01 MAP / PREVIEW
-        </span>
-<!-- Main title -->
-<h1 class="text-2xl sm:text-[28px] font-bold text-stone-900 tracking-tight flex items-center gap-2">
-          원도심 전체 지도
-          <span class="inline-flex items-center text-xs font-medium text-brand-olive px-2.5 py-0.5 rounded-full bg-brand-oliveBg">
-            이천 산책 코스
-          </span>
-</h1>
-</div>
-<!-- Close Button with circular accent -->
-<button aria-label="닫기" class="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-stone-400 text-stone-600 hover:text-stone-900 hover:border-stone-700 hover:bg-stone-100/70 transition-colors flex items-center justify-center group focus:outline-none focus:ring-2 focus:ring-stone-400" data-purpose="modal-close-button" onclick="document.getElementById('map-dialog').close()" type="button">
-<svg class="w-5 h-5 transition-transform group-hover:rotate-90 duration-200" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-</button>
-</header>
-<!-- END: HeaderSection -->
-<!-- BEGIN: LegendSection -->
-<div class="flex items-center space-x-5 mb-3 text-xs sm:text-sm font-medium text-stone-700" data-purpose="map-legend">
-<!-- Standard Route Legend -->
-<div class="flex items-center space-x-2">
-<span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-brand-markerBrown text-white font-bold text-xs italic shadow-sm">
-          1
-        </span>
-<span class="font-semibold text-stone-800">추천 동선 (1~6)</span>
-</div>
-</div>
-<!-- END: LegendSection -->
-<!-- BEGIN: MapCanvasSection -->
-<!-- Stylized accurate vector map based on actual Icheon geography -->
-<section aria-label="이천 원도심 일러스트 지도" class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden border border-[#ebdccb] shadow-inner bg-[#fbf9f5] select-none" data-purpose="interactive-map-area" id="tour-map">
-<!-- Base SVG Map Graphic -->
-<svg class="absolute inset-0 w-full h-full" fill="none" preserveAspectRatio="none" viewBox="0 0 760 570" xmlns="http://www.w3.org/2000/svg">
-<defs>
-<!-- Water Lake gradient -->
-<linearGradient id="lakeGradient" x1="0%" x2="100%" y1="0%" y2="100%">
-<stop offset="0%" stop-color="#bfe0f0" stop-opacity="0.95"></stop>
-<stop offset="100%" stop-color="#d4eaf5" stop-opacity="0.9"></stop>
-</linearGradient>
-<!-- Stream gradient -->
-<linearGradient id="streamGrad" x1="0%" x2="100%" y1="50%" y2="50%">
-<stop offset="0%" stop-color="#cae3f0"></stop>
-<stop offset="100%" stop-color="#dbeaf2"></stop>
-</linearGradient>
-<!-- Park Green gradient -->
-<radialGradient cx="35%" cy="40%" id="parkGreenGrad" r="60%">
-<stop offset="0%" stop-color="#d8e8d8"></stop>
-<stop offset="100%" stop-color="#c9dfca"></stop>
-</radialGradient>
-</defs>
-<!-- Background Base -->
-<rect fill="#fbf9f5" height="570" width="760"></rect>
-<!-- [GEOGRAPHY 1: Seolbong Park & Mountain Forest - Left Bottom / West] -->
-<path d="M -20,180 C 40,160 120,200 170,250 C 220,300 230,370 200,450 C 180,510 130,560 60,600 L -20,600 Z" fill="url(#parkGreenGrad)" opacity="0.85"></path>
-<!-- [GEOGRAPHY 2: Seolbong Lake (설봉호) - Organic natural lake body] -->
-<path d="M 45,350 C 50,310 100,295 145,315 C 185,335 195,390 175,430 C 150,475 90,485 55,450 C 35,425 40,380 45,350 Z" fill="url(#lakeGradient)" stroke="#a9d1e5" stroke-width="2.5"></path>
-<!-- Lake Ripples / Detail -->
-<path d="M 75,370 C 95,365 125,370 145,365" fill="none" opacity="0.6" stroke="#93c2db" stroke-linecap="round" stroke-width="2"></path>
-<path d="M 90,410 C 110,405 135,410 150,405" fill="none" opacity="0.6" stroke="#93c2db" stroke-linecap="round" stroke-width="2"></path>
-<!-- [GEOGRAPHY 3: Heungmanso Garden / Forest - Top North] -->
-<path d="M 370,-20 C 420,-10 490,20 500,80 C 510,130 460,160 400,165 C 350,170 320,130 310,70 C 300,10 330,-15 370,-20 Z" fill="#dceadc" opacity="0.8"></path>
-<!-- [GEOGRAPHY 4: Oncheon-cheon (온천천) Stream Axis towards Bokha-cheon] -->
-<path d="M 175,385 C 240,390 320,395 410,425 C 490,450 560,500 660,515 C 710,520 750,515 780,510" fill="none" stroke="url(#streamGrad)" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"></path>
-<!-- [ROAD NETWORK: Major Roads in Icheon Old Town] -->
-<!-- Jungni-ro / Seolbong-ro connecting Seolbong Park to Downtown & Terminal -->
-<path d="M 170,345 C 260,335 380,340 520,380 C 600,405 670,445 780,480" fill="none" stroke="#ede8df" stroke-linecap="round" stroke-linejoin="round" stroke-width="22"></path>
-<!-- Gyeongchung-daero (Main Arterial Road: North-South) -->
-<path d="M 640,-20 C 645,150 660,300 670,430 C 675,500 680,590 685,600" fill="none" stroke="#ede8df" stroke-linecap="round" stroke-linejoin="round" stroke-width="20"></path>
-<!-- Yeongchang-ro (Market & Commercial Street: East-West) -->
-<path d="M 230,280 C 330,265 470,265 620,285 C 700,295 740,310 780,325" fill="none" stroke="#ede8df" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"></path>
-<!-- Eoseop-ro (North-South Connector through Gwango & Changjeon) -->
-<path d="M 450,-10 C 445,140 440,260 435,370 C 430,470 420,530 410,600" fill="none" stroke="#ede8df" stroke-linecap="round" stroke-linejoin="round" stroke-width="17"></path>
-<!-- Secondary Street from Gwango Market to Seolbongho -->
-<path d="M 330,270 C 270,285 210,315 165,340" fill="none" stroke="#ede8df" stroke-linecap="round" stroke-width="14"></path>
-<!-- Downtown Alley Net -->
-<path d="M 520,270 C 515,330 510,400 505,470" fill="none" stroke="#ede8df" stroke-linecap="round" stroke-width="13"></path>
-<!-- Inner road center lines (Warm soft white) -->
-<path d="M 170,345 C 260,335 380,340 520,380 C 600,405 670,445 780,480" fill="none" stroke="#fcfbfa" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"></path>
-<path d="M 640,-20 C 645,150 660,300 670,430 C 675,500 680,590 685,600" fill="none" stroke="#fcfbfa" stroke-linecap="round" stroke-linejoin="round" stroke-width="9"></path>
-<path d="M 230,280 C 330,265 470,265 620,285 C 700,295 740,310 780,325" fill="none" stroke="#fcfbfa" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"></path>
-<path d="M 450,-10 C 445,140 440,260 435,370 C 430,470 420,530 410,600" fill="none" stroke="#fcfbfa" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"></path>
-<path d="M 330,270 C 270,285 210,315 165,340" fill="none" stroke="#fcfbfa" stroke-linecap="round" stroke-width="7"></path>
-<!-- [WALKING ROUTE: 1 -> 2 -> 3 -> 4 -> 5 (North) -> 6 (Seolbong) -> 7 (Back to Terminal)] -->
-<path class="animated-route" d="M 640,465 C 610,435 590,410 560,395 C 530,375 500,350 470,335 C 440,315 425,290 395,250 C 385,200 395,145 415,108 C 370,120 280,180 215,260 C 175,310 160,325 145,345" fill="none" stroke="#5c3826" stroke-linecap="round" stroke-linejoin="round" stroke-width="5.5"></path>
-<!-- [GEOGRAPHIC LABELS & ICONS (SVGs / Text)] -->
-<!-- Seolbong Lake Label -->
-<text fill="#5285a3" font-family="'Noto Sans KR', sans-serif" font-size="13" font-weight="700" letter-spacing="1" text-anchor="middle" x="110" y="395">설봉호</text>
-<text fill="#7baec9" font-family="'Noto Sans KR', sans-serif" font-size="10" font-weight="500" text-anchor="middle" x="110" y="412">호수 둘레길</text>
-<!-- Seolbong Mountain / Waterfall indication -->
-<g fill="#466946" opacity="0.8" transform="translate(45, 255)">
-<circle cx="10" cy="10" fill="#d1e3d1" r="12"></circle>
-<path d="M10 3 L16 14 L4 14 Z"></path>
-<path d="M10 0 L15 10 L5 10 Z" opacity="0.9"></path>
-<text fill="#3e593e" font-family="'Noto Sans KR', sans-serif" font-size="11" font-weight="700" x="24" y="14">설봉공원·폭포</text>
-</g>
-<!-- Heungmanso (North) Area Label -->
-<g transform="translate(415, 60)">
-<text fill="#486047" font-family="'Noto Sans KR', sans-serif" font-size="12" font-weight="700">흥만소</text>
-<text fill="#728c71" font-family="'Noto Sans KR', sans-serif" font-size="9" font-weight="500" y="14">쌀 베이커리·디저트</text>
-</g>
-<!-- Oncheon-cheon Stream text -->
-<text fill="#7baec9" font-family="'Noto Sans KR', sans-serif" font-size="10" font-weight="600" letter-spacing="2" transform="rotate(18, 480, 435)" x="480" y="435">온천천</text>
-<!-- Gwango Market District Label -->
-<text fill="#9c8774" font-family="'Noto Sans KR', sans-serif" font-size="11" font-weight="600" x="350" y="275">관고전통시장 일대</text>
-<!-- Terminal District Label -->
-<text fill="#8c6a53" font-family="'Noto Sans KR', sans-serif" font-size="11" font-weight="600" x="605" y="525">이천종합터미널</text>
-</svg>
-<!-- ================= WAYPOINT MARKERS ================= -->
-<!-- 1. 이천종합터미널 (출발) - [Right Bottom] -->
-<div class="group absolute left-[84%] top-[81%] -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer" data-marker-index="1">
-<div class="absolute inset-0 rounded-full bg-brand-markerBrown opacity-40 ping-marker"></div>
-<div class="relative w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-brand-markerBrown text-white font-bold text-xs sm:text-sm italic flex items-center justify-center ring-4 ring-white marker-shadow transition-transform group-hover:scale-115">
-          1
+  <div class="kakao-modal-card">
+    <!-- Header Section -->
+    <div class="kakao-modal-header">
+      <div>
+        <div class="kko-header-meta">
+          <span class="kko-badge-tag">⭐️ 카카오맵 즐겨찾기 동기화</span>
+          <span class="kko-badge-count" id="modal-bm-count">16개 장소 동기화</span>
         </div>
-<!-- Hover Popover Tooltip -->
-<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-stone-900/90 backdrop-blur-sm text-white text-xs p-2.5 rounded-xl opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 shadow-xl z-40 text-center">
-<div class="font-bold text-amber-200">1. 이천종합터미널 (출발)</div>
-<div class="text-[11px] text-stone-300 mt-0.5">도보 여정의 기점 · 물품보관 가능</div>
-</div>
-</div>
-<!-- 2. 우진 커피니케이션 - [Center-SouthEast] -->
-<div class="group absolute left-[73.5%] top-[69%] -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer" data-marker-index="2">
-<div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-brand-markerBrown text-white font-bold text-xs sm:text-sm italic flex items-center justify-center ring-4 ring-white marker-shadow transition-transform group-hover:scale-115">
-          2
-        </div>
-<!-- Hover Popover Tooltip -->
-<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-52 bg-stone-900/90 backdrop-blur-sm text-white text-xs p-2.5 rounded-xl opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 shadow-xl z-40 text-center">
-<div class="font-bold text-amber-200">2. 우진 커피니케이션</div>
-<div class="text-[11px] text-stone-300 mt-0.5">스페셜티 드립커피와 감각적인 공간</div>
-</div>
-</div>
-<!-- 3. 로컬 혼밥 (원도심 맛집) - [Center] -->
-<div class="group absolute left-[62%] top-[58.5%] -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer" data-marker-index="3">
-<div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-brand-markerBrown text-white font-bold text-xs sm:text-sm italic flex items-center justify-center ring-4 ring-white marker-shadow transition-transform group-hover:scale-115">
-          3
-        </div>
-<!-- Hover Popover Tooltip -->
-<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-stone-900/90 backdrop-blur-sm text-white text-xs p-2.5 rounded-xl opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 shadow-xl z-40 text-center">
-<div class="font-bold text-amber-200">3. 로컬 혼밥 (창전동 맛집)</div>
-<div class="text-[11px] text-stone-300 mt-0.5">이천 쌀밥 정식 &amp; 깔끔한 1인 로컬식</div>
-</div>
-</div>
-<!-- 4. 관고전통시장 - [Center North] -->
-<div class="group absolute left-[52%] top-[44%] -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer" data-marker-index="4">
-<div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-brand-markerBrown text-white font-bold text-xs sm:text-sm italic flex items-center justify-center ring-4 ring-white marker-shadow transition-transform group-hover:scale-115">
-          4
-        </div>
-<!-- Hover Popover Tooltip -->
-<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-stone-900/90 backdrop-blur-sm text-white text-xs p-2.5 rounded-xl opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 shadow-xl z-40 text-center">
-<div class="font-bold text-amber-200">4. 관고전통시장</div>
-<div class="text-[11px] text-stone-300 mt-0.5">활기찬 5일장 먹거리와 닭발 골목</div>
-</div>
-</div>
-<!-- 5. 흥만소 (쌀 베이커리) - [North Top] -->
-<div class="group absolute left-[54.5%] top-[19%] -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer" data-marker-index="5">
-<div class="absolute inset-0 rounded-full bg-brand-markerBrown opacity-40 ping-marker"></div>
-<div class="relative w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-brand-markerBrown text-white font-bold text-xs sm:text-sm italic flex items-center justify-center ring-4 ring-white marker-shadow transition-transform group-hover:scale-115">
-          5
-        </div>
-<!-- Hover Popover Tooltip -->
-<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-52 bg-stone-900/90 backdrop-blur-sm text-white text-xs p-2.5 rounded-xl opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 shadow-xl z-40 text-center">
-<div class="font-bold text-amber-200">5. 흥만소 (쌀 베이커리)</div>
-<div class="text-[11px] text-stone-300 mt-0.5">이천쌀 크림빵 &amp; 시그니처 쌀 디저트</div>
-</div>
-</div>
-<!-- 6. 설봉공원 & 설봉호 - [Left Bottom/West] -->
-<div class="group absolute left-[19%] top-[60.5%] -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer" data-marker-index="6">
-<div class="absolute inset-0 rounded-full bg-brand-markerBrown opacity-40 ping-marker"></div>
-<div class="relative w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-brand-markerBrown text-white font-bold text-xs sm:text-sm italic flex items-center justify-center ring-4 ring-white marker-shadow transition-transform group-hover:scale-115">
-          6
-        </div>
-<!-- Hover Popover Tooltip -->
-<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-stone-900/90 backdrop-blur-sm text-white text-xs p-2.5 rounded-xl opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 shadow-xl z-40 text-center">
-<div class="font-bold text-amber-200">6. 설봉공원 &amp; 설봉호</div>
-<div class="text-[11px] text-stone-300 mt-0.5">설봉호 둘레길 산책과 힐링 쉼터</div>
-</div>
-</div>
-<!-- 7. 터미널 귀가 - [Right Bottom] -->
-
-<!-- Map interaction hint badge -->
-<div class="absolute bottom-2.5 right-3 bg-white/85 backdrop-blur-sm px-2.5 py-1 rounded-full text-[11px] text-stone-600 font-medium pointer-events-none flex items-center gap-1 shadow-sm border border-stone-200/60">
-<i class="fa-solid fa-hand-pointer text-[10px] text-brand-brownText"></i> 번호를 누르면 상세 코스를 확인합니다
+        <h2 id="map-title" class="kko-modal-title">이천 원도심 투어 즐겨찾기 지도</h2>
+        <p class="kko-modal-desc">취재 에디터가 카카오맵에 직접 저장한 추천 동선과 즐겨찾기 장소 좌표를 한눈에 확인하세요.</p>
       </div>
-</section>
-<!-- END: MapCanvasSection -->
-<!-- BEGIN: SequentialRouteSummaryCard -->
-<div class="mt-4 p-4 sm:p-5 bg-white rounded-2xl border border-stone-200/90 shadow-sm" data-purpose="course-stops-overview">
-<p class="text-[13px] sm:text-[14px] leading-relaxed font-medium text-stone-800 tracking-tight text-center sm:text-left break-keep"><span class="font-bold text-brand-markerBrown">1:</span> 터미널출발 <span class="text-stone-300 mx-1">·</span>
-<span class="font-bold text-brand-markerBrown">2:</span> 우진 커피니케이션 <span class="text-stone-300 mx-1">·</span>
-<span class="font-bold text-brand-markerBrown">3:</span> 로컬 혼밥 <span class="text-stone-300 mx-1">·</span>
-<span class="font-bold text-brand-markerBrown">4:</span> 관고전통시장 <span class="text-stone-300 mx-1">·</span>
-<span class="font-bold text-brand-markerBrown">5:</span> 흥만소 <span class="text-stone-300 mx-1">·</span>
-<span class="font-bold text-brand-markerBrown">6:</span> 설봉공원</p>
-<!-- Expandable Mini Info Chips -->
-<div class="mt-3 pt-3 border-t border-stone-100 grid grid-cols-3 gap-2 text-center text-xs">
-<div class="bg-stone-50/80 p-2 rounded-xl border border-stone-100">
-<span class="text-stone-400 block text-[10px] font-medium">총 코스 거리</span>
-<span class="font-bold text-stone-700 sm:text-sm">약 3.8 km</span>
-</div>
-<div class="bg-stone-50/80 p-2 rounded-xl border border-stone-100">
-<span class="text-stone-400 block text-[10px] font-medium">예상 소요 시간</span>
-<span class="font-bold text-stone-700 sm:text-sm">약 3시간 30분</span>
-</div>
-<div class="bg-stone-50/80 p-2 rounded-xl border border-stone-100">
-<span class="text-stone-400 block text-[10px] font-medium">코스 난이도</span>
-<span class="font-bold text-emerald-700 sm:text-sm">편안한 평지·호수 도보</span>
-</div>
-</div>
-</div>
-<!-- END: SequentialRouteSummaryCard -->
-<!-- BEGIN: DisclaimerFooter -->
-<footer class="mt-3 px-1" data-purpose="disclaimer-caption">
-<p class="text-[11.5px] sm:text-xs text-stone-500 font-normal">
-        실제 이천 원도심의 지리적 위치(설봉호, 관고전통시장, 이천터미널)를 반영한 감성 투어 맵입니다.
-      </p>
-</footer>
-<!-- END: DisclaimerFooter -->
-</main>
+      <div class="kko-header-actions">
+        <a id="btn-open-kko-folder" href="https://kko.to/Jx9RDjPVcq" target="_blank" rel="noopener noreferrer" class="btn-kko-app-link" title="카카오맵 앱에서 전체 폴더 열기">
+          <span>카카오맵 앱 열기 ↗</span>
+        </a>
+        <button type="button" class="btn-close-kko-modal" onclick="document.getElementById('map-dialog').close()" aria-label="닫기">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" style="width:20px; height:20px;">
+            <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Category Filter Bar -->
+    <div class="kko-map-filter-bar">
+      <button type="button" class="filter-chip active" data-filter="all" onclick="filterMapMarkers('all')">전체 보기</button>
+      <button type="button" class="filter-chip" data-filter="route" onclick="filterMapMarkers('route')">🚶 추천 동선</button>
+      <button type="button" class="filter-chip" data-filter="food" onclick="filterMapMarkers('food')">🍜 맛집·카페</button>
+      <button type="button" class="filter-chip" data-filter="transit" onclick="filterMapMarkers('transit')">🚌 대중교통·정류장</button>
+    </div>
+
+    <!-- Map Canvas Container -->
+    <div class="kko-map-canvas-box">
+      <div id="kakao-map-canvas-detail" class="kko-map-canvas" style="height: 440px; width: 100%;"></div>
+      <div class="kko-map-tip-bar">
+        <span>💡 핀을 클릭하면 상세 주소와 길찾기 버튼이 나타납니다. 아래 목록을 클릭해도 해당 위치로 이동합니다.</span>
+      </div>
+    </div>
+
+    <!-- Bookmarks Horizontal Drawer -->
+    <div class="kko-drawer-section">
+      <div class="kko-drawer-title">📌 등록된 즐겨찾기 스팟 목록 (클릭 시 지도 이동)</div>
+      <div class="kko-bookmarks-drawer" id="kko-bookmarks-drawer"></div>
+    </div>
+  </div>
 </dialog>
 
 <script>
@@ -859,5 +2685,106 @@ p { line-height: 1.65; word-break: keep-all; }
     }
   });
 
+  // 공유하기 (Web Share API 및 클립보드 복사)
+  function handleShare() {
+    const shareTitle = "이천 원도심 투어 · 뚜벅뚜벅 나혼자 [이천]";
+    const shareText = "빵과 커피 들고 오래된 이천을 걷다 · 원도심 3.8km 도보 산책 코스를 친구에게 추천합니다!";
+    const shareUrl = window.location.href;
+
+    if (navigator.share) {
+      navigator.share({
+        title: shareTitle,
+        text: shareText,
+        url: shareUrl
+      }).catch(err => {
+        if (err.name !== 'AbortError') {
+          copyToClipboard(shareUrl, "✨ 원도심 투어 링크가 복사되었습니다! 친구에게 공유해보세요.");
+        }
+      });
+    } else {
+      copyToClipboard(shareUrl, "✨ 원도심 투어 링크가 복사되었습니다! 친구에게 공유해보세요.");
+    }
+  }
+
+  function copyCurrentUrl() {
+    copyToClipboard(window.location.href, "✨ 원도심 투어 링크가 복사되었습니다! 친구에게 공유해보세요.");
+  }
+
+  function copyToClipboard(text, successMsg) {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(successMsg);
+      }).catch(() => {
+        fallbackCopy(text, successMsg);
+      });
+    } else {
+      fallbackCopy(text, successMsg);
+    }
+  }
+
+  function fallbackCopy(text, successMsg) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      showToast(successMsg);
+    } catch (err) {
+      prompt("아래 링크를 복사하여 친구에게 공유하세요:", text);
+    }
+    document.body.removeChild(textArea);
+  }
+
+  let toastTimeout = null;
+  function showToast(msg) {
+    const toast = document.getElementById('share-toast');
+    const msgEl = document.getElementById('share-toast-msg');
+    if (!toast) return;
+    if (msgEl && msg) msgEl.textContent = msg;
+    toast.classList.add('show');
+    if (toastTimeout) clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
+      toast.classList.remove('show');
+    }, 3200);
+  }
 </script>
+
+<!-- Floating Toast Notification -->
+<div id="share-toast" class="share-toast" role="alert" aria-live="polite">
+  <i class="fa-solid fa-circle-check"></i>
+  <span id="share-toast-msg">원도심 투어 링크가 복사되었습니다! 친구에게 공유해보세요.</span>
+</div>
+
+<!-- Mobile Floating Bottom Navigation (Only on mobile viewport) -->
+<nav aria-label="하단 네비게이션 바" class="bottom-nav-bar">
+  <a href="../01_home.html/code.html" class="nav-tab" id="tab-home">
+    <span class="tab-icon">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+    </span>
+    <span class="tab-label">홈</span>
+  </a>
+  <a href="../01_home.html/code.html#courses-section" class="nav-tab" id="tab-courses">
+    <span class="tab-icon">
+      <svg viewBox="0 0 24 24"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3V6z"></path><path d="M9 3v15M15 6v15"></path></svg>
+    </span>
+    <span class="tab-label">세 갈래 코스</span>
+  </a>
+  <a href="../01_home.html/code.html#keyword-selection-area" class="nav-tab" id="tab-keyword">
+    <span class="tab-icon">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v8M8 12h8"></path></svg>
+    </span>
+    <span class="tab-label">취향 추천</span>
+  </a>
+  <a href="../01_home.html/code.html#transit-tips-section" class="nav-tab" id="tab-transit">
+    <span class="tab-icon">
+      <svg viewBox="0 0 24 24"><rect height="13" rx="2" width="18" x="3" y="4"></rect><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle><path d="M3 9h18"></path></svg>
+    </span>
+    <span class="tab-label">교통팁</span>
+  </a>
+</nav>
+
 </body></html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>가로형 배너 3종 시안 미리보기</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Pretendard', sans-serif;
+      background: #f4efe6;
+      color: #241e19;
+      padding: 40px 20px;
+    }
+    .preview-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .header-info {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .header-info h1 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      color: #1f1b16;
+    }
+    .header-info p {
+      font-size: 15px;
+      color: #6d6255;
+      line-height: 1.6;
+    }
+    .banner-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 32px;
+      box-shadow: 0 10px 30px rgba(36,30,25,0.06);
+      border: 1px solid rgba(220,210,195,0.7);
+    }
+    .banner-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .course-badge {
+      font-size: 13px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: #efe7db;
+      color: #725737;
+    }
+    .course-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1f1b16;
+    }
+    /* Exactly 730px wrapper matching detail page */
+    .detail-container-sim {
+      max-width: 730px;
+      margin: 0 auto;
+      border: 2px dashed #d5c8b5;
+      border-radius: 18px;
+      padding: 12px;
+      background: #faf8f5;
+    }
+    .detail-container-sim .label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #8c7b68;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .banner-img-box {
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(36,30,25,0.1);
+      background: #000;
+      line-height: 0;
+    }
+    .banner-img-box img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .specs {
+      margin-top: 14px;
+      font-size: 13px;
+      color: #7b6f60;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .specs span strong {
+      color: #2e261f;
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-container">
+    <div class="header-info">
+      <h1>🎨 가로형(와이드) 배너 3종 시안 미리보기</h1>
+      <p>
+        상세페이지 우측 본문 너비인 <strong>730px</strong> 환경에 1:1로 맞춘 시뮬레이션입니다.<br>
+        망고보드 원본 고화질 배경 사진, 전용 폰트(Poppins & Pretendard), 고유 색상 뱃지 및 핀을 100% 반영했습니다.
+      </p>
+    </div>
+
+    <!-- Course 01 -->
+    <div class="banner-card">
+      <div class="banner-card-header">
+        <span class="course-title">코스 1. 원도심 골목 산책 (LOCAL TOWN)</span>
+        <span class="course-badge">5개 스팟 순회</span>
+      </div>
+      <div class="detail-container-sim">
+        <div class="label">
+          <span>상세페이지 실제 렌더링 영역 (너비 730px 기준)</span>
+          <span>높이 약 320px (세로 공간 65% 절약)</span>
+        </div>
+        <div class="banner-img-box">
+          <img src="images/banner_course01_v4.png" alt="LOCAL TOWN 배너">
+        </div>
+      </div>
+      <div class="specs">
+        <span>• <strong>스팟 경로:</strong> 1 이천터미널 → 2 우진 커피니케이션 → 3 관고전통시장 → 4 쌀베이커리 흥만소 → 5 설봉공원</span>
+        <span>• <strong>해상도:</strong> 1460 × 640 (Retina 2x 지원)</span>
+      </div>
+    </div>
+
+    <!-- Course 02 -->
+    <div class="banner-card">
+      <div class="banner-card-header">
+        <span class="course-title">코스 2. 도예촌 힐링 산책 (CERAMICS)</span>
+        <span class="course-badge">4개 스팟 순회</span>
+      </div>
+      <div class="detail-container-sim">
+        <div class="label">
+          <span>상세페이지 실제 렌더링 영역 (너비 730px 기준)</span>
+          <span>높이 약 320px (세로 공간 65% 절약)</span>
+        </div>
+        <div class="banner-img-box">
+          <img src="images/banner_course02_v4.png" alt="CERAMICS 배너">
+        </div>
+      </div>
+      <div class="specs">
+        <span>• <strong>스팟 경로:</strong> 1 신둔도예촌역 → 2 이천 쌀밥 정식 → 3 광주요 카페 코유 → 4 예스파크</span>
+        <span>• <strong>해상도:</strong> 1460 × 640 (Retina 2x 지원)</span>
+      </div>
+    </div>
+
+    <!-- Course 03 -->
+    <div class="banner-card">
+      <div class="banner-card-header">
+        <span class="course-title">코스 3. 복합문화 감성 공간 (CULTURAL SPACE)</span>
+        <span class="course-badge">5개 스팟 순회</span>
+      </div>
+      <div class="detail-container-sim">
+        <div class="label">
+          <span>상세페이지 실제 렌더링 영역 (너비 730px 기준)</span>
+          <span>높이 약 320px (세로 공간 65% 절약)</span>
+        </div>
+        <div class="banner-img-box">
+          <img src="images/banner_course03_v4.png" alt="CULTURAL SPACE 배너">
+        </div>
+      </div>
+      <div class="specs">
+        <span>• <strong>스팟 경로:</strong> 1 이천터미널 → 2 이천쌀빵 심빵 → 3 시몬스 테라스점 → 4 코지모가 → 5 미솥지음</span>
+        <span>• <strong>해상도:</strong> 1460 × 640 (Retina 2x 지원)</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

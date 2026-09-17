@@ -1,10 +1,11 @@
-<!DOCTYPE html><html lang="ko" style=""><head>
+<!DOCTYPE html><html lang="ko"><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" name="viewport">
-<title>뚜벅뚜벅 나혼자 [이천] · 당일치기 도보 여행</title>
+<title>뚜벅뚜벅 나혼자 [이천] · 당일치기 도보 여행 가이드</title>
 <link href="https://fonts.googleapis.com" rel="preconnect">
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&amp;family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&amp;family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&amp;family=Outfit:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 <style>
     :root {
       --earth: #9d705b;
@@ -13,54 +14,221 @@
       --sage: #a9bc8d;
       --sage-dark: #5e7150;
       --sage-light: #eff4eb;
-      --paper: #f8f5ee;
-      --cream: #f2ede4;
+      --paper: #fbf9f5;
+      --cream: #f4efe6;
       --ink: #2b2723;
       --muted: #746d64;
-      --line: #e4ddd2;
+      --line: #e6dfd5;
       --white: #ffffff;
-      --nav-height: 60px;
+      --nav-height: 70px;
       --bottom-bar-height: 62px;
       font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
       color: var(--ink);
-      background: #1e1a17;
+      background: var(--paper);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      background: #1a1715;
+      background: #f7f4ee;
       -webkit-font-smoothing: antialiased;
-      line-height: 1.5;
+      line-height: 1.6;
+      color: var(--ink);
     }
+    body, p, span, li, dt, dd, h1, h2, h3, h4, h5, h6, a, button {
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    .br-pc { display: inline; }
+    .br-mobile { display: none; }
     button, a { -webkit-tap-highlight-color: transparent; }
     button { font: inherit; cursor: pointer; border: none; background: none; }
     a { color: inherit; text-decoration: none; }
     img { display: block; width: 100%; }
 
-    .shell {
-      max-width: 480px;
-      margin: 0 auto;
-      background: var(--paper);
+    /* Site Shell */
+    .site-shell {
+      width: 100%;
       min-height: 100vh;
-      box-shadow: 0 0 50px rgba(0,0,0,0.35);
-      position: relative;
-      overflow-x: hidden;
+      background: var(--paper);
       display: flex;
       flex-direction: column;
+      position: relative;
     }
 
+    .container {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    /* Desktop Navigation Header */
+    .site-nav-header {
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      width: 100%;
+      height: var(--nav-height);
+      background: rgba(251, 249, 245, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(230, 223, 213, 0.85);
+      transition: all 0.25s ease;
+    }
+    .site-nav-inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 19px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+    }
+    .brand-logo .brand-badge {
+      font-size: 11px;
+      font-weight: 700;
+      background: var(--earth-light);
+      color: var(--earth-dark);
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(157, 112, 91, 0.22);
+      letter-spacing: 0;
+    }
+    .desktop-nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      list-style: none;
+    }
+    .desktop-nav-menu a {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--muted);
+      transition: color 0.2s;
+      position: relative;
+      padding: 6px 2px;
+      white-space: nowrap;
+    }
+    .desktop-nav-menu a:hover,
+    .desktop-nav-menu a.active {
+      color: var(--earth-dark);
+    }
+    .desktop-nav-menu a.active::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--earth-dark);
+      border-radius: 2px;
+    }
+    .nav-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--earth-dark);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 9px 18px;
+      border-radius: 20px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(110, 72, 56, 0.2);
+      white-space: nowrap;
+    }
+    .nav-cta-btn:hover {
+      background: #563628;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(110, 72, 56, 0.28);
+    }
+    .nav-actions-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ffffff;
+      color: var(--ink);
+      border: 1.2px solid var(--line);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 20px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(71, 49, 36, 0.04);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .nav-share-btn:hover {
+      background: #fbf5ee;
+      border-color: #d8c3b0;
+      color: var(--earth-dark);
+      transform: translateY(-1px);
+    }
+    .nav-share-btn i {
+      font-size: 12.5px;
+      color: var(--earth-dark);
+    }
+
+
+    /* Floating Toast Notification */
+    .share-toast {
+      position: fixed;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(36, 30, 25, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 13.5px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+      z-index: 9999;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity: 0;
+      pointer-events: none;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      white-space: nowrap;
+    }
+    .share-toast.show {
+      bottom: 32px;
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .share-toast i {
+      color: #9fe29f;
+      font-size: 16px;
+    }
+
+    /* Hero Section (Tall Immersion Banner like gglocaltour) */
     .hero-container {
       position: relative;
-      height: 480px;
+      height: 86vh;
+      min-height: 800px;
+      max-height: 940px;
       width: 100%;
       overflow: hidden;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      align-items: center;
       color: #ffffff;
     }
-
     .hero-slides-wrapper {
       position: absolute;
       inset: 0;
@@ -73,274 +241,661 @@
       background-size: cover;
       background-position: center;
       opacity: 0;
-      transition: opacity 1s ease-in-out;
+      transform: scale(1.04);
+      transition: opacity 1.3s ease-in-out, transform 9s ease-out;
     }
     .hero-slide.active {
       opacity: 1;
+      transform: scale(1);
     }
-    
     .hero-scrim {
       position: absolute;
       inset: 0;
       background: linear-gradient(
         180deg, 
-        rgba(18, 15, 13, 0.42) 0%, 
-        rgba(18, 15, 13, 0.22) 25%, 
-        rgba(18, 15, 13, 0.48) 60%, 
-        rgba(18, 15, 13, 0.85) 100%
+        rgba(26, 21, 18, 0.58) 0%, 
+        rgba(26, 21, 18, 0.32) 40%, 
+        rgba(26, 21, 18, 0.76) 80%,
+        rgba(26, 21, 18, 0.95) 100%
       );
       z-index: 2;
     }
-
-    .hero-top-bar {
+    .hero-content-inner {
       position: relative;
       z-index: 10;
-      height: var(--nav-height);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      flex-shrink: 0;
-    }
-    .brand-title {
-      font-size: 16px;
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      text-shadow: 0 1px 6px rgba(0,0,0,0.4);
-    }
-    .brand-title span.badge {
-      font-size: 11px;
-      font-weight: 700;
-      background: rgba(255, 255, 255, 0.22);
-      backdrop-filter: blur(4px);
-      padding: 2px 6px;
-      border-radius: 4px;
-      letter-spacing: 0;
-    }
-
-    .hero-hamburger {
-      width: 42px;
-      height: 42px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-end;
-      gap: 6px;
-      cursor: pointer;
-      padding: 8px;
-    }
-    .hero-hamburger span {
-      display: block;
-      height: 2px;
-      background-color: #ffffff;
-      border-radius: 2px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
-    }
-    .hero-hamburger span:nth-child(1) { width: 24px; }
-    .hero-hamburger span:nth-child(2) { width: 18px; }
-
-    .hero-main-content {
-      position: relative;
-      z-index: 10;
-      flex: 1;
-      padding: 10px 22px 24px;
+      width: 100%;
+      padding: 80px 0;
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin: auto 0;
     }
     .hero-tag {
       font-family: "DM Sans", sans-serif;
-      font-size: 11px;
+      font-size: 13.5px;
       font-weight: 700;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 10px;
-      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+      color: rgba(255, 255, 255, 0.96);
+      display: inline-block;
+      margin-bottom: 26px;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(10px);
+      padding: 7px 20px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
     .hero-headline {
-      font-size: 26px;
+      font-size: 52px;
       font-weight: 900;
-      letter-spacing: -0.04em;
-      line-height: 1.3;
-      margin-bottom: 10px;
+      letter-spacing: -0.035em;
+      line-height: 1.36;
+      margin-bottom: 26px;
       color: #ffffff;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
       word-break: keep-all;
     }
     .hero-description {
-      font-size: 14px;
+      font-size: 18.5px;
       font-weight: 500;
-      line-height: 1.5;
-      color: rgba(255, 255, 255, 0.92);
-      margin-bottom: 22px;
-      text-shadow: 0 1px 6px rgba(0,0,0,0.55);
+      line-height: 1.85;
+      color: rgba(255, 255, 255, 0.95);
+      max-width: 720px;
+      margin: 0 auto 44px;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.65);
       word-break: keep-all;
     }
-
-    .hero-ghost-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      max-width: 290px;
-      height: 48px;
-      border: 1.5px solid rgba(255, 255, 255, 0.88);
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(6px);
-      color: #ffffff;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      border-radius: 8px;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-      gap: 6px;
-    }
-
     .hero-pagination-dots {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 8px;
-      margin-top: 16px;
+      gap: 12px;
     }
     .dot-item {
-      width: 6px;
-      height: 6px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.4);
       transition: all 0.3s ease;
       cursor: pointer;
     }
     .dot-item.active {
-      width: 8px;
-      height: 8px;
+      width: 24px;
+      border-radius: 4px;
       background: #ffffff;
-      box-shadow: 0 0 6px rgba(255,255,255,0.7);
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
     }
 
-    .section-container {
-      padding: 24px 20px 34px;
-      flex: 1 0 auto;
-    }
-    .keyword-section {
-      background: #ffffff;
-      border-radius: 18px;
-      border: 1.5px solid var(--line);
-      padding: 24px 18px 22px;
-      box-shadow: 0 4px 20px rgba(71, 49, 36, 0.06);
-      margin-top: 32px;
-      position: relative;
-      z-index: 20;
+    /* Section Global Headers */
+    .section-header {
+      text-align: center;
+      margin-bottom: 38px;
     }
     .eyebrow {
       font-family: "DM Sans", sans-serif;
       color: var(--earth);
-      font-size: 11px;
+      font-size: 12.5px;
       font-weight: 800;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      display: block;
-      margin-bottom: 4px;
+      display: inline-block;
+      margin-bottom: 10px;
     }
     .section-title {
-      font-size: 20px;
+      font-size: 32px;
       font-weight: 900;
-      letter-spacing: -0.04em;
+      letter-spacing: -0.035em;
+      line-height: 1.42;
       color: var(--ink);
-      margin-bottom: 6px;
+      margin-bottom: 14px;
+      word-break: keep-all;
     }
     .section-desc {
-      font-size: 13px;
+      font-size: 16px;
       color: var(--muted);
-      line-height: 1.5;
-      margin-bottom: 18px;
+      line-height: 1.88;
+      max-width: 680px;
+      margin: 0 auto;
+      word-break: keep-all;
     }
 
+    /* Keyword Recommendation Section (3x2 Grid & Isolated Viewport) */
+    .keyword-section {
+      background: #ffffff;
+      border-radius: 28px;
+      border: 1.5px solid var(--line);
+      padding: 38px 36px 34px;
+      box-shadow: 0 8px 32px rgba(71, 49, 36, 0.05);
+      margin: 44px auto 64px;
+      max-width: 980px;
+      position: relative;
+      scroll-margin-top: 76px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
     .keyword-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-bottom: 18px;
+      gap: 14px;
+      margin: 22px auto 24px;
+      max-width: 860px;
+      width: 100%;
     }
     .keyword-chip {
       background: var(--paper);
       border: 1.5px solid var(--line);
-      border-radius: 12px;
-      padding: 12px 6px;
+      border-radius: 18px;
+      padding: 22px 14px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 5px;
+      gap: 8px;
       font-weight: 700;
-      font-size: 13px;
+      font-size: 15px;
       color: var(--ink);
-      min-height: 64px;
+      min-height: 104px;
+      transition: all 0.22s ease;
+      cursor: pointer;
+      text-align: center;
     }
     .keyword-chip .chip-icon {
-      font-size: 20px;
+      font-size: 28px;
       line-height: 1;
+      margin-bottom: 2px;
+    }
+    .keyword-chip .chip-sub {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: -0.02em;
+    }
+    .keyword-chip:hover {
+      border-color: var(--earth);
+      background: #fdfaf6;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(110, 72, 56, 0.1);
     }
     .keyword-chip.active {
       background: var(--earth-dark);
       color: #ffffff;
       border-color: var(--earth-dark);
-      box-shadow: 0 4px 14px rgba(110, 72, 56, 0.28);
+      box-shadow: 0 6px 20px rgba(110, 72, 56, 0.32);
+      transform: translateY(-2px);
+    }
+    .keyword-chip.active .chip-sub {
+      color: rgba(255, 255, 255, 0.88);
     }
 
-    .primary-submit-btn {
-      width: 100%;
-      background: var(--earth-dark);
-      color: #ffffff;
-      border-radius: 12px;
-      padding: 14px 16px;
-      min-height: 52px;
-      font-size: 15px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
+    .keyword-submit-wrap {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      box-shadow: 0 4px 14px rgba(110, 72, 56, 0.22);
+      margin-top: 10px;
+    }
+    .primary-submit-btn {
+      min-width: 300px;
+      background: var(--earth-dark);
+      color: #ffffff;
+      border-radius: 14px;
+      padding: 16px 36px;
+      min-height: 54px;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 6px 18px rgba(110, 72, 56, 0.25);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .primary-submit-btn:hover {
+      background: #563628;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(110, 72, 56, 0.35);
     }
 
+    /* Courses Vertical Series Layout (직렬 형태: Top Photo + Bottom Content) */
     .courses-wrapper {
-      margin-top: 0;
+      padding: 56px 0 70px;
+      scroll-margin-top: var(--nav-height, 64px);
+      position: relative;
     }
     .course-card-list {
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      margin-top: 14px;
+      gap: 56px;
+      margin-top: 40px;
+      max-width: 960px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .course-item-card {
+      background: #ffffff;
+      border: 1.5px solid var(--line);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 12px 36px rgba(71, 49, 36, 0.07);
+      display: flex;
+      flex-direction: column;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+    .course-item-card:hover {
+      transform: translateY(-6px);
+      border-color: #d6c4b2;
+      box-shadow: 0 22px 50px rgba(71, 49, 36, 0.13);
+    }
+    .course-item-card.highlight-pulse {
+      animation: cardPulse 1.8s ease-in-out infinite;
+      border-color: var(--earth-dark);
+    }
+    @keyframes cardPulse {
+      0% { box-shadow: 0 0 0 0 rgba(157, 112, 91, 0.45); }
+      70% { box-shadow: 0 0 0 16px rgba(157, 112, 91, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(157, 112, 91, 0); }
     }
 
-    /* ================= Stitch Map Preview Dialog Styles ================= */
+    /* Top Photo Cover */
+    .course-card-cover {
+      position: relative;
+      width: 100%;
+      height: 380px;
+      min-height: 360px;
+      overflow: hidden;
+      background: #e8e1d5;
+    }
+    .course-card-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+    .course-item-card:hover .course-card-cover img {
+      transform: scale(1.04);
+    }
+    .course-card-cover-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.58) 100%);
+    }
+    .cover-badge-top {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(30, 24, 20, 0.84);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      font-size: 12.5px;
+      font-weight: 800;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-family: "DM Sans", sans-serif;
+      letter-spacing: 0.08em;
+    }
+    .cover-time-badge {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(94, 113, 80, 0.95);
+      color: #ffffff;
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 8px;
+      backdrop-filter: blur(6px);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Bottom Content Area */
+    .course-card-body {
+      padding: 38px 48px 42px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .course-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .course-idx {
+      font-family: "DM Sans", sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--earth);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .course-badge {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--sage-dark);
+      background: var(--sage-light);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+    .course-title {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.45;
+      margin-bottom: 12px;
+      color: var(--ink);
+    }
+    .course-summary {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 28px;
+      line-height: 1.82;
+      max-width: 680px;
+      word-break: keep-all;
+    }
+    .course-steps-flow {
+      width: 100%;
+      max-width: 720px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      position: relative;
+      background: var(--paper);
+      border: 1.5px solid var(--line);
+      border-radius: 18px;
+      padding: 22px 32px 20px;
+      margin-bottom: 28px;
+    }
+    .course-card-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin-top: 6px;
+    }
+    .btn-map-preview {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 15px 38px;
+      background: var(--cream);
+      border: 1.5px solid #ded5c7;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--earth-dark);
+      transition: all 0.22s ease;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(110, 72, 56, 0.08);
+    }
+    .btn-map-preview:hover {
+      background: #ecd9c7;
+      border-color: var(--earth);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(110, 72, 56, 0.16);
+    }
+
+    /* Transit Guide Vertical List */
+    .transit-section {
+      margin: 64px auto 90px;
+      max-width: 960px;
+      scroll-margin-top: 100px;
+    }
+    .transit-list-vertical {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      margin-top: 36px;
+    }
+    .transit-item-card {
+      background: #ffffff;
+      border: 1.5px solid #dbe5d4;
+      border-radius: 26px;
+      padding: 38px 42px 34px;
+      box-shadow: 0 8px 28px rgba(71, 49, 36, 0.05);
+      display: flex;
+      flex-direction: column;
+      transition: all 0.25s ease;
+    }
+    .transit-item-card:hover {
+      border-color: var(--sage-dark);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(71, 49, 36, 0.1);
+    }
+    .transit-badge {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: var(--sage-dark);
+      background: var(--sage-light);
+      padding: 4px 10px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 10px;
+      width: fit-content;
+    }
+    .transit-item-title {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--ink);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .transit-item-desc {
+      font-size: 16px;
+      color: #55504a;
+      line-height: 1.88;
+      margin-bottom: 16px;
+      word-break: keep-all;
+    }
+    .transit-item-tip {
+      padding: 12px 18px;
+      background: #f7faf5;
+      border-left: 3px solid var(--sage-dark);
+      border-radius: 0 10px 10px 0;
+      font-size: 13.5px;
+      color: var(--sage-dark);
+      font-weight: 700;
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+    .transit-btn-wrap {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 4px;
+    }
+    .transit-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 13px 26px;
+      background: var(--sage-light);
+      border: 1.5px solid #cbdbbf;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--sage-dark);
+      transition: all 0.22s ease;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .transit-action-btn:hover {
+      background: #dceadc;
+      border-color: var(--sage-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(94, 113, 80, 0.2);
+    }
+
+        /* Site Footer Modern Redesign */
+    .site-footer {
+      border-top: 1px solid var(--line);
+      background: #faf7f2;
+      color: var(--muted);
+      margin-top: 80px;
+      padding: 0;
+    }
+    .footer-top-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 44px 32px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 32px;
+    }
+    .footer-brand-block {
+      max-width: 650px;
+    }
+    .footer-eyebrow {
+      display: inline-block;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--sage-dark);
+      background: rgba(94, 113, 80, 0.12);
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+    .footer-brand-title {
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--ink);
+      margin: 0 0 10px;
+      letter-spacing: -0.02em;
+    }
+    .footer-brand-title span {
+      color: var(--earth-dark);
+    }
+    .footer-brand-desc {
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: #6d5e51;
+      margin: 0;
+    }
+    .footer-partner-logos {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      padding: 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      flex-shrink: 0;
+    }
+    .partner-logo-item {
+      display: inline-flex;
+      align-items: center;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      text-decoration: none;
+    }
+    .partner-logo-item:hover {
+      transform: translateY(-1px);
+      opacity: 0.85;
+    }
+    .logo-glowide {
+      height: 20px;
+      width: auto;
+      display: block;
+    }
+    .logo-highlocal {
+      height: 36px;
+      width: auto;
+      display: block;
+    }
+    .footer-logo-divider {
+      width: 1px;
+      height: 26px;
+      background: #e2d7c9;
+    }
+    .footer-bottom-bar {
+      background: #faeecf;
+      border-top: 1px solid #eedda9;
+      padding: 18px 32px 20px;
+    }
+    .footer-bottom-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: center;
+      text-align: center;
+    }
+    .footer-info-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: #524335;
+    }
+    .footer-info-meta .meta-sep {
+      color: #c4b087;
+    }
+    .footer-email-link {
+      color: var(--earth-dark);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s;
+    }
+    .footer-email-link:hover {
+      color: #9d4624;
+    }
+    .footer-disclaimer {
+      font-size: 11.5px;
+      color: #7d6e5c;
+      margin: 0;
+    }
+    @media (max-width: 768px) {
+      .footer-top-container {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 36px 20px 28px;
+        gap: 22px;
+      }
+      .footer-partner-logos {
+        width: 100%;
+        justify-content: center;
+      }
+      .footer-bottom-bar {
+        padding: 16px 20px 20px;
+      }
+      .footer-info-meta {
+        flex-direction: column;
+        gap: 6px;
+      }
+      .footer-info-meta .meta-sep {
+        display: none;
+      }
+    }
+
+    /* Stitch Map Preview Dialog Styles */
     dialog {
       border: 0;
       padding: 0;
       background: transparent;
-      width: calc(100vw - 20px);
-      max-width: 680px;
-      max-height: 94vh;
-      border-radius: 24px;
+      width: calc(100vw - 32px);
+      max-width: 860px;
+      max-height: 92vh;
+      border-radius: 28px;
       margin: auto;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
       box-shadow: none;
     }
     dialog::backdrop {
-      background: rgba(20, 18, 16, 0.72);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
+      background: rgba(20, 18, 16, 0.75);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
     }
     .custom-shadow-modal {
       box-shadow: 0 25px 50px -12px rgba(67, 40, 28, 0.22), 0 0 0 1px rgba(67, 40, 28, 0.08);
@@ -367,142 +922,22 @@
     .ping-marker {
       animation: ping-subtle 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
     }
-    .active-tooltip {
-      opacity: 1 !important;
-      transform: translateX(-50%) translateY(0) !important;
-      pointer-events: auto !important;
-    }
-    .course-item-card {
-      background: #ffffff;
-      border: 1.5px solid var(--line);
-      border-radius: 16px;
-      padding: 18px 16px;
-      box-shadow: 0 2px 10px rgba(71, 49, 36, 0.05);
-      display: flex;
-      flex-direction: column;
-    }
-    .course-card-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 8px;
-    }
-    .course-idx {
-      font-family: "DM Sans", sans-serif;
-      font-size: 11px;
-      font-weight: 800;
-      color: var(--earth);
-      letter-spacing: 0.08em;
-    }
-    .course-badge {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--sage-dark);
-      background: var(--sage-light);
-      padding: 3px 8px;
-      border-radius: 6px;
-    }
-    .course-title {
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      margin-bottom: 4px;
-      color: var(--ink);
-    }
-    .course-summary {
-      font-size: 12.5px;
-      color: var(--muted);
-      margin-bottom: 14px;
-      line-height: 1.45;
-    }
-    .course-steps-flow {
-      display: flex;
-      align-items: center;
-      background: var(--paper);
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 9px 12px;
-      margin-bottom: 14px;
-      gap: 6px;
-    }
-    .flow-node {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      flex: 1;
-      font-size: 11.5px;
-      font-weight: 700;
-      color: var(--ink);
-      white-space: nowrap;
-    }
-    .flow-arrow {
-      color: #b7ab9c;
-      font-size: 11px;
-      flex-shrink: 0;
-    }
-    .course-action-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 10px 16px;
-      background: var(--cream);
-      border-radius: 9px;
-      font-size: 12.5px;
-      font-weight: 800;
-      color: var(--earth-dark);
-      align-self: flex-end;
-      margin-left: auto;
-      cursor: pointer;
-      border: none;
-      outline: none;
-    }
 
-    .transit-card {
-      background: #eff4eb;
-      border: 1.5px solid #d3dec8;
-      border-radius: 16px;
-      padding: 18px 16px;
-      margin-top: 26px;
-    }
-    .transit-title {
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--sage-dark);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-    .transit-list {
-      list-style: none;
-      font-size: 12px;
-      color: #495640;
-      line-height: 1.6;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .transit-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 6px;
-    }
-
+    /* Mobile Bottom Navigation Bar */
     .bottom-nav-bar {
-      position: sticky;
+      display: none; /* hidden on desktop */
+      position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
       height: var(--bottom-bar-height);
       background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(227, 220, 209, 0.8);
-      display: flex;
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(227, 220, 209, 0.85);
       align-items: center;
       justify-content: space-around;
       z-index: 100;
-      box-shadow: 0 -3px 14px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 -3px 14px rgba(0, 0, 0, 0.06);
     }
     .nav-tab {
       flex: 1;
@@ -513,13 +948,7 @@
       justify-content: center;
       gap: 3px;
       color: var(--muted);
-    }
-    .nav-tab .tab-icon {
-      width: 22px;
-      height: 22px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      cursor: pointer;
     }
     .nav-tab .tab-icon svg {
       width: 20px;
@@ -539,20 +968,154 @@
       color: var(--earth-dark);
     }
 
-    .site-footer {
-      border-top: 1px solid var(--line);
-      padding: 24px 18px 20px;
-      font-size: 11px;
-      color: var(--muted);
-      line-height: 1.65;
-      background: var(--paper);
-      text-align: center;
-      margin-top: auto;
+    /* Media Queries for Responsive Tablet & Mobile */
+    @media (max-width: 1024px) {
+      .keyword-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+      .transit-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .hero-headline {
+        font-size: 42px;
+      }
     }
-  </style>
-<!-- Google Fonts Outfit & FontAwesome & Tailwind for Stitch Maps -->
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&amp;display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+    @media (max-width: 768px) {
+      :root {
+        --nav-height: 58px;
+      }
+      .br-pc {
+        display: none !important;
+      }
+      .br-mobile {
+        display: inline !important;
+      }
+      .container {
+        padding: 0 16px;
+      }
+      .desktop-nav-menu,
+      .nav-cta-btn {
+        display: none;
+      }
+      .hero-container {
+        height: 76vh;
+        min-height: 560px;
+      }
+      .hero-tag {
+        font-size: 11.5px;
+        letter-spacing: 0.08em;
+        padding: 5px 14px;
+        margin-bottom: 18px;
+        white-space: nowrap;
+      }
+      .hero-headline {
+        font-size: 25px;
+        line-height: 1.38;
+        margin-bottom: 16px;
+        letter-spacing: -0.03em;
+        text-wrap: balance;
+      }
+      .hero-description {
+        font-size: 14.5px;
+        margin-bottom: 28px;
+        line-height: 1.7;
+      }
+      .section-title {
+        font-size: 23px;
+        line-height: 1.35;
+        text-wrap: balance;
+      }
+      .section-desc {
+        font-size: 14px;
+        line-height: 1.65;
+      }
+      .courses-wrapper {
+        padding: 16px 0 40px !important;
+        scroll-margin-top: 58px !important;
+      }
+      .courses-wrapper .section-header {
+        margin-top: 0 !important;
+        padding-top: 10px !important;
+      }
+      .course-card-cover {
+        height: 230px;
+        min-height: 230px;
+      }
+      .course-card-body {
+        padding: 28px 18px 30px;
+      }
+      .course-title {
+        font-size: 20px;
+        line-height: 1.35;
+        text-wrap: balance;
+      }
+      .course-summary {
+        font-size: 14px;
+        margin-bottom: 20px;
+        line-height: 1.65;
+      }
+      .transit-item-desc {
+        font-size: 13.5px;
+        line-height: 1.65;
+      }
+      .course-steps-flow {
+        padding: 16px 12px 14px;
+        margin-bottom: 22px;
+      }
+      .btn-map-preview {
+        width: 100%;
+        padding: 14px 20px;
+      }
+      .keyword-section {
+        padding: 24px 14px 22px;
+        margin: 28px 0 36px;
+        border-radius: 20px;
+        scroll-margin-top: 68px;
+      }
+      .keyword-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .keyword-chip {
+        min-height: 82px;
+        padding: 14px 8px;
+        font-size: 13.5px;
+        border-radius: 14px;
+      }
+      .keyword-chip .chip-icon {
+        font-size: 24px;
+      }
+      .keyword-chip .chip-sub {
+        font-size: 11px;
+      }
+      .primary-submit-btn {
+        width: 100%;
+        min-width: auto;
+      }
+      .course-card-list {
+        gap: 32px;
+      }
+      .transit-list-vertical {
+        gap: 20px;
+      }
+      .transit-item-card {
+        padding: 26px 18px 24px;
+      }
+      .transit-action-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .site-footer {
+        padding-bottom: calc(var(--bottom-bar-height) + 34px);
+      }
+      .bottom-nav-bar {
+        display: flex;
+      }
+    }
+</style>
+<!-- Tailwind for Stitch Maps -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script>
   tailwind.config = {
@@ -590,179 +1153,443 @@
 </script>
 </head>
 <body data-page="home">
-<div class="shell">
-<section class="hero-container" id="top-hero">
-<div aria-hidden="true" class="hero-slides-wrapper">
-<div class="hero-slide active" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAs1N1nUDNIPD4QvFCG6aqRfa7d-RtzxQX259ezkoLOzOgMlB8IrqSnspX0krTe_7W-rpkKPAoF12E1OLSPsEf8NlzBwsL2Jiq2Ws-HhfK5-WQYxp3A4wFPJyTo3tsGTRDUY-jrjfTe5fkxEcbsyRjVbnv0zWZ5NTy7XiWFcknSyT-6Be_zlvxpHDVs6gaqiHbHN60HdIRPP7F56toAkxFjwGWa62qoaFcysz2RIPliMVvPvqPhgn2C8KfAD3lPC5RxmjQ');"></div>
-<div class="hero-slide" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBZpBvw9uDqJDTDLgvdflS-xfQNeQhTUyxo0bpP4cUzMUZstPn23ETnyDWf8TQEwwWqnj99vBn6IM_20qVQtsiOz_NrlGi5AN6F2qbFHUfC0-4Zyc7jzywBmb8bocJarThp_OlJLahWiED50qoAPKY_9jlZZHBixSXv-IIflgN5Iz--mEu3xb_r3bZNhFRhPa4TDczgMG5_Ji65VHSOxGtR2Ta0wsXZEcrUre0njDWTCD8XDXTzhspD4BvQk2T41FUaRO8');"></div>
-<div class="hero-slide" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA7tdh-TVddOv_8G8n9RzuegGAJJdC2Ge7ge-ASGx-Koxlabg45jjTOVJCPg3XLuENOCABU2FrhWa6QBEwQ8c-f46F7r9_jvco-ONvmVPdMH2vfZjruwT9TlCYLmwMvz5iaz0n93WYHak0tNpUtlWSUVKOF4Hk_AtuP8mExv3GTBkgIe7_cpO1AGpHyzGRCx8_nIuhz7768T8QqM9j1aEXu46gbKCHKsorhSEhpKyvFMyT4EceKytlb-PMEwGddCQlUGAU');"></div>
-</div>
-<div aria-hidden="true" class="hero-scrim"></div>
-<header class="hero-top-bar">
-<div class="brand-title">
-<span class="">뚜벅뚜벅 나혼자</span>
-<span class="badge" style="font-size: 16px; font-weight: 900; background: none; backdrop-filter: none; padding: 0px; border-radius: 0px; letter-spacing: inherit;">[이천]</span>
-</div>
-<div aria-label="메뉴" class="hero-hamburger">
-<span></span>
-<span></span>
-</div>
-</header>
-<div class="hero-main-content">
-<span class="hero-tag">A DAY IN ICHEON,<br class="">DISCOVERED ON FOOT</span>
-<h1 class="hero-headline">걸어서 만나는<br class="">[이천]의 하루</h1>
-<p class="hero-description">혼자여도 가볍게,<br class="">차 없이도 온전하게.</p>
+<div class="site-shell">
 
-<div class="hero-pagination-dots" id="hero-dots">
-<span class="dot-item active"></span>
-<span class="dot-item"></span>
-<span class="dot-item"></span>
-</div>
-</div>
-</section>
-<main class="section-container">
-<section class="courses-wrapper" id="courses-section">
-<span class="eyebrow">THREE WAYS TO ICHEON</span>
-<h2 class="section-title">세 갈래의 하루</h2>
-<p class="section-desc">세 코스의 분위기를 먼저 살펴보세요. <br>어디서 시작해도 이천의 진짜 매력을 만날 수 있습니다.</p>
-<div class="course-card-list">
-<article class="course-item-card">
-<div class="course-card-head">
-<span class="course-idx">COURSE 01 · LOCAL TOWN</span>
-<span class="course-badge">도보 중심 · 3.5시간</span>
-</div>
-<h3 class="course-title">이천 원도심 투어</h3>
-<p class="course-summary">빵과 커피 들고 오래된 이천을 걷다</p>
-<div class="course-steps-flow" style="display: flex; justify-content: space-between; align-items: flex-start; position: relative; background: rgb(250, 247, 242); border: 1px solid rgb(235, 217, 200); border-radius: 14px; padding: 20px 16px 18px; margin-bottom: 14px;"><div style="position: absolute; top: 41px; left: 18%; right: 18%; height: 0; border-top: 2px dashed #c8b7a4; z-index: 1;"></div><div style="display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; width: 30%;"><div style="width: 44px; height: 44px; border-radius: 50%; background: rgb(255, 255, 255); border: 1.5px solid rgb(231, 216, 198); display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 6px; margin-bottom: 9px; outline: rgb(250, 247, 242) solid 5px;" class="">🏪</div><span style="font-size: 13px; font-weight: 800; color: rgb(43, 39, 35); letter-spacing: -0.02em; margin-bottom: 3px;" class="">시장 구경</span><span style="font-size: 11px; color: rgb(116, 109, 100); font-weight: 500;" class="">관고전통시장</span></div><div style="display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; width: 30%;"><div style="width: 44px; height: 44px; border-radius: 50%; background: rgb(237, 244, 232); border: 1.5px solid rgb(203, 219, 191); display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 6px; margin-bottom: 9px; outline: rgb(250, 247, 242) solid 5px;" class="">☕️</div><span style="font-size: 13px; font-weight: 800; color: rgb(43, 39, 35); letter-spacing: -0.02em; margin-bottom: 3px;" class="">빵·커피</span><span style="font-size: 11px; color: rgb(116, 109, 100); font-weight: 500;" class="">로컬 베이커리</span></div><div style="display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; width: 30%;"><div style="width: 44px; height: 44px; border-radius: 50%; background: rgb(255, 255, 255); border: 1.5px solid rgb(231, 216, 198); display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 6px; margin-bottom: 9px; outline: rgb(250, 247, 242) solid 5px;" class="">🌲</div><span style="font-size: 13px; font-weight: 800; color: rgb(43, 39, 35); letter-spacing: -0.02em; margin-bottom: 3px;" class="">호수 산책</span><span style="font-size: 11px; color: rgb(116, 109, 100); font-weight: 500;" class="">설봉공원</span></div></div>
-<div style="display: flex; justify-content: flex-end; width: 100%;">
-<button class="course-action-link" type="button" onclick="document.getElementById('map-dialog-01').showModal()">
-<span class="">원도심 코스 미리보기</span>
-<span class="">→</span>
-</button>
-</div>
-</article>
-<article class="course-item-card">
-<div class="course-card-head">
-<span class="course-idx">COURSE 02 · CERAMICS</span>
-<span class="course-badge">도보+버스 · 4.5시간</span>
-</div>
-<h3 class="course-title">이천 도예촌 투어</h3>
-<p class="course-summary">쌀밥 먹고 도자 예술마을을 걷다</p>
-<div class="course-steps-flow" style="display: flex; justify-content: space-between; align-items: flex-start; position: relative; background: rgb(250, 247, 242); border: 1px solid rgb(235, 217, 200); border-radius: 14px; padding: 20px 16px 18px; margin-bottom: 14px;"><div style="position: absolute; top: 41px; left: 18%; right: 18%; height: 0; border-top: 2px dashed #c8b7a4; z-index: 1;"></div><div style="display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; width: 30%;"><div style="width: 44px; height: 44px; border-radius: 50%; background: rgb(255, 255, 255); border: 1.5px solid rgb(231, 216, 198); display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 6px; margin-bottom: 9px; outline: rgb(250, 247, 242) solid 5px;" class="">🍚</div><span style="font-size: 13px; font-weight: 800; color: rgb(43, 39, 35); letter-spacing: -0.02em; margin-bottom: 3px;" class="">든든한 한 끼</span><span style="font-size: 11px; color: rgb(116, 109, 100); font-weight: 500;" class="">이천 쌀밥 정식</span></div><div style="display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; width: 30%;"><div style="width: 44px; height: 44px; border-radius: 50%; background: rgb(237, 244, 232); border: 1.5px solid rgb(203, 219, 191); display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 6px; margin-bottom: 9px; outline: rgb(250, 247, 242) solid 5px;" class="">🫖</div><span style="font-size: 13px; font-weight: 800; color: rgb(43, 39, 35); letter-spacing: -0.02em; margin-bottom: 3px;" class="">오름가마와 그릇</span><span style="font-size: 11px; color: rgb(116, 109, 100); font-weight: 500;" class="">광주요 카페 코유</span></div><div style="display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; width: 30%;"><div style="width: 44px; height: 44px; border-radius: 50%; background: rgb(255, 255, 255); border: 1.5px solid rgb(231, 216, 198); display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 6px; margin-bottom: 9px; outline: rgb(250, 247, 242) solid 5px;" class="">🎨</div><span style="font-size: 13px; font-weight: 800; color: rgb(43, 39, 35); letter-spacing: -0.02em; margin-bottom: 3px;" class="">도자예술마을</span><span style="font-size: 11px; color: rgb(116, 109, 100); font-weight: 500;" class="">예스파크</span></div></div>
-<div style="display: flex; justify-content: flex-end; width: 100%;">
-<button class="course-action-link" type="button" onclick="document.getElementById('map-dialog-02').showModal()">
-<span class="">도예촌 코스 미리보기</span>
-<span class="">→</span>
-</button>
-</div>
-</article>
-<article class="course-item-card">
-<div class="course-card-head">
-<span class="course-idx">COURSE 03 · CULTURAL SPACE</span>
-<span class="course-badge">도보+버스 · 4.0시간</span>
-</div>
-<h3 class="course-title">이천 문화공간 투어</h3>
-<p class="course-summary">조금 멀리, 이천의 복합문화공간을 찾아가다</p>
-<div class="course-steps-flow" style="display: flex; justify-content: space-between; align-items: flex-start; position: relative; background: rgb(250, 247, 242); border: 1px solid rgb(235, 217, 200); border-radius: 14px; padding: 20px 16px 18px; margin-bottom: 14px;"><div style="position: absolute; top: 41px; left: 18%; right: 18%; height: 0; border-top: 2px dashed #c8b7a4; z-index: 1;"></div><div style="display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; width: 30%;"><div style="width: 44px; height: 44px; border-radius: 50%; background: rgb(255, 255, 255); border: 1.5px solid rgb(231, 216, 198); display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 6px; margin-bottom: 9px; outline: rgb(250, 247, 242) solid 5px;" class="">🍞</div><span style="font-size: 13px; font-weight: 800; color: rgb(43, 39, 35); letter-spacing: -0.02em; margin-bottom: 3px;" class="">이천 쌀빵</span><span style="font-size: 11px; color: rgb(116, 109, 100); font-weight: 500;" class="">로컬 빵집</span></div><div style="display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; width: 30%;"><div style="width: 44px; height: 44px; border-radius: 50%; background: rgb(237, 244, 232); border: 1.5px solid rgb(203, 219, 191); display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 6px; margin-bottom: 9px; outline: rgb(250, 247, 242) solid 5px;" class="">🏛️</div><span style="font-size: 13px; font-weight: 800; color: rgb(43, 39, 35); letter-spacing: -0.02em; margin-bottom: 3px;" class="">복합문화공간</span><span style="font-size: 11px; color: rgb(116, 109, 100); font-weight: 500;" class="">시몬스 테라스점</span></div><div style="display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; width: 30%;"><div style="width: 44px; height: 44px; border-radius: 50%; background: rgb(255, 255, 255); border: 1.5px solid rgb(231, 216, 198); display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 6px; margin-bottom: 9px; outline: rgb(250, 247, 242) solid 5px;" class="">🍽️</div><span style="font-size: 13px; font-weight: 800; color: rgb(43, 39, 35); letter-spacing: -0.02em; margin-bottom: 3px;" class="">정갈한 한 끼</span><span style="font-size: 11px; color: rgb(116, 109, 100); font-weight: 500;" class="">이천쌀 솥밥</span></div></div>
-<div style="display: flex; justify-content: flex-end; width: 100%;">
-<button class="course-action-link" type="button" onclick="document.getElementById('map-dialog-03').showModal()">
-<span class="">문화공간 코스 미리보기</span>
-<span class="">→</span>
-</button>
-</div>
-</article>
-</div>
-</section>
+  <!-- Desktop Navigation Header -->
+  <header class="site-nav-header">
+    <div class="container site-nav-inner">
+      <a href="#top-hero" class="brand-logo">
+        <span>뚜벅뚜벅 나혼자</span>
+        <span style="color: var(--earth); font-weight: 900;">[이천]</span>
+      </a>
+      <nav class="desktop-nav-menu">
+        <a href="#top-hero" class="active">홈</a>
+        <a href="#keyword-selection-area">취향 추천</a>
+        <a href="../03_detail_course01.html/code.html">원도심 투어</a>
+        <a href="../03_detail_course02.html/code.html">도예촌 투어</a>
+        <a href="../03_detail_course03.html/code.html">문화공간 투어</a>
+        <a href="#transit-tips-section">대중교통 팁</a>
+      </nav>
+      <div class="nav-actions-group">
+        <button type="button" class="nav-share-btn" onclick="handleShare('home')" title="이천 뚜벅이 여행 가이드 친구에게 공유하기">
+          <i class="fa-solid fa-arrow-up-from-bracket"></i>
+          <span>공유하기</span>
+        </button>
+        <a href="#keyword-selection-area" class="nav-cta-btn">
+          <i class="fa-solid fa-compass"></i>
+          <span>내 코스 찾기</span>
+        </a>
+      </div>
+    </div>
+  </header>
 
-<section class="keyword-section" id="keyword-selection-area">
-<span class="eyebrow">FIND YOUR DAY</span>
-<h2 class="section-title">오늘 끌리는 건?</h2>
-<p class="section-desc">한 가지만 골라주세요. 정해진 세 코스 중 가장 어울리는 하루를 보여드려요.</p>
-<div aria-label="관심사 키워드 선택" class="keyword-grid" role="group">
-<div class="keyword-chip active">
-<span class="chip-icon">☕️</span>
-<span class="">빵·커피</span>
-</div>
-<div class="keyword-chip">
-<span class="chip-icon">🏪</span>
-<span class="">전통시장</span>
-</div>
-<div class="keyword-chip">
-<span class="chip-icon">🏺</span>
-<span class="">도자·공예</span>
-</div>
-<div class="keyword-chip">
-<span class="chip-icon">🌲</span>
-<span class="">호수·공원</span>
-</div>
-<div class="keyword-chip">
-<span class="chip-icon">🏛️</span>
-<span class="">문화공간</span>
-</div>
-<div class="keyword-chip">
-<span class="chip-icon">🍚</span>
-<span class="">이천쌀밥</span>
-</div>
-</div>
-<div class="primary-submit-btn" id="choose-go">
-<span class="">내 맞춤 코스 보기</span>
-<span aria-hidden="true" class="arrow">→</span>
-</div>
-</section>
+  <!-- Hero Section -->
+  <section class="hero-container" id="top-hero">
+    <div aria-hidden="true" class="hero-slides-wrapper">
+      <div class="hero-slide active" style="background-image: url('../images/c01_hero.jpg');"></div>
+      <div class="hero-slide" style="background-image: url('../images/c02_cover_img2367.jpg');"></div>
+      <div class="hero-slide" style="background-image: url('../images/c03_cover_simmons2.jpg');"></div>
+    </div>
+    <div aria-hidden="true" class="hero-scrim"></div>
 
-<div class="transit-card" id="transit-tips-section">
-<div class="transit-title">
-<span class="">🚌</span> 뚜벅이 여행자를 위한 안심 이동 팁
+    <div class="container">
+      <div class="hero-content-inner">
+        <span class="hero-tag">WALKING IN ICHEON · 당일치기 감성 도보 여행</span>
+        <h1 class="hero-headline">
+          이번 주말엔 혼자여도 좋아,<br class="br-pc"><br class="br-mobile">
+          걸어서 만나는 [이천]의 하루
+        </h1>
+        <p class="hero-description">
+          잠실역에서 빨간 버스 타고 50분이면 도착하는 도심 밖 쉼표.<br class="br-pc">
+          정갈한 쌀밥 한 상, 감성 카페와 도자 공방 골목을<br class="br-pc">
+          내 걸음 속도대로 천천히 누려보세요.
+        </p>
+
+        <div class="hero-pagination-dots" id="hero-dots">
+          <span class="dot-item active"></span>
+          <span class="dot-item"></span>
+          <span class="dot-item"></span>
         </div>
-<ul class="transit-list">
-<li class="">
-<span class="">•</span>
-<span class=""><strong>서울 잠실역 ➔ 이천터미널</strong>: 광역버스 G2100번 탑승 시 환승 없이 약 50분 만에 도착합니다.</span>
-</li>
-<li class="">
-<span class="">•</span>
-<span class=""><strong>시내 도보 &amp; 이동</strong>: 정류장에서 애매한 거리는 ‘똑타’ 앱의 수요응답형 <strong>이천 똑버스</strong>를 호출하면 편리합니다.</span>
-</li>
-</ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Area -->
+  <main class="container">
+
+    <!-- Section 2: Three Distinct Courses (3-Column Grid on PC) -->
+    <section class="courses-wrapper" id="courses-section">
+      <div id="three-courses-section" style="position: absolute; top: 0; pointer-events: none;"></div>
+      <div class="section-header">
+        <span class="eyebrow">THREE WAYS TO ICHEON · 뚜벅이 추천 코스</span>
+        <h2 class="section-title">나의 취향대로 고르는 세 갈래의 하루</h2>
+        <p class="section-desc">
+          운전 스트레스 없이 전철과 버스로 가볍게.<br class="br-pc">
+          혼자 떠나는 여행자를 위해 도보 동선과 감성 스팟만 알차게 엮었습니다.
+        </p>
+      </div>
+
+      <div class="course-card-list">
+        
+        <!-- COURSE 01 Card -->
+        <article class="course-item-card" id="card-course-01">
+          <div class="course-card-cover">
+            <img src="../images/c01_hero.jpg" alt="이천 원도심 문화의 거리 전경">
+            <div class="course-card-cover-overlay"></div>
+            <span class="cover-badge-top">COURSE 01</span>
+            <span class="cover-time-badge"><i class="fa-regular fa-clock"></i> 약 3.5시간</span>
+          </div>
+          <div class="course-card-body">
+            <div class="course-card-head">
+              <span class="course-idx">VINTAGE ALLEY &amp; BREAD · 원도심 감성 산책</span>
+              <span class="course-badge">도보 100% 안심 완주</span>
+            </div>
+            <h3 class="course-title">원도심 투어 : 오래된 골목과 빵·커피 산책</h3>
+            <p class="course-summary">
+              관고전통시장의 정겨운 먹거리부터 명물 쌀베이커리 흥만소,<br class="br-pc">
+              호수 멍때리기 좋은 설봉공원까지 차 없이 가볍게 걷는 힐링 코스
+            </p>
+
+            <div class="course-steps-flow">
+              <div style="position: absolute; top: 38px; left: 18%; right: 18%; height: 0; border-top: 2px dashed #c8b7a4; z-index: 1;"></div>
+              <div style="display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; width: 30%;">
+                <div style="width: 42px; height: 42px; border-radius: 50%; background: #ffffff; border: 1.5px solid #e7d8c6; display: flex; align-items: center; justify-content: center; font-size: 19px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); margin-bottom: 8px;">🏪</div>
+                <span style="font-size: 12.5px; font-weight: 800; color: var(--ink); margin-bottom: 2px;">시장 구경</span>
+                <span style="font-size: 11px; color: var(--muted);">관고전통시장</span>
+              </div>
+              <div style="display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; width: 30%;">
+                <div style="width: 42px; height: 42px; border-radius: 50%; background: #edf4e8; border: 1.5px solid #cbdbbf; display: flex; align-items: center; justify-content: center; font-size: 19px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); margin-bottom: 8px;">☕️</div>
+                <span style="font-size: 12.5px; font-weight: 800; color: var(--ink); margin-bottom: 2px;">빵·커피</span>
+                <span style="font-size: 11px; color: var(--muted);">우진·흥만소</span>
+              </div>
+              <div style="display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; width: 30%;">
+                <div style="width: 42px; height: 42px; border-radius: 50%; background: #ffffff; border: 1.5px solid #e7d8c6; display: flex; align-items: center; justify-content: center; font-size: 19px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); margin-bottom: 8px;">🌲</div>
+                <span style="font-size: 12.5px; font-weight: 800; color: var(--ink); margin-bottom: 2px;">호수 산책</span>
+                <span style="font-size: 11px; color: var(--muted);">설봉공원</span>
+              </div>
+            </div>
+
+            <div class="course-card-actions">
+              <button class="btn-map-preview" type="button" onclick="document.getElementById('map-dialog-01').showModal()">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <span>지도 미리보기</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- COURSE 02 Card -->
+        <article class="course-item-card" id="card-course-02">
+          <div class="course-card-cover">
+            <img src="../images/c02_cover_img2367.jpg" alt="광주요 카페 코유 마당 전경">
+            <div class="course-card-cover-overlay"></div>
+            <span class="cover-badge-top">COURSE 02</span>
+            <span class="cover-time-badge"><i class="fa-regular fa-clock"></i> 약 4.5시간</span>
+          </div>
+          <div class="course-card-body">
+            <div class="course-card-head">
+              <span class="course-idx">CERAMICS &amp; RICE · 든든한 미식과 공예</span>
+              <span class="course-badge">경강선 신둔도예촌역 연계</span>
+            </div>
+            <h3 class="course-title">도예촌 투어 : 쌀밥 든든히 먹고 예스파크 산책</h3>
+            <p class="course-summary">
+              이천에 왔으니 돌솥밥 정식 든든히 챙겨 먹고,<br class="br-pc">
+              광주요의 고즈넉한 오름가마 정원과 예스파크 공방 거리에서 나만의 그릇을 찾는 하루
+            </p>
+
+            <div class="course-steps-flow">
+              <div style="position: absolute; top: 38px; left: 18%; right: 18%; height: 0; border-top: 2px dashed #c8b7a4; z-index: 1;"></div>
+              <div style="display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; width: 30%;">
+                <div style="width: 42px; height: 42px; border-radius: 50%; background: #ffffff; border: 1.5px solid #e7d8c6; display: flex; align-items: center; justify-content: center; font-size: 19px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); margin-bottom: 8px;">🍚</div>
+                <span style="font-size: 12.5px; font-weight: 800; color: var(--ink); margin-bottom: 2px;">든든한 한 끼</span>
+                <span style="font-size: 11px; color: var(--muted);">이천돌솥밥</span>
+              </div>
+              <div style="display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; width: 30%;">
+                <div style="width: 42px; height: 42px; border-radius: 50%; background: #edf4e8; border: 1.5px solid #cbdbbf; display: flex; align-items: center; justify-content: center; font-size: 19px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); margin-bottom: 8px;">🫖</div>
+                <span style="font-size: 12.5px; font-weight: 800; color: var(--ink); margin-bottom: 2px;">오름가마</span>
+                <span style="font-size: 11px; color: var(--muted);">광주요·코유</span>
+              </div>
+              <div style="display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; width: 30%;">
+                <div style="width: 42px; height: 42px; border-radius: 50%; background: #ffffff; border: 1.5px solid #e7d8c6; display: flex; align-items: center; justify-content: center; font-size: 19px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); margin-bottom: 8px;">🎨</div>
+                <span style="font-size: 12.5px; font-weight: 800; color: var(--ink); margin-bottom: 2px;">도예마을</span>
+                <span style="font-size: 11px; color: var(--muted);">예스파크</span>
+              </div>
+            </div>
+
+            <div class="course-card-actions">
+              <button class="btn-map-preview" type="button" onclick="document.getElementById('map-dialog-02').showModal()">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <span>지도 미리보기</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- COURSE 03 Card -->
+        <article class="course-item-card" id="card-course-03">
+          <div class="course-card-cover">
+            <img src="../images/c03_cover_simmons2.jpg" alt="시몬스 테라스점 전경">
+            <div class="course-card-cover-overlay"></div>
+            <span class="cover-badge-top">COURSE 03</span>
+            <span class="cover-time-badge"><i class="fa-regular fa-clock"></i> 약 4.0시간</span>
+          </div>
+          <div class="course-card-body">
+            <div class="course-card-head">
+              <span class="course-idx">CULTURAL RETREAT · 복합문화공간</span>
+              <span class="course-badge">똑버스 호출 연계</span>
+            </div>
+            <h3 class="course-title">문화공간 투어 : 시몬스테라스와 감성 솥밥</h3>
+            <p class="course-summary">
+              인스타에서 핫한 이천의 대표 복합문화공간 시몬스테라스와 파머스마켓,<br class="br-pc">
+              정갈한 솥밥까지 여유롭게 즐기는 감성 충전 코스
+            </p>
+
+            <div class="course-steps-flow">
+              <div style="position: absolute; top: 38px; left: 18%; right: 18%; height: 0; border-top: 2px dashed #c8b7a4; z-index: 1;"></div>
+              <div style="display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; width: 30%;">
+                <div style="width: 42px; height: 42px; border-radius: 50%; background: #ffffff; border: 1.5px solid #e7d8c6; display: flex; align-items: center; justify-content: center; font-size: 19px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); margin-bottom: 8px;">🍞</div>
+                <span style="font-size: 12.5px; font-weight: 800; color: var(--ink); margin-bottom: 2px;">이천 쌀빵</span>
+                <span style="font-size: 11px; color: var(--muted);">심빵 베이커리</span>
+              </div>
+              <div style="display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; width: 30%;">
+                <div style="width: 42px; height: 42px; border-radius: 50%; background: #edf4e8; border: 1.5px solid #cbdbbf; display: flex; align-items: center; justify-content: center; font-size: 19px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); margin-bottom: 8px;">🏛️</div>
+                <span style="font-size: 12.5px; font-weight: 800; color: var(--ink); margin-bottom: 2px;">복합문화공간</span>
+                <span style="font-size: 11px; color: var(--muted);">시몬스 테라스</span>
+              </div>
+              <div style="display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; width: 30%;">
+                <div style="width: 42px; height: 42px; border-radius: 50%; background: #ffffff; border: 1.5px solid #e7d8c6; display: flex; align-items: center; justify-content: center; font-size: 19px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); margin-bottom: 8px;">🍽️</div>
+                <span style="font-size: 12.5px; font-weight: 800; color: var(--ink); margin-bottom: 2px;">정갈한 한 끼</span>
+                <span style="font-size: 11px; color: var(--muted);">미솥지음 솥밥</span>
+              </div>
+            </div>
+
+            <div class="course-card-actions">
+              <button class="btn-map-preview" type="button" onclick="document.getElementById('map-dialog-03').showModal()">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <span>지도 미리보기</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Section 1: Keyword Preference Curation -->
+    <section class="keyword-section" id="keyword-selection-area">
+      <div class="section-header">
+        <span class="eyebrow">TASTE CURATION · 30초 취향 찾기</span>
+        <h2 class="section-title">오늘 당신의 기분에 딱 맞는 테마는?</h2>
+        <p class="section-desc">
+          지금 가장 끌리는 키워드를 하나 골라보세요.<br class="br-pc">
+          나에게 꼭 맞는 맞춤 코스 상세 페이지로 바로 안내해 드립니다.
+        </p>
+      </div>
+
+      <div aria-label="관심사 키워드 선택" class="keyword-grid" role="group">
+        <div class="keyword-chip active" data-keyword="빵·커피">
+          <span class="chip-icon">☕️</span>
+          <span class="chip-title">빵·커피</span>
+          <span class="chip-sub">골목길 스페셜티</span>
+        </div>
+        <div class="keyword-chip" data-keyword="전통시장">
+          <span class="chip-icon">🏪</span>
+          <span class="chip-title">전통시장</span>
+          <span class="chip-sub">관고 5일장 먹거리</span>
+        </div>
+        <div class="keyword-chip" data-keyword="도자·공예">
+          <span class="chip-icon">🏺</span>
+          <span class="chip-title">도자·공예</span>
+          <span class="chip-sub">예스파크 공방 산책</span>
+        </div>
+        <div class="keyword-chip" data-keyword="호수·공원">
+          <span class="chip-icon">🌲</span>
+          <span class="chip-title">호수·공원</span>
+          <span class="chip-sub">설봉호수 둘레길</span>
+        </div>
+        <div class="keyword-chip" data-keyword="문화공간">
+          <span class="chip-icon">🏛️</span>
+          <span class="chip-title">문화공간</span>
+          <span class="chip-sub">시몬스 테라스 감성</span>
+        </div>
+        <div class="keyword-chip" data-keyword="이천쌀밥">
+          <span class="chip-icon">🍚</span>
+          <span class="chip-title">이천쌀밥</span>
+          <span class="chip-sub">돌솥밥 정식 든든 한 상</span>
+        </div>
+      </div>
+
+      <div class="keyword-submit-wrap">
+        <button class="primary-submit-btn" id="choose-go" type="button">
+          <i class="fa-solid fa-compass"></i>
+          <span>내 맞춤 코스 보기</span>
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Section 3: Transit Tips for Walking Travelers (Vertical Series) -->
+    <section class="transit-section" id="transit-tips-section">
+      <div class="section-header">
+        <span class="eyebrow">SMART TRANSIT TIPS · 차 없어도 완전 가능</span>
+        <h2 class="section-title">뚜벅이 여행자를 위한 안심 이동 꿀팁</h2>
+        <p class="section-desc">
+          서울 잠실과 판교에서 50분대 직통 연결!<br class="br-pc">
+          초보 뚜벅이도 길 잃을 걱정 없는 3가지 이동 공식입니다.
+        </p>
+      </div>
+
+      <div class="transit-list-vertical">
+        
+        <!-- Transit 01 -->
+        <div class="transit-item-card">
+          <span class="transit-badge">잠실 ↔ 이천 직통버스</span>
+          <h3 class="transit-item-title">
+            <span>🚌</span> 잠실역 G2100번 빨간버스
+          </h3>
+          <p class="transit-item-desc">
+            잠실역 환승센터(지하)에서 탑승 시 가락시장역과 장지역을 거쳐<br class="br-pc">
+            이천종합터미널까지 약 50분 만에 환승 없이 직통 도착합니다.<br class="br-pc">
+            편안하게 앉아서 넷플릭스를 보며 여유롭게 이동할 수 있어요.
+          </p>
+          <div class="transit-item-tip">
+            💡 배차간격 약 20~30분 · 카드 기준 2,800원 내외 (지하 환승센터 24번 게이트)
+          </div>
+          <div class="transit-btn-wrap">
+            <a href="https://kko.to/41hfwlpOtU" target="_blank" rel="noopener noreferrer" class="transit-action-btn">
+              <i class="fa-solid fa-map-location-dot"></i>
+              <span>카카오맵 길찾기 링크</span>
+              <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 11px; opacity: 0.65;"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Transit 02 -->
+        <div class="transit-item-card">
+          <span class="transit-badge">수도권 전철망 연계</span>
+          <h3 class="transit-item-title">
+            <span>🚆</span> 수인분당선 이매역에서 경강선으로 환승
+          </h3>
+          <p class="transit-item-desc">
+            수인분당선 이매역에서 경강선으로 환승하면 도로 정체 걱정 없이<br class="br-pc">
+            신둔도예촌역(코스 2)과 이천역(원도심)까지 정시성 100%로 쾌적하게 닿습니다.<br class="br-pc">
+            창밖으로 시골 풍경을 감상하며 힐링 기분을 만끽해보세요.
+          </p>
+          <div class="transit-item-tip">
+            💡 이매역에서 신둔도예촌역까지 경강선 전철 약 22분 소요
+          </div>
+          <div class="transit-btn-wrap">
+            <a href="https://kko.to/A0BVSXXdL-" target="_blank" rel="noopener noreferrer" class="transit-action-btn">
+              <i class="fa-solid fa-train-subway"></i>
+              <span>카카오맵 전철 노선표 링크</span>
+              <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 11px; opacity: 0.65;"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Transit 03 -->
+        <div class="transit-item-card">
+          <span class="transit-badge">로컬 이동 치트키</span>
+          <h3 class="transit-item-title">
+            <span>🚕</span> 이천 똑버스 (수요응답형)
+          </h3>
+          <p class="transit-item-desc">
+            배차 간격이 긴 외곽 구간이나 모가면(시몬스테라스) 이동 시<br class="br-pc">
+            스마트폰 ‘똑타’ 앱으로 호출하면 나만을 위해 가장 가까운 정류장으로 바로 찾아옵니다.<br class="br-pc">
+            시내버스 요금으로 택시처럼 편안하게 탈 수 있는 뚜벅이 필수 치트키입니다.
+          </p>
+          <div class="transit-item-tip">
+            💡 똑타 앱 사전 설치 필수 · 일반 시내버스 요금 적용 및 수도권 환승 할인
+          </div>
+          <div class="transit-btn-wrap" style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="https://play.google.com/store/apps/details?id=com.hyundai.shucle.gmaas&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="transit-action-btn">
+              <i class="fa-brands fa-google-play"></i>
+              <span>안드로이드용 똑타 다운로드</span>
+              <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 11px; opacity: 0.65;"></i>
+            </a>
+            <a href="https://apps.apple.com/kr/app/%EB%98%91%ED%83%80-%EA%B2%BD%EA%B8%B0%EB%8F%84-%EB%98%91%EB%B2%84%EC%8A%A4-%ED%98%B8%EC%B6%9C-%EC%95%B1/id6444244331" target="_blank" rel="noopener noreferrer" class="transit-action-btn">
+              <i class="fa-brands fa-apple"></i>
+              <span>아이폰용 똑타 다운로드</span>
+              <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 11px; opacity: 0.65;"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Site Footer -->
+    <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-top-container">
+      <div class="footer-brand-block">
+        <span class="footer-eyebrow">로컬 에디터 이천 1기 참여 프로젝트</span>
+        <h3 class="footer-brand-title">뚜벅뚜벅 나혼자 <span>[이천]</span></h3>
+        <p class="footer-brand-desc">
+          본 가이드는 글로와이드와 하이로컬이천이 주관하는 <strong>‘로컬 에디터 이천 1기’</strong> 프로그램에 참여하여<br class="br-pc">
+          뚜벅이 여행자의 시선으로 이천의 숨은 매력과 로컬 동선을 직접 취재하고 기획·제작한 프로젝트입니다.
+        </p>
+      </div>
+
+      <div class="footer-partner-logos">
+        <a href="https://www.glowide.ai/" target="_blank" rel="noopener noreferrer" class="partner-logo-item" title="글로와이드 (Glowide) 바로가기">
+          <img src="../images/logo_glowide_dark.png" alt="글로와이드 (Glowide)" class="logo-glowide">
+        </a>
+        <div class="footer-logo-divider"></div>
+        <a href="https://high-local.or.kr/" target="_blank" rel="noopener noreferrer" class="partner-logo-item" title="하이로컬이천 (High-Local) 바로가기">
+          <img src="../images/logo_highlocal_clean.png" alt="하이로컬이천 (High-Local)" class="logo-highlocal">
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      <div class="footer-bottom-inner">
+        <div class="footer-info-meta">
+          <span><strong>프로젝트</strong> 로컬 에디터 이천 1기</span>
+          <span class="meta-sep">|</span>
+          <span><strong>문의</strong> <a href="mailto:anyes0106@gmail.com" class="footer-email-link">anyes0106@gmail.com</a></span>
+          <span class="meta-sep">|</span>
+          <span>© 2026 뚜벅뚜벅 나혼자 [이천]. All rights reserved.</span>
+        </div>
+        <p class="footer-disclaimer">
+          실제 버스 시각 및 매장 운영 정보는 현장 사정에 따라 변동될 수 있으므로 방문 전 사전 확인을 권장합니다.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Floating Bottom Navigation (Only on mobile viewport) -->
+  <nav aria-label="하단 네비게이션 바" class="bottom-nav-bar">
+    <div class="nav-tab active" id="tab-home">
+      <span class="tab-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      </span>
+      <span class="tab-label">홈</span>
+    </div>
+    <div class="nav-tab" id="tab-courses">
+      <span class="tab-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3V6z"></path><path d="M9 3v15M15 6v15"></path></svg>
+      </span>
+      <span class="tab-label">세 갈래 코스</span>
+    </div>
+    <div class="nav-tab" id="tab-keyword">
+      <span class="tab-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v8M8 12h8"></path></svg>
+      </span>
+      <span class="tab-label">취향 추천</span>
+    </div>
+    <div class="nav-tab" id="tab-transit">
+      <span class="tab-icon">
+        <svg viewBox="0 0 24 24"><rect height="13" rx="2" width="18" x="3" y="4"></rect><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle><path d="M3 9h18"></path></svg>
+      </span>
+      <span class="tab-label">교통팁</span>
+    </div>
+  </nav>
+
 </div>
-</main>
-<footer class="site-footer">
-<p class=""><strong>뚜벅뚜벅 나혼자 [이천]</strong> · 모바일 도보 여행 가이드</p>
-<p style="opacity: 0.75;" class="">실제 버스 시각 및 매장 영업 정보는 방문 전 확인을 권장합니다.</p>
-</footer>
-<nav aria-label="하단 네비게이션 바" class="bottom-nav-bar">
-<div class="nav-tab" id="tab-menu">
-<span class="tab-icon">
-<svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
-</span>
-<span class="tab-label">메뉴</span>
-</div>
-<div class="nav-tab" id="tab-courses">
-<span class="tab-icon">
-<svg viewBox="0 0 24 24"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3V6z"></path><path d="M9 3v15M15 6v15"></path></svg>
-</span>
-<span class="tab-label">코스목록</span>
-</div>
-<div class="nav-tab active" id="tab-home">
-<span class="tab-icon">
-<svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-</span>
-<span class="tab-label">홈</span>
-</div>
-<div class="nav-tab" id="tab-keyword">
-<span class="tab-icon">
-<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v8M8 12h8"></path></svg>
-</span>
-<span class="tab-label">키워드</span>
-</div>
-<div class="nav-tab" id="tab-transit">
-<span class="tab-icon">
-<svg viewBox="0 0 24 24"><rect height="13" rx="2" width="18" x="3" y="4"></rect><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle><path d="M3 9h18"></path></svg>
-</span>
-<span class="tab-label">교통팁</span>
-</div>
-</nav>
-</div>
+
 
 <!-- Modal 1: 원도심 전체 지도 (신규 시안) -->
 <dialog aria-labelledby="map-title-01" id="map-dialog-01">
@@ -790,6 +1617,7 @@
 </button>
 </header>
 <!-- END: HeaderSection -->
+
 <!-- BEGIN: LegendSection -->
 <div class="flex items-center space-x-5 mb-3 text-xs sm:text-sm font-medium text-stone-700" data-purpose="map-legend">
 <!-- Standard Route Legend -->
@@ -958,6 +1786,8 @@
       </div>
 </section>
 <!-- END: MapCanvasSection -->
+
+
 <!-- BEGIN: SequentialRouteSummaryCard -->
 <div class="mt-4 p-4 sm:p-5 bg-white rounded-2xl border border-stone-200/90 shadow-sm" data-purpose="course-stops-overview">
 <p class="text-[13px] sm:text-[14px] leading-relaxed font-medium text-stone-800 tracking-tight text-center sm:text-left break-keep"><span class="font-bold text-brand-markerBrown">1:</span> 터미널출발 <span class="text-stone-300 mx-1">·</span>
@@ -990,9 +1820,7 @@
       </p>
 </footer>
 <!-- END: DisclaimerFooter -->
-<div style="display:flex; justify-content:flex-end; margin-top:12px;">
-  <a href="../03_detail_course01.html/code.html" style="display:inline-flex; align-items:center; gap:4px; font-size:12px; font-weight:700; color:#5c3826; background:#ebdccb; padding:8px 16px; border-radius:10px; text-decoration:none; transition:background 0.2s;" onmouseover="this.style.background='#dfcfbe'" onmouseout="this.style.background='#ebdccb'">코스 전체 안내 보기 →</a>
-</div>
+
 </main>
 </dialog>
 
@@ -1020,6 +1848,7 @@
 </button>
 </header>
 <!-- END: HeaderSection -->
+
 <!-- BEGIN: LegendBar -->
 <section class="flex flex-wrap items-center gap-4 sm:gap-5 mb-3 text-xs sm:text-sm font-medium text-stone-700" data-purpose="map-legend"><div class="flex items-center space-x-2">
 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-brand-markerBrown text-white font-bold text-xs italic shadow-sm">
@@ -1212,6 +2041,8 @@
 <div class="absolute bottom-2.5 right-3 bg-white/85 backdrop-blur-sm px-2.5 py-1 rounded-full text-[11px] text-stone-600 font-medium pointer-events-none flex items-center gap-1 shadow-sm border border-stone-200/60"><i class="fa-solid fa-hand-pointer text-[10px] text-brand-brownText"></i> 번호를 누르면 상세 코스를 확인합니다</div>
 </section>
 <!-- END: IllustratedMapArea -->
+
+
 <!-- BEGIN: SequentialRouteSummaryCard -->
 <div class="mt-4 p-4 sm:p-5 bg-white rounded-2xl border border-stone-200/90 shadow-sm" data-purpose="course-stops-overview"><p class="text-[13px] sm:text-[14px] leading-relaxed font-medium text-stone-800 tracking-tight text-center sm:text-left break-keep">
 <span class="font-bold text-brand-markerBrown">1:</span> 신둔도예촌역 <span class="text-stone-300 mx-1">·</span>
@@ -1246,9 +2077,7 @@
   신둔도예촌역과 예스파크(도자예술마을)의 실제 지리적 위치를 반영한 감성 투어 맵입니다.
 </p></footer>
 <!-- END: Footnote -->
-<div style="display:flex; justify-content:flex-end; margin-top:12px;">
-  <a href="../03_detail_course02.html/code.html" style="display:inline-flex; align-items:center; gap:4px; font-size:12px; font-weight:700; color:#5c3826; background:#ebdccb; padding:8px 16px; border-radius:10px; text-decoration:none; transition:background 0.2s;" onmouseover="this.style.background='#dfcfbe'" onmouseout="this.style.background='#ebdccb'">코스 전체 안내 보기 →</a>
-</div>
+
 </main>
 </dialog>
 
@@ -1278,6 +2107,7 @@
 </button>
 </header>
 <!-- END: HeaderSection -->
+
 <!-- BEGIN: LegendBar -->
 <section class="flex items-center gap-4 text-xs sm:text-sm font-semibold text-stone-700 mb-3 px-0.5" data-purpose="map-legend">
 <div class="flex items-center gap-1.5">
@@ -1445,6 +2275,8 @@
 </div>
 </section>
 <!-- END: InteractiveMapCanvas -->
+
+
 <!-- BEGIN: SequentialRouteSummaryCard -->
 <div class="mt-4 p-4 sm:p-5 bg-white rounded-2xl border border-stone-200/90 shadow-sm" data-purpose="course-stops-overview">
 <p class="text-[13px] sm:text-[14px] leading-relaxed font-medium text-stone-800 tracking-tight text-center sm:text-left break-keep">
@@ -1478,56 +2310,118 @@
   </p>
 </footer>
 <!-- END: ModalFooterDisclaimer -->
-<div style="display:flex; justify-content:flex-end; margin-top:12px;">
-  <a href="../03_detail_course03.html/code.html" style="display:inline-flex; align-items:center; gap:4px; font-size:12px; font-weight:700; color:#5c3826; background:#ebdccb; padding:8px 16px; border-radius:10px; text-decoration:none; transition:background 0.2s;" onmouseover="this.style.background='#dfcfbe'" onmouseout="this.style.background='#ebdccb'">코스 전체 안내 보기 →</a>
-</div>
+
 </main>
 </dialog>
 
 <script>
-  // 1. 키워드 선택 인터랙션 (한 가지만 선택)
+  // 1. 키워드 선택 인터랙션 & 맞춤 코스 상세 페이지 매핑 (Item 6)
   const keywordChips = document.querySelectorAll('.keyword-chip');
   const chooseGoBtn = document.getElementById('choose-go');
 
-  // 키워드별 추천 코스 상세 페이지 매핑
-  const keywordUrlMap = {
-    '빵·커피': '../03_detail_course01.html/code.html',
-    '전통시장': '../03_detail_course01.html/code.html',
-    '도자·공예': '../03_detail_course02.html/code.html',
-    '호수·공원': '../03_detail_course01.html/code.html',
-    '문화공간': '../03_detail_course03.html/code.html',
-    '이천쌀밥': '../03_detail_course02.html/code.html'
+  const keywordMap = {
+    '빵·커피': { cardId: 'card-course-01', url: '../03_detail_course01.html/code.html', name: 'COURSE 01 · 원도심 투어' },
+    '전통시장': { cardId: 'card-course-01', url: '../03_detail_course01.html/code.html', name: 'COURSE 01 · 원도심 투어' },
+    '도자·공예': { cardId: 'card-course-02', url: '../03_detail_course02.html/code.html', name: 'COURSE 02 · 도예촌 투어' },
+    '호수·공원': { cardId: 'card-course-01', url: '../03_detail_course01.html/code.html', name: 'COURSE 01 · 원도심 투어' },
+    '문화공간': { cardId: 'card-course-03', url: '../03_detail_course03.html/code.html', name: 'COURSE 03 · 문화공간 투어' },
+    '이천쌀밥': { cardId: 'card-course-02', url: '../03_detail_course02.html/code.html', name: 'COURSE 02 · 도예촌 투어' }
   };
 
   let selectedKeyword = '빵·커피';
 
+  function updateSelectedKeyword(kw) {
+    selectedKeyword = kw;
+  }
+
   keywordChips.forEach(chip => {
-    chip.style.cursor = 'pointer';
     chip.addEventListener('click', () => {
       keywordChips.forEach(c => c.classList.remove('active'));
       chip.classList.add('active');
-      const text = chip.querySelector('span:last-child').textContent.trim();
-      selectedKeyword = text;
+      const kw = chip.dataset.keyword || chip.querySelector('.chip-title')?.textContent.trim() || '빵·커피';
+      updateSelectedKeyword(kw);
     });
   });
 
-  // '내 맞춤 코스 보기' 버튼 클릭 인터랙션 -> 해당되는 투어 소개 페이지로 바로 이동
+  // '내 맞춤 코스 보기' 버튼 클릭 시 선택된 코스의 상세 페이지로 즉시 이동
   if (chooseGoBtn) {
-    chooseGoBtn.style.cursor = 'pointer';
     chooseGoBtn.addEventListener('click', () => {
-      const targetUrl = keywordUrlMap[selectedKeyword] || '../03_detail_course01.html/code.html';
-      window.location.href = targetUrl;
+      const match = keywordMap[selectedKeyword] || keywordMap['빵·커피'];
+      window.location.href = match.url;
     });
   }
 
+  // 상단 데스크톱 메뉴 스크롤 연동 (온페이지 앵커 링크 대상)
+  const navSections = [
+    { id: 'top-hero', link: document.querySelector('.desktop-nav-menu a[href="#top-hero"]') },
+    { id: 'keyword-selection-area', link: document.querySelector('.desktop-nav-menu a[href="#keyword-selection-area"]') },
+    { id: 'transit-tips-section', link: document.querySelector('.desktop-nav-menu a[href="#transit-tips-section"]') }
+  ];
+
+  window.addEventListener('scroll', () => {
+    const scrollPos = window.scrollY + 140;
+    navSections.forEach(({ id, link }) => {
+      const el = document.getElementById(id);
+      if (!el || !link) return;
+      const top = el.offsetTop;
+      const height = el.offsetHeight;
+      if (scrollPos >= top && scrollPos < top + height) {
+        document.querySelectorAll('.desktop-nav-menu a').forEach(a => a.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  });
+
+  // Smart scroll to Taste Curation section without bottom clipping
+  function scrollToTasteCuration(e) {
+    if (e) e.preventDefault();
+    const target = document.getElementById('keyword-selection-area');
+    if (!target) return;
+    const navHeight = 68;
+    const rect = target.getBoundingClientRect();
+    const cardHeight = target.offsetHeight;
+    const windowHeight = window.innerHeight;
+    const availableHeight = windowHeight - navHeight;
+    if (cardHeight < availableHeight) {
+      const topOffset = navHeight + (availableHeight - cardHeight) / 2;
+      const targetScrollY = window.pageYOffset + rect.top - topOffset;
+      window.scrollTo({ top: Math.max(0, targetScrollY), behavior: 'smooth' });
+    } else {
+      const targetScrollY = window.pageYOffset + rect.top - navHeight - 12;
+      window.scrollTo({ top: Math.max(0, targetScrollY), behavior: 'smooth' });
+    }
+  }
+
+  // Bind desktop navigation clicks for taste curation
+  document.querySelectorAll('a[href="#keyword-selection-area"]').forEach(btn => {
+    btn.addEventListener('click', scrollToTasteCuration);
+  });
+
   // 2. 하단 네비게이션 탭바 스크롤 인터랙션
+  const scrollToCourses = (behavior = 'smooth') => {
+    const header = document.querySelector('.courses-wrapper .section-header') || document.getElementById('courses-section');
+    if (header) {
+      const nav = document.querySelector('.site-nav-header');
+      const navHeight = nav ? nav.offsetHeight : 58;
+      const topPos = header.getBoundingClientRect().top + window.pageYOffset - navHeight + 2;
+      window.scrollTo({ top: topPos, behavior: behavior });
+    }
+  };
+
   const tabs = {
     'tab-home': () => window.scrollTo({ top: 0, behavior: 'smooth' }),
-    'tab-courses': () => document.getElementById('courses-section')?.scrollIntoView({ behavior: 'smooth' }),
-    'tab-keyword': () => document.getElementById('keyword-selection-area')?.scrollIntoView({ behavior: 'smooth' }),
-    'tab-transit': () => document.getElementById('transit-tips-section')?.scrollIntoView({ behavior: 'smooth' }),
-    'tab-menu': () => document.getElementById('courses-section')?.scrollIntoView({ behavior: 'smooth' })
+    'tab-courses': scrollToCourses,
+    'tab-keyword': () => scrollToTasteCuration(),
+    'tab-transit': () => document.getElementById('transit-tips-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+    'tab-menu': scrollToCourses
   };
+
+  // URL 해시(#courses-section 또는 #three-courses-section) 진입 시 히어로 잔여 영역 없이 섹션 상단 정렬
+  window.addEventListener('load', () => {
+    if (window.location.hash === '#courses-section' || window.location.hash === '#three-courses-section') {
+      setTimeout(scrollToCourses, 120);
+    }
+  });
 
   const navTabs = document.querySelectorAll('.bottom-nav-bar .nav-tab');
   navTabs.forEach(tab => {
@@ -1544,9 +2438,7 @@
   const hamburger = document.querySelector('.hero-hamburger');
   if (hamburger) {
     hamburger.style.cursor = 'pointer';
-    hamburger.addEventListener('click', () => {
-      document.getElementById('courses-section')?.scrollIntoView({ behavior: 'smooth' });
-    });
+    hamburger.addEventListener('click', scrollToCourses);
   }
 
   // 4. 히어로 슬라이드 3개 대표 이미지 자동 롤링 인터랙션
@@ -1603,5 +2495,92 @@
       });
     }
   });
+
+  // 6. 공유하기 (Web Share API 및 클립보드 복사)
+  function handleShare(targetKey) {
+    let shareTitle = "뚜벅뚜벅 나혼자 [이천] · 당일치기 감성 도보 여행";
+    let shareText = "잠실에서 50분, 차 없이 가볍게 떠나는 이천 뚜벅이 감성 투어 가이드!";
+    let shareUrl = window.location.href;
+
+    if (targetKey === 'course-01') {
+      shareTitle = "이천 원도심 투어 · 뚜벅뚜벅 나혼자 [이천]";
+      shareText = "빵과 커피 들고 오래된 이천을 걷다 · 원도심 3.8km 도보 산책 코스를 친구에게 추천합니다!";
+      shareUrl = new URL('../03_detail_course01.html/code.html', window.location.href).href;
+    } else if (targetKey === 'course-02') {
+      shareTitle = "이천 도예촌 투어 · 뚜벅뚜벅 나혼자 [이천]";
+      shareText = "쌀밥 먹고 도자 예술마을을 걷다 · 경강선 신둔도예촌역 4.5km 도예 산책 코스를 친구에게 추천합니다!";
+      shareUrl = new URL('../03_detail_course02.html/code.html', window.location.href).href;
+    } else if (targetKey === 'course-03') {
+      shareTitle = "이천 문화공간 투어 · 뚜벅뚜벅 나혼자 [이천]";
+      shareText = "조금 멀리, 이천의 쌀과 복합문화공간을 찾아가다 · 시몬스테라스 & 솥밥 힐링 코스를 추천합니다!";
+      shareUrl = new URL('../03_detail_course03.html/code.html', window.location.href).href;
+    } else {
+      shareTitle = "뚜벅뚜벅 나혼자 [이천] · 당일치기 감성 도보 여행";
+      shareText = "잠실에서 50분, 차 없이 가볍게 떠나는 이천 뚜벅이 감성 투어 가이드!";
+      shareUrl = window.location.href;
+    }
+
+    if (navigator.share) {
+      navigator.share({
+        title: shareTitle,
+        text: shareText,
+        url: shareUrl
+      }).catch(err => {
+        if (err.name !== 'AbortError') {
+          copyToClipboard(shareUrl, "✨ 여행 가이드 링크가 복사되었습니다! 친구에게 공유해보세요.");
+        }
+      });
+    } else {
+      copyToClipboard(shareUrl, "✨ 여행 가이드 링크가 복사되었습니다! 친구에게 공유해보세요.");
+    }
+  }
+
+  function copyToClipboard(text, successMsg) {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(successMsg);
+      }).catch(() => {
+        fallbackCopy(text, successMsg);
+      });
+    } else {
+      fallbackCopy(text, successMsg);
+    }
+  }
+
+  function fallbackCopy(text, successMsg) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      showToast(successMsg);
+    } catch (err) {
+      prompt("아래 링크를 복사하여 친구에게 공유하세요:", text);
+    }
+    document.body.removeChild(textArea);
+  }
+
+  let toastTimeout = null;
+  function showToast(msg) {
+    const toast = document.getElementById('share-toast');
+    const msgEl = document.getElementById('share-toast-msg');
+    if (!toast) return;
+    if (msgEl && msg) msgEl.textContent = msg;
+    toast.classList.add('show');
+    if (toastTimeout) clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
+      toast.classList.remove('show');
+    }, 3200);
+  }
 </script>
+
+<!-- Floating Toast Notification -->
+<div id="share-toast" class="share-toast" role="alert" aria-live="polite">
+  <i class="fa-solid fa-circle-check"></i>
+  <span id="share-toast-msg">여행 가이드 링크가 복사되었습니다! 친구에게 공유해보세요.</span>
+</div>
 </body></html>
