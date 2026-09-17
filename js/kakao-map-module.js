@@ -20,7 +20,6 @@ const COURSE_MAP_CONFIG = {
     "routeSpotNames": [
       "제일은행.이천터미널",
       "우진커피니케이션",
-      "관고동사랑방",
       "관고전통시장",
       "쌀베이커리카페 흥만소",
       "설봉공원"
@@ -40,14 +39,13 @@ const COURSE_MAP_CONFIG = {
         "tag": "food"
       },
       "쌀베이커리카페 흥만소": {
-        "num": 5,
+        "num": 4,
         "cat": "쌀 디저트 카페",
         "icon": "🍞",
         "memo": "이천쌀 크림빵 & 시그니처 쌀 디저트와 레트로 한옥",
         "tag": "food"
       },
       "관고동사랑방": {
-        "num": 3,
         "cat": "로컬 맛집",
         "icon": "🍝",
         "memo": "정성 가득한 생면 라자냐 & 파스타 1인 식사",
@@ -85,14 +83,14 @@ const COURSE_MAP_CONFIG = {
         "tag": "food"
       },
       "설봉공원": {
-        "num": 6,
+        "num": 5,
         "cat": "공원·호수",
         "icon": "🌲",
         "memo": "설봉호 둘레길 산책과 시원한 음악분수 쉼터",
         "tag": "spot"
       },
       "관고전통시장": {
-        "num": 4,
+        "num": 3,
         "cat": "전통시장",
         "icon": "🏪",
         "memo": "활기찬 5일장 장터 먹거리와 정겨운 닭발 골목",
@@ -166,6 +164,13 @@ const COURSE_MAP_CONFIG = {
         "icon": "☕",
         "memo": "광주요 12칸 전통 오름가마와 테라스 정원, 도자 쇼룸",
         "tag": "food"
+      },
+      "예스파크": {
+        "num": 4,
+        "cat": "도예 예술마을",
+        "icon": "🏺",
+        "memo": "국내 최대 공예 예술 마을 · 수백여 공방과 갤러리 산책",
+        "tag": "spot"
       },
       "저수지입구": {
         "cat": "버스정류장",
@@ -436,7 +441,7 @@ const COURSE_BOOKMARKS = {
   "course-02": {
     "folderId": "23973908",
     "shortUrl": "https://kko.to/SmoaGzhtB3",
-    "count": 12,
+    "count": 13,
     "bookmarks": [
       {
         "name": "신둔도예촌역",
@@ -461,6 +466,14 @@ const COURSE_BOOKMARKS = {
         "lng": 127.39801381,
         "type": "PLACE",
         "key": "454460196"
+      },
+      {
+        "name": "예스파크",
+        "addr": "경기 이천시 신둔면 도자예술로 57",
+        "lat": 37.294242,
+        "lng": 127.385500,
+        "type": "PLACE",
+        "key": "YESPARK"
       },
       {
         "name": "저수지입구",
@@ -669,31 +682,43 @@ function renderKakaoCourseMap(containerId, courseKey) {
   window.activeCourseKey = courseKey;
 
   ensureKakaoMapsLoaded(() => {
-    // If map already initialized, relayout and return
-    if (window.kakaoMapInstances[containerId]) {
-      const mapObj = window.kakaoMapInstances[containerId];
-      setTimeout(() => {
-        mapObj.map.relayout();
-        mapObj.map.setBounds(mapObj.bounds);
-      }, 100);
-      return;
+    let mapObj = window.kakaoMapInstances[containerId];
+    let map = null;
+
+    if (!mapObj) {
+      const firstBm = bmData.bookmarks[0];
+      const mapCenter = new kakao.maps.LatLng(firstBm.lat, firstBm.lng);
+
+      map = new kakao.maps.Map(container, {
+        center: mapCenter,
+        level: 5
+      });
+
+      const mapTypeControl = new kakao.maps.MapTypeControl();
+      map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+      const zoomControl = new kakao.maps.ZoomControl();
+      map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+      mapObj = { map: map, bounds: null };
+      window.kakaoMapInstances[containerId] = mapObj;
+    } else {
+      map = mapObj.map;
     }
 
-    // Default center from first spot
-    const firstBm = bmData.bookmarks[0];
-    const mapCenter = new kakao.maps.LatLng(firstBm.lat, firstBm.lng);
+    // Clean up existing markers & polyline
+    if (window.activeMapMarkers && window.activeMapMarkers.length > 0) {
+      window.activeMapMarkers.forEach(m => {
+        if (m.overlay) m.overlay.setMap(null);
+        if (m.infoOverlay) m.infoOverlay.setMap(null);
+      });
+    }
+    window.activeMapMarkers = [];
 
-    const map = new kakao.maps.Map(container, {
-      center: mapCenter,
-      level: 5
-    });
-
-    // Add controls
-    const mapTypeControl = new kakao.maps.MapTypeControl();
-    map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
-
-    const zoomControl = new kakao.maps.ZoomControl();
-    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+    if (window.activeCoursePolyline) {
+      window.activeCoursePolyline.setMap(null);
+      window.activeCoursePolyline = null;
+    }
 
     const bounds = new kakao.maps.LatLngBounds();
     const routePoints = [];
@@ -710,59 +735,62 @@ function renderKakaoCourseMap(containerId, courseKey) {
       const isRoute = meta.num !== undefined;
       const num = meta.num || null;
       const cat = meta.cat || (bm.type === 'BUSSTOP' ? '버스정류장' : (bm.type === 'SUBWAYSTATION' ? '전철역' : '로컬 스팟'));
-      const icon = meta.icon || (bm.type === 'BUSSTOP' ? '🚏' : '⭐️');
+      const icon = meta.icon || (bm.type === 'BUSSTOP' ? '🚏' : (meta.tag === 'spot' ? '🏛️' : '⭐️'));
       const memo = meta.memo || bm.addr;
-      const tag = meta.tag || (bm.type === 'BUSSTOP' ? 'transit' : 'spot');
+      const tag = meta.tag || (bm.type === 'BUSSTOP' ? 'transit' : (bm.type === 'SUBWAYSTATION' ? 'transit' : 'spot'));
 
       if (isRoute) {
         routePoints.push({ num: num, pos: pos, name: bm.name });
       }
 
-      // Marker element
+      // Marker DOM Element
       const markerEl = document.createElement('div');
       markerEl.className = 'kakao-custom-marker';
       markerEl.setAttribute('data-tag', tag);
       markerEl.setAttribute('data-name', bm.name);
+      // Fixed: Removed transform: translate(-50%, -100%) to align precisely with xAnchor: 0.5, yAnchor: 1.0
       markerEl.style.cssText = `
         cursor: pointer;
         display: flex;
         flex-direction: column;
         align-items: center;
-        transform: translate(-50%, -100%);
-        transition: transform 0.18s ease;
-        z-index: ${isRoute ? '15' : '10'};
+        transition: transform 0.15s ease;
+        z-index: ${isRoute ? '20' : '10'};
       `;
 
       if (isRoute) {
         // Numbered pin for sequential route stops
         markerEl.innerHTML = `
-          <div style="background: ${config.themeColor}; color: #ffffff; width: 34px; height: 34px; border-radius: 50%; border: 3px solid #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; font-family: 'DM Sans', sans-serif;">
+          <div style="background: ${config.themeColor}; color: #ffffff; width: 32px; height: 32px; border-radius: 50%; border: 2.5px solid #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13.5px; font-family: 'DM Sans', sans-serif;">
             ${num}
           </div>
-          <div style="background: rgba(36,30,25,0.92); backdrop-filter: blur(4px); color: #ffffff; font-size: 11.5px; font-weight: 700; padding: 3px 8px; border-radius: 6px; margin-top: 3px; white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.15);">
+          <div style="background: rgba(36,30,25,0.92); backdrop-filter: blur(4px); color: #ffffff; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; margin-top: 3px; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.18);">
             ${bm.name}
           </div>
         `;
       } else {
-        // Star pin for bookmarked favorite spots
-        const isTransit = bm.type === 'BUSSTOP' || bm.type === 'SUBWAYSTATION';
-        const pinBg = isTransit ? '#4b5563' : '#d97706';
-        const pinIcon = isTransit ? '🚏' : '★';
+        // Star / Category pin for bookmarked favorite spots
+        const isTransit = tag === 'transit';
+        const isCultural = tag === 'spot';
+        const pinBg = isTransit ? '#4b5563' : (isCultural ? '#0284c7' : '#d97706');
+        const pinIcon = isTransit ? '🚏' : (isCultural ? '🏛️' : '★');
         markerEl.innerHTML = `
-          <div style="background: ${pinBg}; color: #ffffff; width: 28px; height: 28px; border-radius: 50%; border: 2.5px solid #ffffff; box-shadow: 0 3px 10px rgba(0,0,0,0.25); display: flex; align-items: center; justify-content: center; font-size: 13px;">
+          <div style="background: ${pinBg}; color: #ffffff; width: 26px; height: 26px; border-radius: 50%; border: 2px solid #ffffff; box-shadow: 0 3px 8px rgba(0,0,0,0.22); display: flex; align-items: center; justify-content: center; font-size: 11.5px;">
             ${pinIcon}
           </div>
-          <div style="background: #ffffff; color: #372a22; font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 6px; margin-top: 2px; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.18); border: 1px solid #ebdccb;">
+          <div style="background: #ffffff; color: #241e19; font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 6px; margin-top: 2px; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.15); border: 1px solid #ebdccb;">
             ${bm.name}
           </div>
         `;
       }
 
+      // Precise Anchoring
       const overlay = new kakao.maps.CustomOverlay({
         position: pos,
         content: markerEl,
-        yAnchor: 1,
-        zIndex: isRoute ? 15 : 10
+        xAnchor: 0.5,
+        yAnchor: 1.0,
+        zIndex: isRoute ? 20 : 10
       });
       overlay.setMap(map);
 
@@ -772,30 +800,29 @@ function renderKakaoCourseMap(containerId, courseKey) {
         background: #ffffff;
         border: 1.5px solid #dfd4c4;
         border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(36,30,25,0.25);
+        box-shadow: 0 12px 32px rgba(36,30,25,0.25);
         padding: 16px 18px 14px;
         width: 270px;
         font-family: 'Noto Sans KR', sans-serif;
         position: relative;
-        transform: translate(-50%, -125%);
-        z-index: 50;
+        z-index: 60;
       `;
       infoCard.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
           <div style="display: flex; align-items: center; gap: 6px;">
-            ${isRoute ? `<span style="background: ${config.themeColor}; color: #fff; font-size: 10.5px; font-weight: 800; padding: 2px 7px; border-radius: 4px;">코스 0${num}</span>` : `<span style="background: #fef3c7; color: #92400e; font-size: 10.5px; font-weight: 800; padding: 2px 7px; border-radius: 4px; border: 1px solid #fde68a;">⭐️ 즐겨찾기</span>`}
-            <span style="font-size: 11px; color: #7a6d61; font-weight: 600;">${cat}</span>
+            ${isRoute ? `<span style="background: ${config.themeColor}; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">코스 0${num}</span>` : `<span style="background: #fef3c7; color: #92400e; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; border: 1px solid #fde68a;">⭐️ 즐겨찾기</span>`}
+            <span style="font-size: 11px; color: #7a6d61; font-weight: 700;">${cat}</span>
           </div>
-          <button type="button" class="close-card-btn" aria-label="닫기" style="background:none; border:none; color:#999; font-size:20px; line-height:1; cursor:pointer; padding:0 4px;">&times;</button>
+          <button type="button" class="close-card-btn" aria-label="닫기" style="background:none; border:none; color:#888; font-size:18px; line-height:1; cursor:pointer; padding:0 4px;">&times;</button>
         </div>
-        <h4 style="font-size: 15px; font-weight: 800; color: #241e19; margin: 0 0 3px;">${bm.name}</h4>
-        <div style="font-size: 11.5px; color: #8c786a; margin-bottom: 6px;">📍 ${bm.addr}</div>
-        <p style="font-size: 12px; color: #5a4e43; line-height: 1.5; margin: 0 0 12px; background: #faf7f2; padding: 8px 10px; border-radius: 8px; border: 1px solid #f0ebe1;">${memo}</p>
+        <h4 style="font-size: 15px; font-weight: 800; color: #241e19; margin: 0 0 3px;">${icon} ${bm.name}</h4>
+        <div style="font-size: 11.5px; color: #8c786a; margin-bottom: 8px;">📍 ${bm.addr}</div>
+        <p style="font-size: 12px; color: #524438; line-height: 1.45; margin: 0 0 12px; background: #faf7f2; padding: 8px 10px; border-radius: 8px; border: 1px solid #f0ebe1;">${memo}</p>
         <div style="display: flex; gap: 6px;">
-          <a href="https://map.kakao.com/link/to/${encodeURIComponent(bm.name)},${bm.lat},${bm.lng}" target="_blank" rel="noopener noreferrer" style="flex: 1; text-align: center; background: #fae100; color: #371d1e; text-decoration: none; font-size: 11.5px; font-weight: 800; padding: 7px 8px; border-radius: 8px; transition: opacity 0.15s; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+          <a href="https://map.kakao.com/link/to/${encodeURIComponent(bm.name)},${bm.lat},${bm.lng}" target="_blank" rel="noopener noreferrer" style="flex: 1; text-align: center; background: #fae100; color: #371d1e; text-decoration: none; font-size: 11.5px; font-weight: 800; padding: 7px 8px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
             카카오맵 길찾기 ↗
           </a>
-          <a href="https://map.kakao.com/link/map/${encodeURIComponent(bm.name)},${bm.lat},${bm.lng}" target="_blank" rel="noopener noreferrer" style="flex: 1; text-align: center; background: #f3eee7; color: #403429; text-decoration: none; font-size: 11.5px; font-weight: 700; padding: 7px 8px; border-radius: 8px; transition: background 0.15s;">
+          <a href="https://map.kakao.com/link/map/${encodeURIComponent(bm.name)},${bm.lat},${bm.lng}" target="_blank" rel="noopener noreferrer" style="flex: 1; text-align: center; background: #f3eee7; color: #403429; text-decoration: none; font-size: 11.5px; font-weight: 700; padding: 7px 8px; border-radius: 8px;">
             크게 보기
           </a>
         </div>
@@ -804,8 +831,9 @@ function renderKakaoCourseMap(containerId, courseKey) {
       const infoOverlay = new kakao.maps.CustomOverlay({
         position: pos,
         content: infoCard,
-        yAnchor: 1,
-        zIndex: 50
+        xAnchor: 0.5,
+        yAnchor: 1.18,
+        zIndex: 60
       });
 
       const closeBtn = infoCard.querySelector('.close-card-btn');
@@ -855,20 +883,16 @@ function renderKakaoCourseMap(containerId, courseKey) {
         path: routePoints.map(r => r.pos),
         strokeWeight: 4,
         strokeColor: config.lineColor,
-        strokeOpacity: 0.85,
+        strokeOpacity: 0.88,
         strokeStyle: 'shortdash'
       });
       polyline.setMap(map);
+      window.activeCoursePolyline = polyline;
     }
 
     // Set map bounds to show all bookmarked pins nicely
     map.setBounds(bounds);
-
-    // Save instance
-    window.kakaoMapInstances[containerId] = {
-      map: map,
-      bounds: bounds
-    };
+    mapObj.bounds = bounds;
 
     // Close open popup on map click
     kakao.maps.event.addListener(map, 'click', () => {
@@ -881,10 +905,27 @@ function renderKakaoCourseMap(containerId, courseKey) {
     // Populate the Bookmarks Drawer below the map
     populateBookmarksDrawer(courseKey, markerList);
 
+    // Reset filter chips to 'all'
+    resetFilterChips();
+
     setTimeout(() => {
       map.relayout();
       map.setBounds(bounds);
-    }, 180);
+    }, 120);
+  });
+}
+
+/**
+ * Reset filter chips UI to 'all'
+ */
+function resetFilterChips() {
+  const chips = document.querySelectorAll('.kko-map-filter-bar .filter-chip');
+  chips.forEach(c => {
+    if (c.getAttribute('data-filter') === 'all') {
+      c.classList.add('active');
+    } else {
+      c.classList.remove('active');
+    }
   });
 }
 
@@ -905,43 +946,50 @@ function populateBookmarksDrawer(courseKey, markerList) {
     const meta = config.placeMeta[bm.name] || {};
     const isRoute = meta.num !== undefined;
     const cat = meta.cat || (bm.type === 'BUSSTOP' ? '정류장' : '로컬');
-    const icon = meta.icon || (bm.type === 'BUSSTOP' ? '🚏' : '⭐️');
+    const icon = meta.icon || (bm.type === 'BUSSTOP' ? '🚏' : (meta.tag === 'spot' ? '🏛️' : '⭐️'));
     const markerObj = markerList.find(m => m.name === bm.name);
 
     const item = document.createElement('div');
     item.className = 'drawer-item';
     item.setAttribute('data-name', bm.name);
+    item.setAttribute('data-tag', meta.tag || (bm.type === 'BUSSTOP' ? 'transit' : 'spot'));
+    item.setAttribute('data-route', isRoute ? 'true' : 'false');
     item.style.cssText = `
       flex: 0 0 auto;
-      width: 210px;
+      width: 220px;
       background: #ffffff;
       border: 1px solid #ebdccb;
-      border-radius: 12px;
-      padding: 10px 12px;
+      border-radius: 14px;
+      padding: 12px 14px;
       cursor: pointer;
       transition: all 0.18s ease;
       box-shadow: 0 2px 6px rgba(36,30,25,0.04);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     `;
 
     item.innerHTML = `
-      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
-        <span style="font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; ${isRoute ? `background: ${config.themeColor}; color: #fff;` : `background: #fef3c7; color: #92400e;`}">
-          ${isRoute ? `0${meta.num} 코스` : '⭐️ 즐겨찾기'}
-        </span>
-        <span style="font-size: 10px; color: #8c786a;">${cat}</span>
-      </div>
-      <div style="font-size: 13px; font-weight: 800; color: #241e19; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-        ${icon} ${bm.name}
-      </div>
-      <div style="font-size: 10.5px; color: #887a6d; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-        ${bm.addr}
+      <div>
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
+          <span style="font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; ${isRoute ? `background: ${config.themeColor}; color: #fff;` : `background: #fef3c7; color: #92400e; border: 1px solid #fde68a;`}">
+            ${isRoute ? `0${meta.num} 코스` : '⭐️ 즐겨찾기'}
+          </span>
+          <span style="font-size: 10.5px; color: #8c786a; font-weight: 600;">${cat}</span>
+        </div>
+        <div style="font-size: 13.5px; font-weight: 800; color: #241e19; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+          ${icon} ${bm.name}
+        </div>
+        <div style="font-size: 11px; color: #887a6d; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+          ${bm.addr}
+        </div>
       </div>
     `;
 
     item.addEventListener('mouseenter', () => {
       item.style.borderColor = config.themeColor;
       item.style.transform = 'translateY(-2px)';
-      item.style.boxShadow = '0 4px 12px rgba(36,30,25,0.1)';
+      item.style.boxShadow = '0 6px 16px rgba(36,30,25,0.1)';
     });
     item.addEventListener('mouseleave', () => {
       item.style.borderColor = '#ebdccb';
@@ -960,7 +1008,8 @@ function populateBookmarksDrawer(courseKey, markerList) {
 }
 
 /**
- * Filter markers on map by category
+ * Filter markers on map by category (5 categories)
+ * Features: fitBounds, polyline sync, flex drawer preservation, live badge update
  */
 function filterMapMarkers(filterType) {
   const chips = document.querySelectorAll('.kko-map-filter-bar .filter-chip');
@@ -971,34 +1020,65 @@ function filterMapMarkers(filterType) {
 
   const markers = window.activeMapMarkers || [];
   const drawerItems = document.querySelectorAll('#kko-bookmarks-drawer .drawer-item');
+  const mapObj = window.kakaoMapInstances['kakao-map-canvas-detail'];
+
+  const filteredBounds = new kakao.maps.LatLngBounds();
+  let visibleCount = 0;
 
   markers.forEach(m => {
     let show = true;
     if (filterType === 'route') show = m.isRoute;
-    else if (filterType === 'food') show = m.tag === 'food';
-    else if (filterType === 'transit') show = m.tag === 'transit';
-    else if (filterType === 'spot') show = m.tag === 'spot' || m.isRoute;
+    else if (filterType === 'spot') show = (m.tag === 'spot');
+    else if (filterType === 'food') show = (m.tag === 'food');
+    else if (filterType === 'transit') show = (m.tag === 'transit');
 
     if (show) {
-      m.overlay.setMap(window.kakaoMapInstances['kakao-map-canvas-detail'].map);
+      if (mapObj && mapObj.map) m.overlay.setMap(mapObj.map);
+      filteredBounds.extend(m.pos);
+      visibleCount++;
     } else {
       m.overlay.setMap(null);
       if (m.infoOverlay) m.infoOverlay.setMap(null);
     }
   });
 
-  // Filter drawer items
+  // Polyline sync: show only for 'all' and 'route'
+  if (window.activeCoursePolyline && mapObj && mapObj.map) {
+    const showPolyline = (filterType === 'all' || filterType === 'route');
+    window.activeCoursePolyline.setMap(showPolyline ? mapObj.map : null);
+  }
+
+  // Dynamic map bounds adjustment (fitBounds)
+  if (visibleCount > 0 && mapObj && mapObj.map) {
+    mapObj.map.setBounds(filteredBounds);
+  }
+
+  // Filter drawer items while preserving flexbox layout
   drawerItems.forEach(d => {
     const name = d.getAttribute('data-name');
     const m = markers.find(item => item.name === name);
     if (!m) return;
     let show = true;
     if (filterType === 'route') show = m.isRoute;
-    else if (filterType === 'food') show = m.tag === 'food';
-    else if (filterType === 'transit') show = m.tag === 'transit';
-    else if (filterType === 'spot') show = m.tag === 'spot' || m.isRoute;
-    d.style.display = show ? 'block' : 'none';
+    else if (filterType === 'spot') show = (m.tag === 'spot');
+    else if (filterType === 'food') show = (m.tag === 'food');
+    else if (filterType === 'transit') show = (m.tag === 'transit');
+
+    d.style.display = show ? '' : 'none'; // Fixed: preserve flexbox
   });
+
+  // Update top counter badge
+  const countBadge = document.getElementById('modal-bm-count');
+  if (countBadge) {
+    const filterNames = {
+      all: '장소 전체',
+      route: '추천 동선',
+      spot: '볼거리·문화',
+      food: '맛집·카페',
+      transit: '대중교통'
+    };
+    countBadge.textContent = `${visibleCount}개 ${filterNames[filterType] || '장소'} 동기화`;
+  }
 }
 
 /**
@@ -1028,7 +1108,10 @@ function openDetailMap(courseKey) {
     }
   }
 
-  renderKakaoCourseMap('kakao-map-canvas-detail', courseKey);
+  // Allow dialog reflow to settle before rendering map
+  setTimeout(() => {
+    renderKakaoCourseMap('kakao-map-canvas-detail', courseKey);
+  }, 80);
 }
 
 // Window resize handler

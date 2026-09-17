@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>카카오맵 즐겨찾기 지도 해결방안 인터랙티브 디자인 시안</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --bg-cream: #f6f3ed;
+      --card-bg: #faf7f2;
+      --border-color: #ebdccb;
+      --text-dark: #241e19;
+      --text-muted: #75675b;
+      --accent-brown: #5a3e30;
+      --accent-amber: #d97706;
+      --accent-green: #385536;
+      --accent-terracotta: #8a4b2d;
+      --kko-yellow: #fae100;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #ede7dc;
+      color: var(--text-dark);
+      padding: 30px 16px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    /* Top Demo Control Header */
+    .demo-header {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 24px 28px;
+      box-shadow: 0 10px 30px rgba(36, 30, 25, 0.08);
+      border: 1px solid var(--border-color);
+      margin-bottom: 24px;
+    }
+
+    .demo-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .demo-title-group h1 {
+      font-size: 24px;
+      font-weight: 800;
+      color: #1f1a16;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .demo-title-group p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 5px;
+    }
+
+    /* Comparison Toggle */
+    .compare-toggle-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #f4ede2;
+      padding: 8px 14px;
+      border-radius: 12px;
+      border: 1px solid #dfd3c3;
+    }
+
+    .compare-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #4a3e35;
+    }
+
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 26px;
+    }
+
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #ef4444; /* Before: Red */
+      transition: .3s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    input:checked + .slider {
+      background-color: #10b981; /* After: Green */
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(24px);
+    }
+
+    .mode-indicator {
+      font-size: 12px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+    .mode-indicator.after {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    .mode-indicator.before {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    /* Course Selection Tabs */
+    .course-tabs {
+      display: flex;
+      gap: 8px;
+      border-top: 1px dashed #e5dacb;
+      padding-top: 16px;
+      overflow-x: auto;
+    }
+
+    .course-tab-btn {
+      background: #faf7f2;
+      border: 1.5px solid var(--border-color);
+      color: #55483e;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .course-tab-btn:hover {
+      background: #f0eae1;
+      color: #241e19;
+    }
+
+    .course-tab-btn.active {
+      background: #241e19;
+      color: #ffffff;
+      border-color: #241e19;
+      box-shadow: 0 4px 12px rgba(36, 30, 25, 0.2);
+    }
+
+    /* Feature Explanation Banner */
+    .solution-highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .highlight-card {
+      background: #ffffff;
+      border: 1px solid #ebdccb;
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-size: 13px;
+    }
+
+    .highlight-card h4 {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #241e19;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .highlight-card p {
+      color: #6e6155;
+      line-height: 1.45;
+      font-size: 12.5px;
+    }
+
+    /* THE MODAL DESIGN CONTAINER */
+    .modal-preview-wrapper {
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 26px 28px;
+      box-shadow: 0 25px 60px rgba(45, 36, 28, 0.15);
+      border: 1px solid rgba(220, 210, 195, 0.9);
+      position: relative;
+    }
+
+    /* Modal Header */
+    .kakao-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .kko-header-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+
+    .kko-badge-tag {
+      font-size: 11.5px;
+      font-weight: 800;
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+      padding: 3px 9px;
+      border-radius: 6px;
+    }
+
+    .kko-badge-count {
+      font-size: 11.5px;
+      font-weight: 800;
+      background: #f3eee7;
+      color: #635345;
+      padding: 3px 9px;
+      border-radius: 6px;
+    }
+
+    .kko-modal-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #1f1b16;
+      margin-bottom: 4px;
+    }
+
+    .kko-modal-desc {
+      font-size: 13.5px;
+      color: #73675c;
+    }
+
+    .kko-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-kko-app-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--kko-yellow);
+      color: #371d1e;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 9px 15px;
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      transition: all 0.15s;
+    }
+
+    .btn-kko-app-link:hover {
+      background: #f0d800;
+      transform: translateY(-1px);
+    }
+
+    .btn-close-modal {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1.5px solid #d4c8b8;
+      background: #faf7f2;
+      color: #6d6054;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-close-modal:hover {
+      background: #eae3d8;
+      color: #241e19;
+    }
+
+    /* Category Filter Bar */
+    .kko-map-filter-bar {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      margin-bottom: 16px;
+    }
+
+    .filter-chip {
+      background: #faf7f2;
+      border: 1.5px solid var(--border-color);
+      color: #5d4f43;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+
+    .filter-chip:hover {
+      background: #f2ece2;
+      color: #241e19;
+    }
+
+    .filter-chip.active {
+      background: #241e19;
+      color: #ffffff;
+      border-color: #241e19;
+      box-shadow: 0 2px 8px rgba(36, 30, 25, 0.25);
+    }
+
+    .filter-chip .chip-count {
+      font-size: 11px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.08);
+    }
+
+    .filter-chip.active .chip-count {
+      background: rgba(255,255,255,0.22);
+      color: #ffffff;
+    }
+
+    /* Map Box */
+    .kko-map-canvas-box {
+      border: 1.5px solid var(--border-color);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.04);
+      background: #eef2f5;
+      position: relative;
+    }
+
+    #preview-map-canvas {
+      width: 100%;
+      height: 480px;
+    }
+
+
+    .kko-map-tip-bar {
+      background: #fbf9f5;
+      border-top: 1px solid var(--border-color);
+      padding: 9px 16px;
+      font-size: 12px;
+      color: #7a6e63;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Bookmarks Drawer */
+    .kko-drawer-section {
+      margin-top: 18px;
+    }
+
+    .kko-drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .kko-drawer-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #241e19;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .drawer-empty-msg {
+      padding: 24px;
+      text-align: center;
+      font-size: 13px;
+      color: #8c7e72;
+      background: #faf7f2;
+      border-radius: 12px;
+      border: 1px dashed var(--border-color);
+    }
+
+    .kko-bookmarks-drawer {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      scrollbar-width: thin;
+    }
+
+    .kko-bookmarks-drawer::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .kko-bookmarks-drawer::-webkit-scrollbar-thumb {
+      background: #d4c7b8;
+      border-radius: 3px;
+    }
+
+    .drawer-item {
+      flex: 0 0 auto;
+      width: 220px;
+      background: #ffffff;
+      border: 1.5px solid var(--border-color);
+      border-radius: 14px;
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(36,30,25,0.04);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .drawer-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(36,30,25,0.1);
+      border-color: #5a3e30;
+    }
+
+    .drawer-item-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .drawer-item-badge {
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .drawer-item-cat {
+      font-size: 10.5px;
+      color: #8c786a;
+      font-weight: 600;
+    }
+
+    .drawer-item-name {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #241e19;
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .drawer-item-addr {
+      font-size: 11px;
+      color: #887a6d;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Comparison Status Alert Bar */
+    .compare-alert-banner {
+      margin-top: 18px;
+      padding: 14px 18px;
+      border-radius: 14px;
+      font-size: 13px;
+      line-height: 1.5;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: all 0.3s;
+    }
+
+    .compare-alert-banner.after {
+      background: #ecfdf5;
+      border: 1.5px solid #a7f3d0;
+      color: #065f46;
+    }
+
+    .compare-alert-banner.before {
+      background: #fff1f2;
+      border: 1.5px solid #fecdd3;
+      color: #9f1239;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      body { padding: 16px 8px; }
+      .modal-preview-wrapper { padding: 18px 16px; border-radius: 20px; }
+      #preview-map-canvas { height: 380px; }
+      .drawer-item { width: 190px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Top Demo Control Header -->
+  <header class="demo-header">
+    <div class="demo-header-top">
+      <div class="demo-title-group">
+        <h1>
+          <span>🗺️ 카카오맵 즐겨찾기 연동 개선 시안</span>
+        </h1>
+        <p>좌표 정밀 앵커링, 5대 카테고리 정상 분류, 지도 영역 자동 맞춤(fitBounds), 동선 점선 연동을 직접 테스트해 보세요.</p>
+      </div>
+
+      <!-- Before / After Switch -->
+      <div class="compare-toggle-box">
+        <span class="compare-label">비교 모드:</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="mode-toggle" checked onchange="toggleCompareMode()">
+          <span class="slider"></span>
+        </label>
+        <span id="mode-badge" class="mode-indicator after">🟢 개선된 해결 시안</span>
+      </div>
+    </div>
+
+    <!-- Course Tabs -->
+    <div class="course-tabs">
+      <button type="button" class="course-tab-btn active" data-course="course-01" onclick="switchCourse('course-01')">
+        <span>01 원도심 투어</span>
+        <span style="font-size: 11px; opacity: 0.8;">(16곳)</span>
+      </button>
+      <button type="button" class="course-tab-btn" data-course="course-02" onclick="switchCourse('course-02')">
+        <span>02 도예촌 투어</span>
+        <span style="font-size: 11px; opacity: 0.8;">(13곳)</span>
+      </button>
+      <button type="button" class="course-tab-btn" data-course="course-03" onclick="switchCourse('course-03')">
+        <span>03 문화공간 투어</span>
+        <span style="font-size: 11px; opacity: 0.8;">(9곳)</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Key Improvements Checklist -->
+  <div class="solution-highlights">
+    <div class="highlight-card">
+      <h4>🎯 좌표 앵커 정밀화</h4>
+      <p>CustomOverlay의 이중 오프셋을 제거하여 핀 하단 끝이 실제 등록 주소에 1px 오차 없이 정확히 꽂힙니다.</p>
+    </div>
+    <div class="highlight-card">
+      <h4>🏺 도자·문화 스팟 버튼 신설</h4>
+      <p>도예촌 공방(너븐재, 가마가텅빈날 등)과 문화 명소가 분류에서 증발하지 않고 <b>[볼거리·문화]</b> 탭으로 완벽 분류됩니다.</p>
+    </div>
+    <div class="highlight-card">
+      <h4>📐 스마트 뷰포트 (fitBounds)</h4>
+      <p>필터 탭 클릭 시 화면에 남은 마커들만 중앙에 오도록 지도가 부드럽게 자동 줌인/줌아웃 이동합니다.</p>
+    </div>
+    <div class="highlight-card">
+      <h4>✨ 동선 점선 &amp; 드로어 연동</h4>
+      <p>추천 동선 점선(Polyline)이 필요할 때만 노출되며, 하단 가로 카드 목록의 flex 레이아웃이 깨지지 않습니다.</p>
+    </div>
+  </div>
+
+  <!-- THE MODAL DESIGN PREVIEW -->
+  <main class="modal-preview-wrapper">
+    <!-- Header -->
+    <div class="kakao-modal-header">
+      <div>
+        <div class="kko-header-meta">
+          <span class="kko-badge-tag">⭐️ 카카오맵 즐겨찾기 동기화</span>
+          <span class="kko-badge-count" id="spot-counter-badge">16개 장소 동기화</span>
+        </div>
+        <h2 id="modal-course-title" class="kko-modal-title">이천 원도심 투어 즐겨찾기 지도</h2>
+        <p id="modal-course-desc" class="kko-modal-desc">취재 에디터가 카카오맵에 직접 저장한 추천 동선과 즐겨찾기 장소 좌표를 한눈에 확인하세요.</p>
+      </div>
+
+      <div class="kko-header-actions">
+        <a id="btn-open-kko-app" href="https://kko.to/Jx9RDjPVcq" target="_blank" rel="noopener noreferrer" class="btn-kko-app-link" title="카카오맵 앱에서 전체 폴더 열기">
+          <span>카카오맵 앱 열기 ↗</span>
+        </a>
+        <button type="button" class="btn-close-modal" aria-label="닫기" onclick="alert('실제 모달에서는 창이 닫힙니다.')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Category Filter Bar (5 Filter Chips) -->
+    <div class="kko-map-filter-bar" id="filter-bar">
+      <button type="button" class="filter-chip active" data-filter="all" onclick="applyFilter('all')">
+        <span>전체 보기</span>
+        <span class="chip-count" id="count-all">16</span>
+      </button>
+      <button type="button" class="filter-chip" data-filter="route" onclick="applyFilter('route')">
+        <span>🚶 추천 동선</span>
+        <span class="chip-count" id="count-route">5</span>
+      </button>
+      <button type="button" class="filter-chip" data-filter="spot" onclick="applyFilter('spot')">
+        <span>🏺 볼거리·문화</span>
+        <span class="chip-count" id="count-spot">3</span>
+      </button>
+      <button type="button" class="filter-chip" data-filter="food" onclick="applyFilter('food')">
+        <span>🍜 맛집·카페</span>
+        <span class="chip-count" id="count-food">11</span>
+      </button>
+      <button type="button" class="filter-chip" data-filter="transit" onclick="applyFilter('transit')">
+        <span>🚌 대중교통·정류장</span>
+        <span class="chip-count" id="count-transit">1</span>
+      </button>
+    </div>
+
+    <!-- Map Canvas Container -->
+    <div class="kko-map-canvas-box">
+      <div id="preview-map-canvas"></div>
+      
+
+      <div class="kko-map-tip-bar">
+        <span>💡 핀을 클릭하면 길찾기와 상세 메모가 표시됩니다. 아래 목록을 클릭해도 해당 위치로 부드럽게 이동합니다.</span>
+      </div>
+    </div>
+
+    <!-- Bookmarks Horizontal Drawer -->
+    <div class="kko-drawer-section">
+      <div class="kko-drawer-header">
+        <div class="kko-drawer-title">
+          <span>📌 등록된 즐겨찾기 스팟 목록 (클릭 시 지도 이동)</span>
+        </div>
+        <span id="drawer-view-count" style="font-size: 12px; color: #8c786a; font-weight: 600;">16개 표시 중</span>
+      </div>
+      <div class="kko-bookmarks-drawer" id="bookmarks-drawer"></div>
+    </div>
+
+    <!-- Live Status Banner -->
+    <div id="compare-alert-banner" class="compare-alert-banner after">
+      <i class="fa-solid fa-circle-check" style="font-size: 16px; margin-top: 2px;"></i>
+      <div>
+        <strong id="alert-title">현재 상태: [개선된 해결 시안] 적용 중</strong>
+        <p id="alert-desc">핀 좌표가 건물 위치에 정확히 꽂히며, [볼거리·문화] 필터로 도자기 공방이 정상 분류됩니다. 필터를 누를 때마다 지도가 최적 영역으로 자동 줌인됩니다.</p>
+      </div>
+    </div>
+  </main>
+
+</div>
+
+<!-- Kakao Maps SDK -->
+<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=d7db5a5025f24de38dd1af902b633258&libraries=services,clusterer"></script>
+
+<script>
+/**
+ * DATA DEFINITION (Fixed & Enhanced)
+ */
+const COURSE_DATA = {
+  "course-01": {
+    id: "course-01",
+    title: "이천 원도심 투어",
+    desc: "취재 에디터가 카카오맵에 직접 저장한 추천 동선과 즐겨찾기 장소 좌표를 한눈에 확인하세요.",
+    shortUrl: "https://kko.to/Jx9RDjPVcq",
+    themeColor: "#5a3e30",
+    lineColor: "#8a5a44",
+    spots: [
+      { name: "제일은행.이천터미널", addr: "경기 이천시 중리동", lat: 37.27620731, lng: 127.44682365, isRoute: true, num: 1, tag: "transit", cat: "교통 기점", icon: "🚌", memo: "도보 여정의 시작점 · 잠실/서울 광역버스 도착" },
+      { name: "우진커피니케이션", addr: "경기 이천시 서희로48번길 3 (중리동)", lat: 37.27994441, lng: 127.44285969, isRoute: true, num: 2, tag: "food", cat: "스페셜티 카페", icon: "☕", memo: "차분한 원도심 골목 속 전문 핸드드립 브루잉 바" },
+      { name: "관고전통시장", addr: "경기 이천시 중리천로21번길 6 (창전동)", lat: 37.28075667, lng: 127.44057317, isRoute: true, num: 3, tag: "spot", cat: "전통시장", icon: "🏪", memo: "활기찬 5일장 장터 먹거리와 정겨운 닭발 골목" },
+      { name: "쌀베이커리카페 흥만소", addr: "경기 이천시 향교로 3 1층 (창전동)", lat: 37.28538013, lng: 127.43783057, isRoute: true, num: 4, tag: "food", cat: "쌀 디저트 카페", icon: "🍞", memo: "이천쌀 크림빵 & 시그니처 쌀 디저트와 레트로 한옥" },
+      { name: "설봉공원", addr: "경기 이천시 관고동 408-3", lat: 37.27662621, lng: 127.4283311, isRoute: true, num: 5, tag: "spot", cat: "공원·호수", icon: "🌲", memo: "설봉호 둘레길 산책과 시원한 음악분수 쉼터" },
+      // Bookmarked favorites
+      { name: "관고동사랑방", addr: "경기 이천시 설봉로37번길 8 1층 (관고동)", lat: 37.2800838, lng: 127.43735788, isRoute: false, tag: "food", cat: "로컬 맛집", icon: "🍝", memo: "정성 가득한 생면 라자냐 & 파스타 1인 식사" },
+      { name: "태극당", addr: "경기 이천시 영창로 195 1층 (창전동)", lat: 37.28129081, lng: 127.44423424, isRoute: false, tag: "food", cat: "명장 베이커리", icon: "🥖", memo: "50년 전통 이천 대표 빵집, 양파베이글 & 쌀빵" },
+      { name: "초이수제비", addr: "경기 이천시 어재연로37번길 16 B동 2층 (창전동)", lat: 37.28039084, lng: 127.44491002, isRoute: false, tag: "food", cat: "로컬 맛집", icon: "🍲", memo: "현지인이 사랑하는 얼큰/담백 손수제비" },
+      { name: "용인순대국집", addr: "경기 이천시 중리천로72번길 23 1층 (중리동)", lat: 37.27798496, lng: 127.44542355, isRoute: false, tag: "food", cat: "로컬 맛집", icon: "🥣", memo: "진한 사골 육수와 부드러운 고기가 가득한 순대국" },
+      { name: "백암토종순대", addr: "경기 이천시 중리천로81번길 3 1층 (창전동)", lat: 37.2789095, lng: 127.4461202, isRoute: false, tag: "food", cat: "로컬 맛집", icon: "🥣", memo: "속이 꽉 찬 토종 순대와 든든한 국밥 혼밥" },
+      { name: "멘야노유메", addr: "경기 이천시 중리천로 58 1동 1층 (중리동)", lat: 37.2795253, lng: 127.44409757, isRoute: false, tag: "food", cat: "로컬 맛집", icon: "🍜", memo: "진한 돈코츠 육수와 자가제면 일본식 정통 라멘" },
+      { name: "을를프로젝트 관고시장", addr: "경기 이천시 중리천로21번길 21 1층 (관고동)", lat: 37.28145605, lng: 127.44052312, isRoute: false, tag: "spot", cat: "로컬 복합문화", icon: "🎨", memo: "시장 골목 속 젊은 로컬 창작자들의 문화 실험 공간" },
+      { name: "팔남매", addr: "경기 이천시 서희로59번길 21 (창전동)", lat: 37.28088625, lng: 127.44158426, isRoute: false, tag: "food", cat: "시장 명물", icon: "🥨", memo: "가성비 넘치는 즉석 찹쌀 꽈배기와 손만두" },
+      { name: "소문난칼국수", addr: "경기 이천시 설봉로58번길 30 (관고동)", lat: 37.28113754, lng: 127.43991687, isRoute: false, tag: "food", cat: "로컬 맛집", icon: "🍜", memo: "매콤달콤 중독성 있는 이천 명물 면낙지와 칼국수" },
+      { name: "삼미분식", addr: "경기 이천시 중리천로21번길 9 관고전통시장 1층", lat: 37.28091219, lng: 127.44042523, isRoute: false, tag: "food", cat: "시장 명물", icon: "🍢", memo: "매콤한 닭발과 떡볶이, 튀김이 유명한 시장 터줏대감" },
+      { name: "이천용인닭발 본점", addr: "경기 이천시 중리천로21번길 11 1층 (관고동)", lat: 37.28097013, lng: 127.4403534, isRoute: false, tag: "food", cat: "시장 명물", icon: "🍗", memo: "불향 가득한 매콤 닭발과 바삭한 닭똥집 튀김" }
+    ]
+  },
+
+  "course-02": {
+    id: "course-02",
+    title: "이천 도예촌 투어",
+    desc: "경강선 타고 떠나는 쌀밥과 도자 예술 산책. 도자기 공방과 예스파크 명소를 확인하세요.",
+    shortUrl: "https://kko.to/SmoaGzhtB3",
+    themeColor: "#385536",
+    lineColor: "#4a6946",
+    spots: [
+      { name: "신둔도예촌역", addr: "경기도 이천시 신둔면 남정로 55", lat: 37.31561301, lng: 127.40524273, isRoute: true, num: 1, tag: "transit", cat: "경강선 전철역", icon: "🚇", memo: "도예촌 여정의 기점 · 판교/이매 환승 연계" },
+      { name: "이천돌솥밥", addr: "경기 이천시 신둔면 경충대로 3194 1층", lat: 37.31137398, lng: 127.40095394, isRoute: true, num: 2, tag: "food", cat: "원조 이천쌀밥", icon: "🍚", memo: "20여 종 정갈한 반찬과 갓 지은 가마솥 쌀밥 한 상" },
+      { name: "코유", addr: "경기 이천시 신둔면 경충대로 3234 에이동 1층", lat: 37.31429242, lng: 127.39801381, isRoute: true, num: 3, tag: "food", cat: "복합문화 카페", icon: "☕", memo: "광주요 12칸 전통 오름가마와 테라스 정원, 도자 쇼룸" },
+      // [보정 완료] 누락되었던 4번 예스파크 등록!
+      { name: "예스파크 (도자예술마을)", addr: "경기 이천시 신둔면 도자예술로 57", lat: 37.294242, lng: 127.385500, isRoute: true, num: 4, tag: "spot", cat: "도예 예술마을", icon: "🏺", memo: "국내 최대 공예 예술 마을 · 수백여 공방과 갤러리 산책" },
+      // Bookmarked favorites
+      { name: "너븐재", addr: "경기 이천시 신둔면 도자예술로6번길 180 1층", lat: 37.2960767, lng: 127.38509214, isRoute: false, tag: "spot", cat: "도자 갤러리", icon: "🪴", memo: "따뜻한 흙 질감의 감성 테이블웨어 도자 쇼룸" },
+      { name: "그루도자기", addr: "경기 이천시 신둔면 도자예술로 47", lat: 37.29424287, lng: 127.3859918, isRoute: false, tag: "spot", cat: "도자 아틀리에", icon: "🏺", memo: "모던한 형태미와 실용성을 겸비한 수제 도예 공방" },
+      { name: "가마가텅빈날", addr: "경기 이천시 신둔면 도자예술로 47", lat: 37.29424645, lng: 127.386120, isRoute: false, tag: "spot", cat: "도예 스튜디오", icon: "🔥", memo: "개성 넘치는 공예 작가의 작품과 감각적인 쇼룸" },
+      { name: "카페오르골", addr: "경기 이천시 신둔면 도자예술로62번길 27-17", lat: 37.29309175, lng: 127.38309654, isRoute: false, tag: "food", cat: "감성 카페", icon: "🎵", memo: "오르골 소리와 커피 향이 머무는 예스파크 쉼터" },
+      { name: "카페앤미", addr: "경기 이천시 신둔면 도자예술로62번길 113-26", lat: 37.29115476, lng: 127.38134997, isRoute: false, tag: "food", cat: "디저트 카페", icon: "🍰", memo: "아기자기한 디저트와 향긋한 커피가 있는 공방 카페" },
+      { name: "저수지입구", addr: "경기 이천시 신둔면 고척리", lat: 37.28960305, lng: 127.3846513, isRoute: false, tag: "transit", cat: "버스정류장", icon: "🚏", memo: "예스파크 방면 마을버스/시내버스 승하차 정류소" },
+      { name: "고척3리입구 (상행)", addr: "경기 이천시 신둔면 고척리", lat: 37.29435803, lng: 127.39153061, isRoute: false, tag: "transit", cat: "버스정류장", icon: "🚏", memo: "예스파크 도예마을 진입로 버스정류장" },
+      { name: "고척3리입구 (하행)", addr: "경기 이천시 신둔면 고척리", lat: 37.29444973, lng: 127.39106908, isRoute: false, tag: "transit", cat: "버스정류장", icon: "🚏", memo: "신둔도예촌역 방면 환승 버스정류장" },
+      { name: "수광2리", addr: "경기 이천시 신둔면 수광리", lat: 37.31204145, lng: 127.3948492, isRoute: false, tag: "transit", cat: "버스정류장", icon: "🚏", memo: "경충대로 변 광주요 & 코유 인근 버스 승하차장" }
+    ]
+  },
+
+  "course-03": {
+    id: "course-03",
+    title: "이천 문화공간 투어",
+    desc: "감각적인 복합문화공간과 쌀 디저트, 솥밥 여정. 모가면의 다채로운 스팟을 만나보세요.",
+    shortUrl: "https://kko.to/XhrAdwEi7t",
+    themeColor: "#8a4b2d",
+    lineColor: "#a85d38",
+    spots: [
+      { name: "제일은행.이천터미널", addr: "경기 이천시 중리동", lat: 37.27620731, lng: 127.44682365, isRoute: true, num: 1, tag: "transit", cat: "교통 기점", icon: "🚌", memo: "모가면 방면 25번 시내버스 탑승 기점 (약 35분 소요)" },
+      { name: "이천쌀빵심빵", addr: "경기 이천시 모가면 사실로 1005 1층", lat: 37.19944116, lng: 127.44692605, isRoute: true, num: 2, tag: "food", cat: "쌀 베이커리", icon: "🍞", memo: "속 편하고 담백한 100% 이천쌀 천연발효 건강 빵집" },
+      { name: "시몬스 테라스점", addr: "경기 이천시 모가면 사실로 988 1층", lat: 37.19765239, lng: 127.44626221, isRoute: true, num: 3, tag: "spot", cat: "복합문화공간", icon: "🏛️", memo: "붉은 벽돌 야외 정원과 헤리티지 앨리 전시, 파머스 마켓" },
+      { name: "코지모가", addr: "경기 이천시 모가면 사실로 979-10 B동 2층", lat: 37.19781987, lng: 127.44581266, isRoute: true, num: 4, tag: "food", cat: "감성 카페 (2F)", icon: "☕", memo: "고소한 이천쌀라떼와 바삭한 쌀크림 크루아상 디저트" },
+      { name: "미솥지음", addr: "경기 이천시 모가면 사실로 979-10 B동 1층", lat: 37.1979000, lng: 127.4456500, isRoute: true, num: 5, tag: "food", cat: "정갈한 솥밥 (1F)", icon: "🍚", memo: "도예가의 그릇에 정갈하게 지어 올린 윤기 흐르는 솥밥 한 상" },
+      // Bookmarked favorites
+      { name: "태루미앞", addr: "경기 이천시 모가면 신갈리", lat: 37.19855574, lng: 127.44636977, isRoute: false, tag: "transit", cat: "버스정류장", icon: "🚏", memo: "시몬스 테라스 / 코지모가 입구 맞은편 버스 정류장" },
+      { name: "신갈1리", addr: "경기 이천시 모가면 신갈리", lat: 37.19801201, lng: 127.44617422, isRoute: false, tag: "transit", cat: "버스정류장", icon: "🚏", memo: "모가면 방면 시내버스 및 똑버스 승하차 정류소" },
+      { name: "이천농업테마공원", addr: "경기 이천시 모가면 공원로 48", lat: 37.17936347, lng: 127.44468619, isRoute: false, tag: "spot", cat: "테마공원", icon: "🌾", memo: "이천 쌀과 농업의 가치를 체험하는 힐링 생태 공원" },
+      { name: "라이스카페", addr: "경기 이천시 모가면 공원로 48 (공원 내)", lat: 37.1776252, lng: 127.44592593, isRoute: false, tag: "food", cat: "쌀 디저트", icon: "🍦", memo: "농업테마공원 내 이천쌀 아이스크림 & 쌀 라떼" }
+    ]
+  }
+};
+
+let currentCourseKey = 'course-01';
+let currentFilter = 'all';
+let isAfterMode = true; // true = After(해결 시안), false = Before(기존 문제)
+let kakaoMap = null;
+let activeMarkers = [];
+let routePolyline = null;
+let currentOpenOverlay = null;
+
+/**
+ * Initialize Map
+ */
+function initMap() {
+  const container = document.getElementById('preview-map-canvas');
+  if (!container || !window.kakao || !window.kakao.maps) return;
+
+  const defaultCenter = new kakao.maps.LatLng(37.2800838, 127.43735788);
+  kakaoMap = new kakao.maps.Map(container, {
+    center: defaultCenter,
+    level: 5
+  });
+
+  // Controls
+  const mapTypeControl = new kakao.maps.MapTypeControl();
+  kakaoMap.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+  const zoomControl = new kakao.maps.ZoomControl();
+  kakaoMap.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+  // Close popup on map click
+  kakao.maps.event.addListener(kakaoMap, 'click', () => {
+    if (currentOpenOverlay) {
+      currentOpenOverlay.setMap(null);
+      currentOpenOverlay = null;
+    }
+  });
+
+  loadCourseData(currentCourseKey);
+}
+
+/**
+ * Load and render course
+ */
+function loadCourseData(courseKey) {
+  currentCourseKey = courseKey;
+  const course = COURSE_DATA[courseKey];
+  if (!course) return;
+
+  // Header updates
+  document.getElementById('modal-course-title').textContent = `${course.title} 즐겨찾기 지도`;
+  document.getElementById('modal-course-desc').textContent = course.desc;
+  document.getElementById('btn-open-kko-app').href = course.shortUrl;
+
+
+  // Update tabs active class
+  document.querySelectorAll('.course-tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-course') === courseKey);
+  });
+
+  // Render Markers
+  renderMarkers(course);
+
+  // Reset filter to 'all'
+  applyFilter('all', false);
+}
+
+/**
+ * Render Markers based on mode (Before vs After)
+ */
+function renderMarkers(course) {
+  // Clear previous markers
+  activeMarkers.forEach(m => {
+    if (m.overlay) m.overlay.setMap(null);
+    if (m.infoOverlay) m.infoOverlay.setMap(null);
+  });
+  activeMarkers = [];
+
+  if (routePolyline) {
+    routePolyline.setMap(null);
+    routePolyline = null;
+  }
+  if (currentOpenOverlay) {
+    currentOpenOverlay.setMap(null);
+    currentOpenOverlay = null;
+  }
+
+  const bounds = new kakao.maps.LatLngBounds();
+  const routePoints = [];
+
+  course.spots.forEach(spot => {
+    // [BEFORE MODE 버그 재현]:
+    // Before 모드에서는 코스 2의 4번 예스파크를 렌더링하지 않음 (누락 오류 시뮬레이션)
+    if (!isAfterMode && course.id === 'course-02' && spot.name.includes('예스파크')) {
+      return;
+    }
+
+    const pos = new kakao.maps.LatLng(spot.lat, spot.lng);
+    bounds.extend(pos);
+
+    if (spot.isRoute) {
+      routePoints.push({ num: spot.num, pos: pos });
+    }
+
+    // Marker DOM
+    const markerEl = document.createElement('div');
+    markerEl.className = 'kakao-custom-marker';
+
+    if (isAfterMode) {
+      // 🟢 [AFTER MODE]: 앵커링 완벽 정렬 (xAnchor: 0.5, yAnchor: 1.0)
+      // CSS transform: translate(-50%, -100%) 제거하여 핀 하단 꼭짓점이 실제 위경도에 정확히 꽂힘!
+      markerEl.style.cssText = `
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: transform 0.15s ease;
+        z-index: ${spot.isRoute ? '20' : '10'};
+      `;
+    } else {
+      // 🔴 [BEFORE MODE]: CSS transform 중복으로 실제 위치보다 55px 북서쪽 허공으로 붕 뜸!
+      markerEl.style.cssText = `
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform: translate(-50%, -100%);
+        transition: transform 0.15s ease;
+        z-index: ${spot.isRoute ? '20' : '10'};
+      `;
+    }
+
+    // Pin UI
+    if (spot.isRoute) {
+      markerEl.innerHTML = `
+        <div style="background: ${course.themeColor}; color: #ffffff; width: 32px; height: 32px; border-radius: 50%; border: 2.5px solid #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13.5px; font-family: 'Outfit', sans-serif;">
+          ${spot.num}
+        </div>
+        <div style="background: rgba(36,30,25,0.92); backdrop-filter: blur(4px); color: #ffffff; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; margin-top: 3px; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.18);">
+          ${spot.name}
+        </div>
+      `;
+    } else {
+      const isTransit = spot.tag === 'transit';
+      const isCultural = spot.tag === 'spot';
+      const pinBg = isTransit ? '#4b5563' : (isCultural ? '#0284c7' : '#d97706');
+      const pinIcon = isTransit ? '🚏' : (isCultural ? '🏛️' : '★');
+
+      markerEl.innerHTML = `
+        <div style="background: ${pinBg}; color: #ffffff; width: 26px; height: 26px; border-radius: 50%; border: 2px solid #ffffff; box-shadow: 0 3px 8px rgba(0,0,0,0.22); display: flex; align-items: center; justify-content: center; font-size: 11.5px;">
+          ${pinIcon}
+        </div>
+        <div style="background: #ffffff; color: #241e19; font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 6px; margin-top: 2px; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.15); border: 1px solid #ebdccb;">
+          ${spot.name}
+        </div>
+      `;
+    }
+
+    // CustomOverlay creation
+    const overlay = new kakao.maps.CustomOverlay({
+      position: pos,
+      content: markerEl,
+      xAnchor: 0.5,
+      yAnchor: 1.0,
+      zIndex: spot.isRoute ? 20 : 10
+    });
+    overlay.setMap(kakaoMap);
+
+    // Popover Info Card
+    const infoCard = document.createElement('div');
+    infoCard.style.cssText = `
+      background: #ffffff;
+      border: 1.5px solid #dfd4c4;
+      border-radius: 16px;
+      box-shadow: 0 12px 32px rgba(36,30,25,0.25);
+      padding: 16px 18px 14px;
+      width: 270px;
+      position: relative;
+      font-family: 'Pretendard', sans-serif;
+      z-index: 60;
+    `;
+    infoCard.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+        <div style="display: flex; align-items: center; gap: 6px;">
+          ${spot.isRoute ? `<span style="background: ${course.themeColor}; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">코스 0${spot.num}</span>` : `<span style="background: #fef3c7; color: #92400e; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; border: 1px solid #fde68a;">⭐️ 즐겨찾기</span>`}
+          <span style="font-size: 11px; color: #7a6d61; font-weight: 700;">${spot.cat}</span>
+        </div>
+        <button type="button" class="close-popup-btn" aria-label="닫기" style="background:none; border:none; color:#888; font-size:18px; cursor:pointer; line-height:1;">&times;</button>
+      </div>
+      <h4 style="font-size: 15px; font-weight: 800; color: #241e19; margin: 0 0 3px;">${spot.icon} ${spot.name}</h4>
+      <div style="font-size: 11.5px; color: #8c786a; margin-bottom: 8px;">📍 ${spot.addr}</div>
+      <p style="font-size: 12px; color: #524438; line-height: 1.45; margin: 0 0 12px; background: #faf7f2; padding: 8px 10px; border-radius: 8px; border: 1px solid #f0ebe1;">${spot.memo}</p>
+      <div style="display: flex; gap: 6px;">
+        <a href="https://map.kakao.com/link/to/${encodeURIComponent(spot.name)},${spot.lat},${spot.lng}" target="_blank" rel="noopener noreferrer" style="flex: 1; text-align: center; background: #fae100; color: #371d1e; text-decoration: none; font-size: 11.5px; font-weight: 800; padding: 7px 8px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+          길찾기 ↗
+        </a>
+        <a href="https://map.kakao.com/link/map/${encodeURIComponent(spot.name)},${spot.lat},${spot.lng}" target="_blank" rel="noopener noreferrer" style="flex: 1; text-align: center; background: #f3eee7; color: #403429; text-decoration: none; font-size: 11.5px; font-weight: 700; padding: 7px 8px; border-radius: 8px;">
+          크게 보기
+        </a>
+      </div>
+    `;
+
+    const infoOverlay = new kakao.maps.CustomOverlay({
+      position: pos,
+      content: infoCard,
+      xAnchor: 0.5,
+      yAnchor: 1.18,
+      zIndex: 60
+    });
+
+    const closeBtn = infoCard.querySelector('.close-popup-btn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        infoOverlay.setMap(null);
+        currentOpenOverlay = null;
+      });
+    }
+
+    function openPopup() {
+      if (currentOpenOverlay) currentOpenOverlay.setMap(null);
+      infoOverlay.setMap(kakaoMap);
+      currentOpenOverlay = infoOverlay;
+      kakaoMap.panTo(pos);
+    }
+
+    markerEl.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (currentOpenOverlay === infoOverlay) {
+        infoOverlay.setMap(null);
+        currentOpenOverlay = null;
+      } else {
+        openPopup();
+      }
+    });
+
+    activeMarkers.push({
+      spot: spot,
+      overlay: overlay,
+      infoOverlay: infoOverlay,
+      open: openPopup,
+      pos: pos
+    });
+  });
+
+  // Polyline for route points
+  routePoints.sort((a, b) => a.num - b.num);
+  if (routePoints.length > 1) {
+    routePolyline = new kakao.maps.Polyline({
+      path: routePoints.map(r => r.pos),
+      strokeWeight: 4,
+      strokeColor: course.lineColor,
+      strokeOpacity: 0.88,
+      strokeStyle: 'shortdash'
+    });
+    routePolyline.setMap(kakaoMap);
+  }
+
+  // Set Bounds with padding
+  kakaoMap.setBounds(bounds);
+
+  // Update Drawer
+  renderDrawer(course.spots);
+  updateCategoryCounts(course.spots);
+}
+
+/**
+ * Render Drawer Items
+ */
+function renderDrawer(spots) {
+  const drawer = document.getElementById('bookmarks-drawer');
+  if (!drawer) return;
+  drawer.innerHTML = '';
+
+  const course = COURSE_DATA[currentCourseKey];
+
+  spots.forEach(spot => {
+    // Before mode check for missing YesPark
+    if (!isAfterMode && currentCourseKey === 'course-02' && spot.name.includes('예스파크')) {
+      return;
+    }
+
+    const markerObj = activeMarkers.find(m => m.spot.name === spot.name);
+
+    const card = document.createElement('div');
+    card.className = 'drawer-item';
+    card.setAttribute('data-name', spot.name);
+    card.setAttribute('data-tag', spot.tag);
+    card.setAttribute('data-route', spot.isRoute ? 'true' : 'false');
+
+    card.innerHTML = `
+      <div>
+        <div class="drawer-item-top">
+          <span class="drawer-item-badge" style="${spot.isRoute ? `background: ${course.themeColor}; color: #ffffff;` : `background: #fef3c7; color: #92400e; border: 1px solid #fde68a;`}">
+            ${spot.isRoute ? `0${spot.num} 코스` : '⭐️ 즐겨찾기'}
+          </span>
+          <span class="drawer-item-cat">${spot.cat}</span>
+        </div>
+        <div class="drawer-item-name">${spot.icon} ${spot.name}</div>
+        <div class="drawer-item-addr">${spot.addr}</div>
+      </div>
+    `;
+
+    card.addEventListener('click', () => {
+      if (markerObj) {
+        markerObj.open();
+      }
+    });
+
+    drawer.appendChild(card);
+  });
+}
+
+/**
+ * Update Filter Tab Counts
+ */
+function updateCategoryCounts(spots) {
+  const allCount = spots.length;
+  const routeCount = spots.filter(s => s.isRoute).length;
+  const spotCount = spots.filter(s => s.tag === 'spot').length;
+  const foodCount = spots.filter(s => s.tag === 'food').length;
+  const transitCount = spots.filter(s => s.tag === 'transit').length;
+
+  document.getElementById('count-all').textContent = allCount;
+  document.getElementById('count-route').textContent = routeCount;
+  document.getElementById('count-spot').textContent = spotCount;
+  document.getElementById('count-food').textContent = foodCount;
+  document.getElementById('count-transit').textContent = transitCount;
+}
+
+/**
+ * Filter Markers (Interactive Feature)
+ */
+function applyFilter(filterType, animateBounds = true) {
+  currentFilter = filterType;
+
+  // Update active chip
+  document.querySelectorAll('.kko-map-filter-bar .filter-chip').forEach(c => {
+    c.classList.toggle('active', c.getAttribute('data-filter') === filterType);
+  });
+
+  const filteredBounds = new kakao.maps.LatLngBounds();
+  let visibleCount = 0;
+
+  activeMarkers.forEach(m => {
+    let show = true;
+
+    if (filterType === 'route') {
+      show = m.spot.isRoute;
+    } else if (filterType === 'spot') {
+      show = m.spot.tag === 'spot';
+    } else if (filterType === 'food') {
+      show = m.spot.tag === 'food';
+    } else if (filterType === 'transit') {
+      show = m.spot.tag === 'transit';
+    }
+
+    if (show) {
+      m.overlay.setMap(kakaoMap);
+      filteredBounds.extend(m.pos);
+      visibleCount++;
+    } else {
+      m.overlay.setMap(null);
+      if (m.infoOverlay) m.infoOverlay.setMap(null);
+    }
+  });
+
+  // [AFTER MODE 혁신 기능 1]: Polyline 스마트 연동
+  if (routePolyline) {
+    if (isAfterMode) {
+      // After: 전체 보기 또는 추천 동선일 때만 점선 노출, 맛집/교통 필터 시에는 자동 숨김!
+      const showPolyline = (filterType === 'all' || filterType === 'route');
+      routePolyline.setMap(showPolyline ? kakaoMap : null);
+    } else {
+      // Before 버그: 필터를 눌러도 흉측한 점선이 지도 위에 계속 남아있음
+      routePolyline.setMap(kakaoMap);
+    }
+  }
+
+  // [AFTER MODE 혁신 기능 2]: 동적 지도 영역 맞춤 (fitBounds)
+  if (isAfterMode) {
+    if (visibleCount > 0 && animateBounds) {
+      kakaoMap.setBounds(filteredBounds);
+    }
+  } else {
+    // Before 버그: 필터를 눌러도 지도가 멍하니 가만히 있어서 핀이 사라졌는지 알 수 없음
+  }
+
+  // [AFTER MODE 혁신 기능 3]: 하단 드로어 카드 필터링 (flex 스타일 보존)
+  const drawerItems = document.querySelectorAll('#bookmarks-drawer .drawer-item');
+  drawerItems.forEach(card => {
+    const isRoute = card.getAttribute('data-route') === 'true';
+    const tag = card.getAttribute('data-tag');
+
+    let show = true;
+    if (filterType === 'route') show = isRoute;
+    else if (filterType === 'spot') show = (tag === 'spot');
+    else if (filterType === 'food') show = (tag === 'food');
+    else if (filterType === 'transit') show = (tag === 'transit');
+
+    if (isAfterMode) {
+      // After: display: '' (flex 유지)
+      card.style.display = show ? '' : 'none';
+    } else {
+      // Before 버그: display: 'block'으로 덮어써서 레이아웃 손상
+      card.style.display = show ? 'block' : 'none';
+    }
+  });
+
+  // Update Drawer Count Text & Top Badge
+  document.getElementById('drawer-view-count').textContent = `${visibleCount}개 표시 중`;
+  const filterNames = {
+    all: '장소 전체',
+    route: '추천 동선 스팟',
+    spot: '볼거리·문화 스팟',
+    food: '맛집·카페',
+    transit: '대중교통·정류장'
+  };
+  document.getElementById('spot-counter-badge').textContent = `${visibleCount}개 ${filterNames[filterType]} 동기화`;
+}
+
+/**
+ * Switch Course Handler
+ */
+function switchCourse(courseKey) {
+  loadCourseData(courseKey);
+}
+
+/**
+ * Toggle Compare Mode (Before vs After)
+ */
+function toggleCompareMode() {
+  const toggle = document.getElementById('mode-toggle');
+  isAfterMode = toggle.checked;
+
+  const modeBadge = document.getElementById('mode-badge');
+  const alertBanner = document.getElementById('compare-alert-banner');
+  const alertTitle = document.getElementById('alert-title');
+  const alertDesc = document.getElementById('alert-desc');
+
+  if (isAfterMode) {
+    modeBadge.className = 'mode-indicator after';
+    modeBadge.textContent = '🟢 개선된 해결 시안';
+    alertBanner.className = 'compare-alert-banner after';
+    alertTitle.textContent = '현재 상태: [개선된 해결 시안] 적용 중';
+    alertDesc.textContent = '핀 좌표가 실제 건물/도로에 1px 오차 없이 정확히 꽂히며, [볼거리·문화] 필터로 도자기 공방이 정상 분류됩니다. 필터를 누르면 지도가 최적 영역으로 자동 줌인됩니다.';
+  } else {
+    modeBadge.className = 'mode-indicator before';
+    modeBadge.textContent = '🔴 기존 문제 방식 (오류 상태)';
+    alertBanner.className = 'compare-alert-banner before';
+    alertTitle.textContent = '현재 상태: [기존 문제 방식] 시뮬레이션 중';
+    alertDesc.textContent = '경고: 핀이 원래 좌표에서 북서쪽 허공으로 약 55px 붕 떠서 표시되며, 도자기 공방이 필터링에서 증발하고, 필터를 눌러도 지도가 멍하니 멈춰 있어 뷰포트가 이동하지 않습니다.';
+  }
+
+  // Re-render markers with selected mode
+  renderMarkers(COURSE_DATA[currentCourseKey]);
+  applyFilter(currentFilter, true);
+}
+
+// Window load
+window.addEventListener('DOMContentLoaded', () => {
+  if (window.kakao && window.kakao.maps) {
+    kakao.maps.load(initMap);
+  } else {
+    setTimeout(initMap, 400);
+  }
+});
+</script>
+
+</body>
+</html>

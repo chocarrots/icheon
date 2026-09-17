@@ -137,7 +137,7 @@
   "course-02": {
     "folderId": "23973908",
     "shortUrl": "https://kko.to/SmoaGzhtB3",
-    "count": 12,
+    "count": 13,
     "bookmarks": [
       {
         "name": "신둔도예촌역",
@@ -162,6 +162,14 @@
         "lng": 127.39801381,
         "type": "PLACE",
         "key": "454460196"
+      },
+      {
+        "name": "예스파크",
+        "addr": "경기 이천시 신둔면 도자예술로 57",
+        "lat": 37.294242,
+        "lng": 127.385500,
+        "type": "PLACE",
+        "key": "YESPARK"
       },
       {
         "name": "저수지입구",
