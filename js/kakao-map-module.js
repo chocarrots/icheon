@@ -7,6 +7,27 @@
 
 const KAKAO_APP_KEY = 'd7db5a5025f24de38dd1af902b633258';
 
+// Kakao Maps는 개발자 콘솔에 등록된 도메인에서만 SDK가 로드된다.
+// 로컬 미리보기 포트나 배포 도메인이 아직 등록되지 않은 경우에도
+// 빈 화면 대신 프로젝트에 포함된 코스별 일러스트 지도를 보여준다.
+const COURSE_MAP_FALLBACKS = {
+  'course-01': {
+    src: '../map_preview/course01_preview.png',
+    title: '이천 원도심 전체 지도',
+    top: '-38%'
+  },
+  'course-02': {
+    src: '../map_preview/course02_preview.png',
+    title: '이천 도예촌 전체 지도',
+    top: '-32%'
+  },
+  'course-03': {
+    src: '../map_preview/course03_preview.png',
+    title: '이천 문화공간 전체 지도',
+    top: '-37%'
+  }
+};
+
 const COURSE_MAP_CONFIG = {
   "course-01": {
     "id": "course-01",
@@ -638,7 +659,7 @@ window.activeCourseKey = null;
 /**
  * Ensure Kakao Maps SDK is loaded and execute callback
  */
-function ensureKakaoMapsLoaded(callback) {
+function ensureKakaoMapsLoaded(callback, onError) {
   if (window.kakao && window.kakao.maps && window.kakao.maps.Map) {
     callback();
     return;
@@ -649,9 +670,9 @@ function ensureKakaoMapsLoaded(callback) {
     if (window.kakao && window.kakao.maps && window.kakao.maps.load) {
       window.kakao.maps.load(callback);
     } else {
-      existingScript.addEventListener('load', () => {
-        window.kakao.maps.load(callback);
-      });
+      // 상세 페이지의 SDK 태그는 이 모듈보다 먼저 실행된다. 이 시점에도
+      // kakao 객체가 없다면 도메인 불일치 등으로 이미 로드가 거절된 상태다.
+      if (typeof onError === 'function') onError();
     }
     return;
   }
@@ -660,12 +681,63 @@ function ensureKakaoMapsLoaded(callback) {
   script.type = 'text/javascript';
   script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_APP_KEY}&libraries=services,clusterer&autoload=false`;
   script.onload = () => {
-    window.kakao.maps.load(callback);
+    if (window.kakao && window.kakao.maps && window.kakao.maps.load) {
+      window.kakao.maps.load(callback);
+    } else if (typeof onError === 'function') {
+      onError();
+    }
   };
   script.onerror = () => {
-    console.error('카카오 지도 SDK 로드에 실패했습니다. 도메인 등록(http://localhost:8080)을 확인해주세요.');
+    console.error('카카오 지도 SDK 로드에 실패했습니다. 카카오 개발자 콘솔의 허용 도메인을 확인해주세요.');
+    if (typeof onError === 'function') onError();
   };
   document.head.appendChild(script);
+}
+
+/**
+ * Kakao SDK를 사용할 수 없을 때 프로젝트 내 코스 지도를 표시한다.
+ */
+function renderCourseMapFallback(container, courseKey) {
+  const fallback = COURSE_MAP_FALLBACKS[courseKey];
+  if (!container || !fallback || container.dataset.mapMode === 'fallback') return;
+
+  container.dataset.mapMode = 'fallback';
+  container.replaceChildren();
+  container.style.height = 'auto';
+  container.style.aspectRatio = '4 / 3';
+  container.style.position = 'relative';
+  container.style.overflow = 'hidden';
+  container.style.background = '#fbf9f5';
+
+  const image = document.createElement('img');
+  image.src = fallback.src;
+  image.alt = fallback.title;
+  image.loading = 'eager';
+  image.style.cssText = `position:absolute;display:block;width:178%;height:auto;max-width:none;left:-39%;top:${fallback.top};user-select:none;pointer-events:none;`;
+  container.appendChild(image);
+
+  const filterBar = document.querySelector('.kko-map-filter-bar');
+  if (filterBar) filterBar.style.display = 'none';
+
+  const drawerSection = document.querySelector('.kko-drawer-section');
+  if (drawerSection) drawerSection.style.display = 'none';
+
+  const badgeTag = document.querySelector('.kko-badge-tag');
+  if (badgeTag) badgeTag.textContent = '🗺️ 코스 일러스트 지도';
+
+  const title = document.getElementById('map-title');
+  if (title) title.textContent = fallback.title;
+
+  const description = document.querySelector('.kko-modal-desc');
+  if (description) description.textContent = '추천 동선과 주요 장소의 위치를 코스 일러스트 지도에서 한눈에 확인하세요.';
+
+  const tipText = document.querySelector('.kko-map-tip-bar span');
+  if (tipText) {
+    tipText.textContent = '카카오 지도 연결이 제한되어 코스 일러스트 지도를 표시합니다. 상세 위치는 상단의 카카오맵 앱 열기에서 확인할 수 있습니다.';
+  }
+
+  const countBadge = document.getElementById('modal-bm-count');
+  if (countBadge) countBadge.textContent = '코스 전체 동선';
 }
 
 /**
@@ -682,6 +754,7 @@ function renderKakaoCourseMap(containerId, courseKey) {
   window.activeCourseKey = courseKey;
 
   ensureKakaoMapsLoaded(() => {
+    container.dataset.mapMode = 'kakao';
     let mapObj = window.kakaoMapInstances[containerId];
     let map = null;
 
@@ -912,6 +985,8 @@ function renderKakaoCourseMap(containerId, courseKey) {
       map.relayout();
       map.setBounds(bounds);
     }, 120);
+  }, () => {
+    renderCourseMapFallback(container, courseKey);
   });
 }
 
