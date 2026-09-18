@@ -884,13 +884,15 @@
       padding: 0;
       background: transparent;
       width: calc(100vw - 32px);
-      max-width: 860px;
-      max-height: 92vh;
+      max-width: 760px;
+      max-height: calc(100dvh - 24px);
       border-radius: 28px;
       margin: auto;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+      overflow: hidden;
       box-shadow: none;
+    }
+    dialog[id^="map-dialog-"] > main {
+      transform-origin: top left;
     }
     dialog::backdrop {
       background: rgba(20, 18, 16, 0.75);
@@ -2486,14 +2488,64 @@
   // 자동 재생 시작
   startHeroAutoPlay();
 
-  // 5. 다이얼로그 바깥(backdrop) 클릭 시 닫기
-  ['map-dialog-01', 'map-dialog-02', 'map-dialog-03'].forEach(id => {
-    const dialog = document.getElementById(id);
-    if (dialog) {
-      dialog.addEventListener('click', (e) => {
-        if (e.target === dialog) dialog.close();
-      });
-    }
+  // 5. 지도 미리보기 모달을 현재 화면 안에 스크롤 없이 맞춤
+  const mapPreviewDialogIds = ['map-dialog-01', 'map-dialog-02', 'map-dialog-03'];
+
+  function fitMapPreviewDialog(dialog) {
+    if (!dialog || !dialog.open) return;
+
+    const panel = dialog.querySelector(':scope > main');
+    if (!panel) return;
+
+    // 이전 화면 크기에서 적용된 값을 해제한 뒤 원래 크기를 다시 측정한다.
+    dialog.style.width = '';
+    dialog.style.height = '';
+    panel.style.width = '';
+    panel.style.transform = 'none';
+
+    const viewportWidth = window.visualViewport?.width || window.innerWidth;
+    const viewportHeight = window.visualViewport?.height || window.innerHeight;
+    const availableWidth = Math.max(280, viewportWidth - 24);
+    const availableHeight = Math.max(280, viewportHeight - 24);
+    const naturalWidth = panel.offsetWidth;
+    const naturalHeight = Math.max(panel.offsetHeight, panel.scrollHeight);
+    const heightSafetyGap = 2;
+    const scale = Math.min(
+      1,
+      availableWidth / naturalWidth,
+      (availableHeight - heightSafetyGap) / naturalHeight
+    );
+
+    // 다이얼로그 폭을 줄여도 패널이 다시 줄어들지 않도록 원래 폭을 고정한다.
+    panel.style.width = `${naturalWidth}px`;
+    panel.style.transform = `scale(${scale})`;
+    dialog.style.width = `${Math.ceil(naturalWidth * scale)}px`;
+    dialog.style.height = `${Math.ceil(naturalHeight * scale) + heightSafetyGap}px`;
+  }
+
+  const mapPreviewDialogs = mapPreviewDialogIds
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+
+  document.querySelectorAll('.btn-map-preview').forEach((button, index) => {
+    button.addEventListener('click', () => {
+      requestAnimationFrame(() => fitMapPreviewDialog(mapPreviewDialogs[index]));
+    });
+  });
+
+  function refitOpenMapPreview() {
+    const openDialog = mapPreviewDialogs.find(dialog => dialog.open);
+    if (openDialog) fitMapPreviewDialog(openDialog);
+  }
+
+  window.addEventListener('resize', refitOpenMapPreview);
+  window.visualViewport?.addEventListener('resize', refitOpenMapPreview);
+
+  // 다이얼로그 바깥(backdrop) 클릭 시 닫기
+  mapPreviewDialogs.forEach(dialog => {
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
   });
 
   // 6. 공유하기 (Web Share API 및 클립보드 복사)
